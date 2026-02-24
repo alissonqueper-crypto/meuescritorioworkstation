@@ -19,7 +19,7 @@ const Footer = () => (
         <div>
           <img src={logo} alt="Meu Escritório – Workstation" className="h-14 w-auto mb-3" />
           <p className="text-sm text-muted-foreground">
-            Seu coworking moderno em Caçador – SC. Produtividade, criatividade e networking.
+            Coworking em Caçador – SC reunindo profissionais de tecnologia (OMIE), contabilidade, marketing digital e inteligência artificial. Salas de reunião por hora.
           </p>
         </div>
 

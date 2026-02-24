@@ -1,4 +1,4 @@
-import { Check, MessageCircle } from "lucide-react";
+import { Check, MessageCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -104,6 +104,39 @@ const Planos = () => (
               </a>
             </div>
           ))}
+        </div>
+      </ScrollSection>
+
+      {/* ============ SALA DE REUNIÃO AVULSA ============ */}
+      <ScrollSection className="mt-12">
+        <div className="bg-card border border-brand-gold/30 rounded-2xl p-8 md:p-10 brand-card max-w-3xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Clock className="w-5 h-5 text-brand-gold" />
+            <span className="text-xs font-semibold text-brand-gold uppercase tracking-wider">Sem necessidade de plano</span>
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">
+            Sala de Reunião <span className="text-brand-gradient">Avulsa</span>
+          </h2>
+          <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
+            Alugue nossa sala de reunião por hora. Ideal para reuniões com clientes, apresentações e videoconferências. Equipada com TV, quadro branco e café incluso.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 mb-6 text-sm">
+            {["TV para apresentações", "Quadro branco", "Videoconferência", "Café incluso", "Até 8 pessoas"].map((f) => (
+              <span key={f} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-secondary">
+                <Check className="w-3.5 h-3.5 text-brand-gold" />
+                {f}
+              </span>
+            ))}
+          </div>
+          <div className="mb-6">
+            <span className="text-3xl font-bold text-primary">Sob consulta</span>
+            <span className="text-muted-foreground text-sm"> /hora</span>
+          </div>
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+            <Button variant="accent" size="lg">
+              <MessageCircle className="w-4 h-4" /> Consultar disponibilidade
+            </Button>
+          </a>
         </div>
       </ScrollSection>
     </div>
