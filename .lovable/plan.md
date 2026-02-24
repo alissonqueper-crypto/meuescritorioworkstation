@@ -1,63 +1,43 @@
 
 
-## Plano: Adicionar Informações Reais do Coworking
+## Plano: Efeito Lamp no Hero com Logo Subindo
 
-Com base no que você descreveu, o escritório é um coworking que oferece salas de reunião por hora e abriga profissionais de diversas áreas: software empresarial (OMIE), contabilidade, agência de marketing digital e social media, e uma equipe de desenvolvimento de inteligência artificial para empresas.
-
----
-
-### Alterações Planejadas
-
-### 1. Nova Seção "Quem Trabalha Aqui" na Home (`Index.tsx`)
-
-Adicionar uma seção entre Benefícios e Planos mostrando as empresas/profissionais residentes:
-
-- **Software Empresarial (OMIE)** — Implementação e suporte do sistema de gestão OMIE para empresas
-- **Contabilidade** — Escritório contábil com atendimento presencial e digital
-- **Marketing Digital & Social Media** — Agência completa de marketing digital, gestão de redes sociais e criação de conteúdo
-- **Inteligência Artificial** — Equipe de desenvolvimento de soluções de IA para empresas
-
-Cada item será um card com ícone relevante (Code, Calculator, Megaphone, Brain), usando as 4 cores da marca alternadamente.
-
-### 2. Atualizar Benefícios na Home (`Index.tsx`)
-
-Substituir "Comunidade Ativa" (genérico) por algo mais específico:
-- **Networking Multidisciplinar** — "Trabalhe ao lado de profissionais de tecnologia, contabilidade, marketing e IA."
-
-### 3. Seção "Salas de Reunião" na Home (`Index.tsx`)
-
-Adicionar destaque para o aluguel de salas de reunião por hora, com CTA para WhatsApp:
-- Equipadas com TV e quadro branco
-- Aluguel por hora avulso (sem necessidade de plano)
-- Ideal para reuniões com clientes, apresentações e videoconferências
-
-### 4. Atualizar Planos (`Planos.tsx`)
-
-Adicionar um novo plano/opção:
-- **Sala de Reunião Avulsa** — R$ sob consulta / por hora — com features: TV, quadro branco, videoconferência, café incluso, até X pessoas
-
-### 5. Atualizar Página Estrutura (`Estrutura.tsx`)
-
-Atualizar as descrições dos espaços para refletir os profissionais residentes:
-- Mencionar nas áreas comuns a convivência entre profissionais de diferentes áreas
-- Salas de reunião: enfatizar aluguel por hora
-
-### 6. Atualizar Textos Gerais
-
-- Hero subtitle: mencionar "tecnologia, contabilidade, marketing e IA" ao invés de genérico
-- Footer: atualizar descrição para refletir as áreas de atuação
+A ideia é adaptar o componente Lamp (Aceternity UI) ao hero da home. Em vez de um título subindo, a **logo** sobe com a animação de luz cônica, e as informações do hero (badges, subtítulo, CTAs) ficam distribuídas de forma minimalista ao redor.
 
 ---
+
+### O que muda
+
+**1. Instalar `framer-motion`**
+- Nova dependência necessária para o efeito Lamp.
+
+**2. Criar `src/components/ui/lamp.tsx`**
+- Componente LampContainer adaptado com as **cores da marca** (vermelho, azul, teal) no gradiente cônico em vez das cores padrão cyan.
+- O feixe de luz usa `--brand-red` e `--brand-blue` para manter identidade visual.
+- Fundo escuro (`--background`) para o efeito funcionar bem.
+
+**3. Redesenhar o Hero em `src/pages/Index.tsx`**
+- Substituir o hero atual pelo LampContainer.
+- A **logo** (`src/assets/logo.png`) é o elemento central que sobe com `motion.div` (translateY de 100px para 0, com spring).
+- Remover a imagem `coworking-hero.jpg` do hero (o efeito de luz substitui).
+- Layout minimalista:
+  - Logo centralizada sobe com a animação.
+  - Abaixo da logo: subtítulo curto em texto pequeno e elegante.
+  - Badges "Coworking Premium" e "Caçador – SC" posicionados sutilmente.
+  - CTAs centralizados abaixo, aparecendo com fade-in após a logo subir.
 
 ### Detalhes Técnicos
 
-**Arquivos modificados:**
-- `src/pages/Index.tsx` — nova seção "Quem Trabalha Aqui", seção salas de reunião, atualizar benefícios e hero
-- `src/pages/Planos.tsx` — adicionar opção de sala de reunião avulsa
-- `src/pages/Estrutura.tsx` — atualizar descrições dos espaços
-- `src/components/Footer.tsx` — atualizar texto descritivo
+**Nova dependência:** `framer-motion`
 
-**Ícones novos do Lucide:** `Code`, `Calculator`, `Megaphone`, `Brain`, `Clock`
+**Novo arquivo:** `src/components/ui/lamp.tsx`
 
-**Sem novos arquivos ou dependências.** Apenas alterações em dados estáticos e textos.
+**Arquivo modificado:** `src/pages/Index.tsx` — hero redesenhado com LampContainer + logo animada
+
+**Cores do efeito lamp:**
+- Gradiente cônico: `--brand-red` (vermelho) e `--brand-blue` (azul)
+- Linha horizontal de luz: `--brand-teal`
+- Glow central: `--brand-gold`
+
+O restante da página (benefícios, residentes, planos, etc.) permanece inalterado.
 
