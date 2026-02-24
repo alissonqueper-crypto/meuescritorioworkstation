@@ -1,11 +1,16 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import {
   ArrowRight, Beer, Gift, Trophy, Music, MapPin, Clock, Shield, Users,
-  ChevronDown, CreditCard, Calendar, Star, Zap, Check
+  ChevronDown, CreditCard, Calendar, Star, Zap, Check, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import eventHeroImg from "@/assets/event-hero.jpg";
 
 const ScrollSection = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => {
@@ -17,112 +22,25 @@ const ScrollSection = ({ children, className = "", id }: { children: React.React
   );
 };
 
-/* ============================================
- * INTEGRAÇÃO INFINITEPAY
- * ============================================
- *
- * Endpoint: POST https://api.infinitepay.io/invoices/public/checkout/links
- *
- * Headers:
- *   Content-Type: application/json
- *
- * Payload:
- * {
- *   "handle": "SUA_INFINITETAG_AQUI",  // sem o símbolo $
- *   "items": [
- *     {
- *       "quantity": 1,
- *       "price": 5000,                  // valor em CENTAVOS
- *       "description": "Ingresso Corrida de Bar em Bar - Lote 1"
- *     }
- *   ],
- *   "order_nsu": "PEDIDO_001",          // ID interno do pedido
- *   "redirect_url": "https://seusite.com/eventos/corrida-de-bar-em-bar/sucesso"
- * }
- *
- * Resposta esperada: { "checkout_url": "https://..." }
- * Redirecionar o usuário para o checkout_url
- * ============================================ */
-
-const createCheckoutLink = async (ticketType: string): Promise<string> => {
-  /*
-   * TODO: Implementar chamada real à API da InfinitePay
-   *
-   * const INFINITEPAY_HANDLE = "SUA_INFINITETAG"; // TODO: inserir sua InfiniteTag
-   * const REDIRECT_URL = "https://seusite.com/eventos/corrida-de-bar-em-bar/sucesso";
-   *
-   * const ticketPrices: Record<string, { price: number; description: string }> = {
-   *   "lote1": { price: 5000, description: "Ingresso Corrida de Bar em Bar - Lote 1" },
-   *   "lote2": { price: 7000, description: "Ingresso Corrida de Bar em Bar - Lote 2" },
-   *   "vip":   { price: 12000, description: "Ingresso VIP Corrida de Bar em Bar" },
-   * };
-   *
-   * const ticket = ticketPrices[ticketType];
-   * const orderNsu = `CORRIDA_${Date.now()}`;
-   *
-   * const response = await fetch("https://api.infinitepay.io/invoices/public/checkout/links", {
-   *   method: "POST",
-   *   headers: { "Content-Type": "application/json" },
-   *   body: JSON.stringify({
-   *     handle: INFINITEPAY_HANDLE,
-   *     items: [{ quantity: 1, price: ticket.price, description: ticket.description }],
-   *     order_nsu: orderNsu,
-   *     redirect_url: REDIRECT_URL,
-   *   }),
-   * });
-   *
-   * const data = await response.json();
-   * return data.checkout_url;
-   */
-
-  // MOCK – remover quando integrar com a API real
-  console.log(`Comprando ingresso: ${ticketType}`);
-  alert(
-    `Redirecionando para pagamento: ${ticketType}\n\nConfigure a integração com InfinitePay para ativar o pagamento real.\n\nVeja os comentários no código-fonte.`
-  );
-  return "#";
-};
-
-const handleBuy = async (ticketType: string) => {
-  const url = await createCheckoutLink(ticketType);
-  if (url && url !== "#") {
-    window.location.href = url;
-  }
-};
-
-/* ============================================
- * CONFIGURAÇÃO: Ingressos – valores e nomes
- * ============================================ */
 const tickets = [
   {
-    id: "lote1",
-    name: "Lote 1",
-    price: "R$ 50,00",    // TODO: valor real
-    desc: "Primeiro lote – garanta o melhor preço!",
-    features: ["Pulseira de acesso", "Mapa do circuito", "1 drink de boas-vindas"],
+    id: "masculino",
+    name: "Masculino",
+    price: "R$ 110,00",
+    desc: "Ingresso masculino para a Corrida de Bar em Bar.",
+    features: ["Pulseira de acesso", "Mapa do circuito", "1 drink de boas-vindas", "Copo personalizado"],
     highlight: false,
   },
   {
-    id: "lote2",
-    name: "Lote 2",
-    price: "R$ 70,00",    // TODO: valor real
-    desc: "Segundo lote – promoção por tempo limitado.",
+    id: "feminino",
+    name: "Feminino",
+    price: "R$ 55,00",
+    desc: "Ingresso feminino para a Corrida de Bar em Bar.",
     features: ["Pulseira de acesso", "Mapa do circuito", "1 drink de boas-vindas", "Copo personalizado"],
     highlight: true,
   },
-  {
-    id: "vip",
-    name: "VIP",
-    price: "R$ 120,00",   // TODO: valor real
-    desc: "Experiência premium com acesso exclusivo.",
-    features: ["Pulseira VIP", "Mapa do circuito", "3 drinks inclusos", "Copo e camiseta", "Área VIP no after"],
-    highlight: false,
-  },
 ];
 
-/* ============================================
- * CONFIGURAÇÃO: Bares participantes
- * ============================================ */
 const bars = [
   { name: "Bar do João", desc: "Drinks autorais e petiscos.", bairro: "Centro" },
   { name: "Cervejaria Artesanal", desc: "As melhores IPAs da cidade.", bairro: "Santa Catarina" },
@@ -130,15 +48,11 @@ const bars = [
   { name: "Lounge Neon", desc: "Cocktails e música eletrônica.", bairro: "Alto Bonito" },
   { name: "Pub Rock & Roll", desc: "Bandas ao vivo e cervejas.", bairro: "Santa Cruz" },
   { name: "Destilaria 88", desc: "Gin tônica e drinks premium.", bairro: "Centro" },
-  // TODO: Adicionar ou editar bares participantes
 ];
 
-/* ============================================
- * CONFIGURAÇÃO: FAQ do evento
- * ============================================ */
 const faq = [
   { q: "Qual a idade mínima para participar?", a: "É necessário ter 18 anos completos e apresentar documento com foto." },
-  { q: "O que está incluso no ingresso?", a: "Pulseira de acesso ao circuito, mapa dos bares e pelo menos 1 drink de boas-vindas (varia por lote)." },
+  { q: "O que está incluso no ingresso?", a: "Pulseira de acesso ao circuito, mapa dos bares e pelo menos 1 drink de boas-vindas." },
   { q: "Quais formas de pagamento são aceitas?", a: "Pagamento online via InfinitePay: cartão de crédito, débito e Pix." },
   { q: "Posso transferir meu ingresso para outra pessoa?", a: "Sim, desde que informe a organização com antecedência." },
   { q: "Como funciona o circuito?", a: "Você retira sua pulseira no ponto de concentração e percorre os bares parceiros, aproveitando drinks e promoções exclusivas." },
@@ -148,9 +62,58 @@ const faq = [
 ];
 
 const CorridaDeBarEmBar = () => {
+  const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({ nome: "", telefone: "", numero_placa: "" });
+  const { toast } = useToast();
+
+  const handleBuy = (ticketId: string) => {
+    setSelectedTicket(ticketId);
+    setForm({ nome: "", telefone: "", numero_placa: "" });
+    setDialogOpen(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedTicket) return;
+
+    const placa = parseInt(form.numero_placa);
+    if (isNaN(placa) || placa <= 0) {
+      toast({ title: "Número de placa inválido", description: "Insira um número válido.", variant: "destructive" });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-checkout", {
+        body: {
+          nome: form.nome,
+          telefone: form.telefone,
+          numero_placa: placa,
+          tipo_ingresso: selectedTicket,
+        },
+      });
+
+      if (error || !data?.checkout_url) {
+        throw new Error(data?.error || "Erro ao gerar link de pagamento.");
+      }
+
+      window.location.href = data.checkout_url;
+    } catch (err: any) {
+      toast({
+        title: "Erro",
+        description: err.message || "Não foi possível processar. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-neon-gradient min-h-screen">
-      {/* ============ HERO ============ */}
+      {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img src={eventHeroImg} alt="Corrida de Bar em Bar" className="w-full h-full object-cover" />
@@ -180,11 +143,9 @@ const CorridaDeBarEmBar = () => {
         </div>
       </section>
 
-      {/* ============ COMO FUNCIONA ============ */}
+      {/* COMO FUNCIONA */}
       <ScrollSection id="como-funciona">
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">
-          Como Funciona?
-        </h2>
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">Como Funciona?</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { n: "01", icon: CreditCard, title: "Inscrição", desc: "Compre seu ingresso online de forma rápida e segura." },
@@ -204,11 +165,9 @@ const CorridaDeBarEmBar = () => {
         </div>
       </ScrollSection>
 
-      {/* ============ O QUE ESTÁ INCLUSO ============ */}
+      {/* O QUE ESTÁ INCLUSO */}
       <ScrollSection className="bg-card/30">
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">
-          O Que Está Incluso
-        </h2>
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">O Que Está Incluso</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
           {[
             { icon: Beer, label: "Bares parceiros" },
@@ -228,11 +187,9 @@ const CorridaDeBarEmBar = () => {
         </div>
       </ScrollSection>
 
-      {/* ============ BARES PARTICIPANTES ============ */}
+      {/* BARES PARTICIPANTES */}
       <ScrollSection>
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">
-          Bares Participantes
-        </h2>
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">Bares Participantes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {bars.map((bar) => (
             <div key={bar.name} className="bg-neon-card rounded-xl p-6 transition-all duration-300">
@@ -247,18 +204,16 @@ const CorridaDeBarEmBar = () => {
         </div>
       </ScrollSection>
 
-      {/* ============ INGRESSOS ============ */}
+      {/* INGRESSOS */}
       <ScrollSection id="ingressos" className="bg-card/30">
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 text-neon-gradient">
-          Ingressos & Valores
-        </h2>
-        <p className="text-center text-muted-foreground mb-12">Garanta sua vaga antes que os lotes esgotem!</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 text-neon-gradient">Ingressos & Valores</h2>
+        <p className="text-center text-muted-foreground mb-12">Garanta sua vaga antes que os ingressos esgotem!</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
           {tickets.map((t) => (
             <div key={t.id} className={`relative bg-neon-card rounded-2xl p-8 flex flex-col transition-all duration-300 ${t.highlight ? "ring-2 ring-neon-pink shadow-[0_0_40px_hsl(var(--neon-pink)/0.2)]" : ""}`}>
               {t.highlight && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 btn-neon text-xs font-bold px-4 py-1 rounded-full">
-                  Melhor Custo-Benefício
+                  Melhor Preço
                 </span>
               )}
               <h3 className="font-display text-xl font-bold mb-1">{t.name}</h3>
@@ -281,12 +236,58 @@ const CorridaDeBarEmBar = () => {
         </div>
       </ScrollSection>
 
-      {/* ============ REGRAS E TERMOS ============ */}
+      {/* MODAL DE INSCRIÇÃO */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="bg-neon-card border-neon-purple/30 sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-display text-xl text-neon-gradient">
+              Inscrição – {selectedTicket === "masculino" ? "Masculino (R$ 110,00)" : "Feminino (R$ 55,00)"}
+            </DialogTitle>
+            <DialogDescription>Preencha seus dados para prosseguir ao pagamento.</DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmit} className="space-y-4 mt-2">
+            <div className="space-y-2">
+              <Label htmlFor="nome">Nome completo</Label>
+              <Input
+                id="nome"
+                required
+                placeholder="Seu nome completo"
+                value={form.nome}
+                onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="telefone">Telefone / WhatsApp</Label>
+              <Input
+                id="telefone"
+                required
+                placeholder="(49) 99999-9999"
+                value={form.telefone}
+                onChange={(e) => setForm((f) => ({ ...f, telefone: e.target.value }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="numero_placa">Número desejado da placa</Label>
+              <Input
+                id="numero_placa"
+                type="number"
+                required
+                min={1}
+                placeholder="Ex: 42"
+                value={form.numero_placa}
+                onChange={(e) => setForm((f) => ({ ...f, numero_placa: e.target.value }))}
+              />
+            </div>
+            <Button type="submit" variant="neon" size="lg" className="w-full" disabled={loading}>
+              {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processando...</> : "Ir para pagamento"}
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* REGRAS E TERMOS */}
       <ScrollSection>
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-8 text-neon-gradient">
-          Regras & Termos
-        </h2>
-        {/* TODO: Editar regras e termos do evento */}
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-8 text-neon-gradient">Regras & Termos</h2>
         <div className="max-w-3xl mx-auto bg-neon-card rounded-xl p-6 md:p-8 text-sm text-muted-foreground space-y-3">
           <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Idade mínima:</strong> 18 anos. Documento com foto obrigatório.</p>
           <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Consumo responsável:</strong> O evento incentiva o consumo moderado de bebidas alcoólicas.</p>
@@ -296,54 +297,37 @@ const CorridaDeBarEmBar = () => {
         </div>
       </ScrollSection>
 
-      {/* ============ FAQ ============ */}
+      {/* FAQ */}
       <ScrollSection className="bg-card/30">
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">
-          Perguntas Frequentes
-        </h2>
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">Perguntas Frequentes</h2>
         <div className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="space-y-3">
             {faq.map((item, i) => (
               <AccordionItem key={i} value={`faq-${i}`} className="bg-neon-card rounded-xl border-none px-6">
-                <AccordionTrigger className="text-left font-medium text-sm hover:no-underline py-4">
-                  {item.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground pb-4">
-                  {item.a}
-                </AccordionContent>
+                <AccordionTrigger className="text-left font-medium text-sm hover:no-underline py-4">{item.q}</AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground pb-4">{item.a}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
         </div>
       </ScrollSection>
 
-      {/* ============ MAPA / LOCAL ============ */}
+      {/* MAPA */}
       <ScrollSection>
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 text-neon-gradient">
-          Local de Concentração
-        </h2>
-        {/* TODO: Editar endereço do ponto de concentração */}
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 text-neon-gradient">Local de Concentração</h2>
         <p className="text-center text-muted-foreground mb-8">Praça Central – Caçador, SC (endereço placeholder)</p>
         <div className="rounded-xl overflow-hidden border border-border aspect-video max-w-4xl mx-auto">
           <iframe
             src="https://maps.google.com/maps?q=Caçador,SC,Brazil&output=embed"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            title="Local do evento"
+            width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title="Local do evento"
           />
         </div>
       </ScrollSection>
 
-      {/* ============ FOOTER DO EVENTO ============ */}
+      {/* FOOTER */}
       <section className="border-t border-neon-purple/20 py-8 px-4">
         <div className="container mx-auto max-w-6xl text-center text-xs text-muted-foreground space-y-2">
-          <p>
-            Organização e sede oficial: <strong className="text-foreground">Meu Escritório – WORKSTATION</strong>
-          </p>
-          {/* TODO: Editar CNPJ e redes do evento */}
+          <p>Organização e sede oficial: <strong className="text-foreground">Meu Escritório – WORKSTATION</strong></p>
           <p>CNPJ: 00.000.000/0001-00</p>
           <p>&copy; {new Date().getFullYear()} Corrida de Bar em Bar. Todos os direitos reservados.</p>
         </div>

@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      inscricoes: {
+        Row: {
+          created_at: string
+          forma_pagamento: string | null
+          id: string
+          nome: string
+          numero_placa: number
+          order_nsu: string | null
+          status_pagamento: string
+          telefone: string
+          tipo_ingresso: string
+          valor_pago: number
+        }
+        Insert: {
+          created_at?: string
+          forma_pagamento?: string | null
+          id?: string
+          nome: string
+          numero_placa: number
+          order_nsu?: string | null
+          status_pagamento?: string
+          telefone: string
+          tipo_ingresso: string
+          valor_pago: number
+        }
+        Update: {
+          created_at?: string
+          forma_pagamento?: string | null
+          id?: string
+          nome?: string
+          numero_placa?: number
+          order_nsu?: string | null
+          status_pagamento?: string
+          telefone?: string
+          tipo_ingresso?: string
+          valor_pago?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

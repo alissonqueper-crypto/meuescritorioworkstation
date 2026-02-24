@@ -1,26 +1,36 @@
+import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { CheckCircle, ArrowRight, MessageCircle } from "lucide-react";
+import { CheckCircle, ArrowRight, MessageCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-/* ============================================
- * PÁGINA DE SUCESSO – Pós-pagamento InfinitePay
- *
- * A InfinitePay pode redirecionar com parâmetros na URL.
- * Exemplo: /eventos/corrida-de-bar-em-bar/sucesso?order_nsu=PEDIDO_001&status=approved
- *
- * TODO: Ler e exibir informações reais do pedido
- * quando a integração estiver ativa.
- * ============================================ */
+import { supabase } from "@/integrations/supabase/client";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Acabei+de+comprar+meu+ingresso+para+a+Corrida+de+Bar+em+Bar.&type=phone_number&app_absent=0";
 
 const CorridaSuccess = () => {
   const [searchParams] = useSearchParams();
-
-  // Exemplo de leitura de parâmetros da URL (InfinitePay)
   const orderNsu = searchParams.get("order_nsu") || "N/A";
-  const status = searchParams.get("status") || "approved";
+  const [status, setStatus] = useState("carregando...");
+
+  useEffect(() => {
+    const updateStatus = async () => {
+      if (orderNsu === "N/A") {
+        setStatus("approved");
+        return;
+      }
+      // Update payment status to approved
+      const { error } = await supabase
+        .from("inscricoes" as any)
+        .update({ status_pagamento: "aprovado" } as any)
+        .eq("order_nsu", orderNsu);
+
+      if (error) {
+        console.error("Error updating status:", error);
+      }
+      setStatus("aprovado");
+    };
+    updateStatus();
+  }, [orderNsu]);
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-neon-gradient">
@@ -37,7 +47,6 @@ const CorridaSuccess = () => {
             Seu ingresso para a <strong className="text-foreground">Corrida de Bar em Bar</strong> foi adquirido com sucesso!
           </p>
 
-          {/* Info do pedido (placeholder) */}
           <div className="bg-neon-card rounded-xl p-6 mb-8 text-left text-sm space-y-2">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Pedido</span>
