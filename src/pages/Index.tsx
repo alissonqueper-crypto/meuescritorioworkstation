@@ -91,14 +91,14 @@ const Index = () => {
             }}
             className="flex flex-col items-center text-center"
           >
-            <img src={logoImg} alt="Meu Escritório Workstation" className="w-40 md:w-56 mb-8" />
+            <img src={logoImg} alt="Meu Escritório Workstation" className="w-56 md:w-72 mb-10" />
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-3">
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                <Button variant="accent" size="xl">Conhecer planos no WhatsApp</Button>
+                <Button variant="accent" size="lg">Conhecer planos no WhatsApp</Button>
               </a>
               <Link to="/planos">
-                <Button variant="outline" size="xl">Ver planos <ArrowRight className="w-5 h-5" /></Button>
+                <Button variant="outline" size="lg">Ver planos <ArrowRight className="w-4 h-4" /></Button>
               </Link>
             </div>
           </motion.div>
