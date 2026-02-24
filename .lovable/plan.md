@@ -1,39 +1,72 @@
 
 
-## Diagnóstico do Problema
+## Plano: Atualizar informações do evento no site
 
-O erro está claro nos logs. A API da InfinitePay retorna o campo **`url`**, mas o código verifica **`checkout_url`**:
+Extraí todas as informações relevantes dos documentos. Vou atualizar a página `CorridaDeBarEmBar.tsx` com os dados reais do evento.
 
-```
-Response: {"url":"https://checkout.infinitepay.io/meu-escritorio?lenc=..."}
-```
+---
 
-Na linha 87, o código faz `!infinitePayData.checkout_url` — que é `undefined` — e retorna erro 502.
+### Informações extraídas dos documentos
 
-## Plano de Correção
+- **Nome completo:** Corrida de Bar em Bar – em busca do Litrão MAPA 2026
+- **Data:** 14 de março de 2026
+- **Largada:** 17h
+- **Duração máxima:** 2 horas
+- **Percurso:** Aproximadamente 2,5 km
+- **Local:** Caçador/SC
+- **11 bares participantes (na ordem do circuito):**
+  1. Cena Indie Bar
+  2. Meu Escritório – Workstation
+  3. Oeste Pub
+  4. Galgo
+  5. Pix
+  6. Pulse
+  7. Império Hamburgueria
+  8. Bravo Pub
+  9. Kazah Oz
+  10. Garagem Bar e Lanchonete
+  11. O Boteco dos Amigos
 
-### 1. Edge Function `create-checkout/index.ts`
+---
 
-- **Linha 87**: Trocar `infinitePayData.checkout_url` por `infinitePayData.url`
-- **Linha 96**: Trocar `infinitePayData.checkout_url` por `infinitePayData.url`
-- Retornar `{ checkout_url: infinitePayData.url }` para manter compatibilidade com o frontend
+### Alterações em `CorridaDeBarEmBar.tsx`
 
-### 2. Frontend `CorridaDeBarEmBar.tsx`
+1. **Hero:** Atualizar subtítulo com data (14 de março), horário (17h) e percurso (2,5 km). Adicionar badges com data/hora/distância.
 
-Nenhuma alteração necessária — o frontend já espera `data.checkout_url` e faz `window.location.href = data.checkout_url`, o que está correto.
+2. **Bares participantes:** Substituir os 6 bares fictícios pelos 11 reais, numerados na ordem do circuito.
 
-### 3. Página de Sucesso `CorridaSuccess.tsx`
+3. **Nova seção "Dinâmica do Circuito":** Explicar as 4 mesas em cada bar:
+   - 1ª mesa: Copo 300ml → adesivo quadrado
+   - 2ª mesa: Copo 200ml → adesivo triângulo
+   - 3ª mesa: Copo 100ml ou shot → adesivo bolinha
+   - 4ª mesa: Apenas registrar passagem → adesivo X
+   - Adesivo entregue mediante devolução do copo ao garçom.
 
-Verificar se já atualiza o `status_pagamento` para "aprovado" quando o usuário retorna com `order_nsu` na URL. Isso já está implementado.
+4. **Nova seção "Critérios de Classificação":** Vence quem concluir no menor tempo, passar pelos 11 bares, não ultrapassar 2h, e atingir o volume exato (Masculino: 2,2L / Feminino: 1,1L).
+
+5. **Atualizar seção "Regras & Termos":** Adicionar regras reais:
+   - Copos plásticos não reutilizáveis
+   - Proibido portar copos fora do ponto de consumo
+   - Devolução obrigatória para validação do adesivo
+   - Participantes só entram nos bares para uso do sanitário
+   - Cada participante é responsável por sua condição física
+
+6. **Atualizar seção "Segurança"** (dentro de Regras ou como seção separada):
+   - Equipe de organização em todas as esquinas
+   - Ambulância e profissional de enfermagem
+   - Apoio da Guarda Municipal
+   - Fiscais e cronômetro oficial
+
+7. **Atualizar FAQ** com informações consistentes (volume, duração, número de bares).
+
+8. **Seção "O que está incluso":** Atualizar itens para refletir: placa de identificação individual, mapa do circuito, copos em cada bar, adesivos de controle.
 
 ---
 
 ### Detalhes Técnicos
 
-A correção é mínima — apenas 2 linhas na edge function. O campo retornado pela API InfinitePay é `url`, não `checkout_url`. Após a correção, o fluxo será:
-
-1. Usuário preenche formulário → chama edge function
-2. Edge function salva inscrição → chama InfinitePay → recebe `url`
-3. Frontend recebe `checkout_url` (mapeado de `url`) → redireciona para página externa de pagamento
-4. Após pagamento, InfinitePay redireciona para página de sucesso → atualiza status no banco
+- Todas as alterações são no arquivo `src/pages/CorridaDeBarEmBar.tsx`
+- Apenas dados estáticos (arrays e textos) — sem mudanças em lógica ou integrações
+- Mantém a mesma estrutura visual e componentes existentes (ScrollSection, neon cards, etc.)
+- Os 11 bares serão exibidos em grid 3 colunas com numeração do circuito
 
