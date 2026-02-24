@@ -187,7 +187,7 @@ const Index = () => {
                   { icon: Tv, text: "TV para apresentações e videoconferências" },
                   { icon: MonitorSmartphone, text: "Quadro branco e material de apoio" },
                   { icon: Coffee, text: "Café e água inclusos" },
-                  { icon: Users, text: "Capacidade para até 8 pessoas" },
+                  { icon: Users, text: "" },
                 ].map((item) => (
                   <li key={item.text} className="flex items-center gap-3 text-sm">
                     <item.icon className="w-4 h-4 text-brand-teal shrink-0" />
