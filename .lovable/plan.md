@@ -1,72 +1,90 @@
 
 
-## Plano: Atualizar informações do evento no site
+## Plano: Redesign Visual Completo com Identidade da Logo
 
-Extraí todas as informações relevantes dos documentos. Vou atualizar a página `CorridaDeBarEmBar.tsx` com os dados reais do evento.
-
----
-
-### Informações extraídas dos documentos
-
-- **Nome completo:** Corrida de Bar em Bar – em busca do Litrão MAPA 2026
-- **Data:** 14 de março de 2026
-- **Largada:** 17h
-- **Duração máxima:** 2 horas
-- **Percurso:** Aproximadamente 2,5 km
-- **Local:** Caçador/SC
-- **11 bares participantes (na ordem do circuito):**
-  1. Cena Indie Bar
-  2. Meu Escritório – Workstation
-  3. Oeste Pub
-  4. Galgo
-  5. Pix
-  6. Pulse
-  7. Império Hamburgueria
-  8. Bravo Pub
-  9. Kazah Oz
-  10. Garagem Bar e Lanchonete
-  11. O Boteco dos Amigos
+Analisei toda a base de código e a logo enviada. As cores da marca são: **vermelho (#E31E24)**, **azul (#3B6FB6)**, **verde/teal (#2DBDB1)** e **amarelo/dourado (#F2C12E)**. O site atual usa apenas ciano e laranja genéricos. Vou criar uma identidade visual única baseada na logo.
 
 ---
 
-### Alterações em `CorridaDeBarEmBar.tsx`
+### 1. Nova Paleta de Cores (`src/index.css`)
 
-1. **Hero:** Atualizar subtítulo com data (14 de março), horário (17h) e percurso (2,5 km). Adicionar badges com data/hora/distância.
+Substituir as variáveis CSS atuais por cores extraídas da logo:
+- **Primary:** Vermelho vibrante da logo (0 85% 50%)
+- **Accent:** Azul da logo (215 55% 47%)
+- **Teal:** Verde/teal da logo (174 70% 46%) — nova cor custom
+- **Gold:** Amarelo da logo (43 88% 57%) — nova cor custom
+- Manter fundo escuro mas ajustar para tons mais sofisticados
 
-2. **Bares participantes:** Substituir os 6 bares fictícios pelos 11 reais, numerados na ordem do circuito.
+### 2. Logo no Header e Footer (`Header.tsx`, `Footer.tsx`)
 
-3. **Nova seção "Dinâmica do Circuito":** Explicar as 4 mesas em cada bar:
-   - 1ª mesa: Copo 300ml → adesivo quadrado
-   - 2ª mesa: Copo 200ml → adesivo triângulo
-   - 3ª mesa: Copo 100ml ou shot → adesivo bolinha
-   - 4ª mesa: Apenas registrar passagem → adesivo X
-   - Adesivo entregue mediante devolução do copo ao garçom.
+- Copiar a imagem da logo para `src/assets/logo.png`
+- Substituir o texto "Meu Escritório – WORKSTATION" pela imagem da logo (h-10 no header, h-14 no footer)
+- Manter fallback de texto acessível via `alt`
 
-4. **Nova seção "Critérios de Classificação":** Vence quem concluir no menor tempo, passar pelos 11 bares, não ultrapassar 2h, e atingir o volume exato (Masculino: 2,2L / Feminino: 1,1L).
+### 3. Animações Originais (`src/index.css`)
 
-5. **Atualizar seção "Regras & Termos":** Adicionar regras reais:
-   - Copos plásticos não reutilizáveis
-   - Proibido portar copos fora do ponto de consumo
-   - Devolução obrigatória para validação do adesivo
-   - Participantes só entram nos bares para uso do sanitário
-   - Cada participante é responsável por sua condição física
+Remover animações genéricas e criar novas:
+- **`animate-logo-pulse`**: Pulsação sutil com glow nas cores da marca (vermelho → azul → teal)
+- **`animate-gradient-shift`**: Background gradient que muda entre as 4 cores da logo em loop
+- **`animate-slide-in-left` / `animate-slide-in-right`**: Entradas laterais alternadas para cards
+- **`animate-typewriter`**: Efeito de digitação para títulos do hero
+- **`animate-border-glow`**: Borda animada que percorre as 4 cores da marca
+- **`animate-parallax-float`**: Movimento parallax suave em camadas
+- **`animate-stagger`**: Delays escalonados para grids (cada card entra com delay progressivo)
+- Hover em cards: `hover:translate-y-[-4px] hover:shadow-[0_8px_30px_rgba(227,30,36,0.15)]` com transição suave
 
-6. **Atualizar seção "Segurança"** (dentro de Regras ou como seção separada):
-   - Equipe de organização em todas as esquinas
-   - Ambulância e profissional de enfermagem
-   - Apoio da Guarda Municipal
-   - Fiscais e cronômetro oficial
+### 4. Hero da Página Inicial (`Index.tsx`)
 
-7. **Atualizar FAQ** com informações consistentes (volume, duração, número de bares).
+- Adicionar gradient animado no fundo (shift entre as 4 cores da logo)
+- Título com efeito de texto gradiente usando as cores da marca
+- Badges de destaque com border-glow animado
+- CTA buttons: Primary em vermelho, Secondary em azul da logo
 
-8. **Seção "O que está incluso":** Atualizar itens para refletir: placa de identificação individual, mapa do circuito, copos em cada bar, adesivos de controle.
+### 5. Cards e Componentes Globais
+
+- Border-radius mais arredondado nos cards
+- Hover com glow sutil na cor primária
+- Ícones usando as 4 cores da logo alternadamente nos grids (vermelho, azul, teal, dourado)
+- Separadores com gradient horizontal nas cores da marca
+
+### 6. Página do Evento (`CorridaDeBarEmBar.tsx`)
+
+- Manter a estética neon/GTA separada (já tem identidade própria)
+- Apenas atualizar os neon colors para harmonizar com a nova paleta
+
+### 7. Preparação para Fotos e Vídeos
+
+- Criar componente `MediaGallery` reutilizável em `src/components/MediaGallery.tsx`
+- Grid responsivo com lightbox (Dialog) para fotos em tela cheia
+- Suporte a vídeos embed (YouTube/iframe)
+- Seção na página Estrutura com placeholder "Adicione suas fotos aqui"
+- Seção na Index com galeria de destaque
+
+### 8. Tailwind Config (`tailwind.config.ts`)
+
+- Adicionar cores `brand-red`, `brand-blue`, `brand-teal`, `brand-gold`
+- Registrar novas keyframes e animations
+- Adicionar font display alternativa
 
 ---
 
 ### Detalhes Técnicos
 
-- Todas as alterações são no arquivo `src/pages/CorridaDeBarEmBar.tsx`
-- Apenas dados estáticos (arrays e textos) — sem mudanças em lógica ou integrações
-- Mantém a mesma estrutura visual e componentes existentes (ScrollSection, neon cards, etc.)
-- Os 11 bares serão exibidos em grid 3 colunas com numeração do circuito
+**Arquivos modificados:**
+- `src/index.css` — nova paleta + animações customizadas
+- `tailwind.config.ts` — cores da marca + keyframes
+- `src/components/Header.tsx` — logo image + animação sutil
+- `src/components/Footer.tsx` — logo image
+- `src/pages/Index.tsx` — hero redesign + gradient animado + galeria preview
+- `src/pages/Estrutura.tsx` — preparação para galeria de fotos
+- `src/pages/Planos.tsx` — cards com cores da marca
+- `src/pages/Contato.tsx` — accent colors atualizados
+
+**Novo arquivo:**
+- `src/components/MediaGallery.tsx` — componente de galeria reutilizável
+
+**Asset copiado:**
+- `user-uploads://Design_sem_nome_10-2.png` → `src/assets/logo.png`
+
+As animações são todas CSS puro (keyframes), sem bibliotecas externas. Cada animação é única e pensada para o contexto do coworking — nada genérico de template.
 
