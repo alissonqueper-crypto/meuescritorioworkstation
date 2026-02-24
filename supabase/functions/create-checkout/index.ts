@@ -84,7 +84,7 @@ Deno.serve(async (req) => {
 
     const infinitePayData = await infinitePayResponse.json();
 
-    if (!infinitePayResponse.ok || !infinitePayData.checkout_url) {
+    if (!infinitePayResponse.ok || !infinitePayData.url) {
       console.error("InfinitePay Error:", infinitePayData);
       return new Response(
         JSON.stringify({ error: "Erro ao gerar link de pagamento.", details: infinitePayData }),
@@ -93,7 +93,7 @@ Deno.serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ checkout_url: infinitePayData.checkout_url, order_nsu: orderNsu }),
+      JSON.stringify({ checkout_url: infinitePayData.url, order_nsu: orderNsu }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {
