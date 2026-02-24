@@ -79,42 +79,48 @@ const Index = () => {
   return (
     <div>
       {/* ============ HERO ============ */}
-      <LampContainer>
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.3,
-            duration: 0.8,
-            ease: "easeInOut",
-          }}
-          className="flex flex-col items-center text-center"
-        >
-          <img src={logoImg} alt="Meu Escritório Workstation" className="w-40 md:w-56 mb-8" />
+      <div className="relative">
+        <LampContainer>
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="flex flex-col items-center text-center"
+          >
+            <img src={logoImg} alt="Meu Escritório Workstation" className="w-40 md:w-56 mb-8" />
 
-          <div className="flex gap-3 mb-6">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-semibold">
-              Coworking Premium
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-teal/30 bg-brand-teal/10 text-brand-teal text-xs font-semibold">
-              Caçador – SC
-            </span>
-          </div>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                <Button variant="accent" size="xl">Conhecer planos no WhatsApp</Button>
+              </a>
+              <Link to="/planos">
+                <Button variant="outline" size="xl">Ver planos <ArrowRight className="w-5 h-5" /></Button>
+              </Link>
+            </div>
+          </motion.div>
+        </LampContainer>
 
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg">
-            Tecnologia, contabilidade, marketing e IA — tudo em um coworking moderno.
+        {/* Badges nos cantos inferiores */}
+        <div className="absolute bottom-8 left-6 md:left-12 z-50">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-semibold">
+            Coworking Premium
+          </span>
+        </div>
+        <div className="absolute bottom-8 right-6 md:right-12 z-50">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-teal/30 bg-brand-teal/10 text-brand-teal text-xs font-semibold">
+            Caçador – SC
+          </span>
+        </div>
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50">
+          <p className="text-xs md:text-sm text-muted-foreground text-center whitespace-nowrap">
+            Tecnologia · Contabilidade · Marketing · IA
           </p>
-
-          <div className="flex flex-wrap justify-center gap-4">
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              <Button variant="accent" size="xl">Conhecer planos no WhatsApp</Button>
-            </a>
-            <Link to="/planos">
-              <Button variant="outline" size="xl">Ver planos <ArrowRight className="w-5 h-5" /></Button>
-            </Link>
-          </div>
-        </motion.div>
-      </LampContainer>
+        </div>
+      </div>
 
       <div className="brand-separator w-full" />
 
