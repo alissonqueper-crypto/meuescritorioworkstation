@@ -4,9 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import heroImg from "@/assets/coworking-hero.jpg";
 
-/* ============================================
- * CONFIGURAÇÃO: Link do WhatsApp
- * ============================================ */
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
 
@@ -19,10 +16,24 @@ const ScrollSection = ({ children, className = "", id }: { children: React.React
   );
 };
 
-/* ============================================
- * BENEFÍCIOS
- * Edite ícones, títulos e descrições aqui
- * ============================================ */
+/* Brand color classes for alternating icons */
+const brandColors = [
+  "text-brand-red",
+  "text-brand-blue",
+  "text-brand-teal",
+  "text-brand-gold",
+  "text-brand-red",
+  "text-brand-blue",
+];
+const brandBgs = [
+  "bg-brand-red/10",
+  "bg-brand-blue/10",
+  "bg-brand-teal/10",
+  "bg-brand-gold/10",
+  "bg-brand-red/10",
+  "bg-brand-blue/10",
+];
+
 const benefits = [
   { icon: Wifi, title: "Internet Ultra Rápida", desc: "Fibra óptica dedicada para sua produtividade." },
   { icon: Users, title: "Salas de Reunião", desc: "Espaços privativos equipados com TV e quadro branco." },
@@ -32,9 +43,6 @@ const benefits = [
   { icon: MapPin, title: "Localização Central", desc: "No coração de Caçador – SC, fácil acesso." },
 ];
 
-/* ============================================
- * PLANOS – Valores fictícios. Edite aqui.
- * ============================================ */
 const plans = [
   {
     name: "Diário",
@@ -66,17 +74,27 @@ const Index = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img src={heroImg} alt="Coworking moderno" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
+          {/* Animated brand gradient overlay */}
+          <div className="absolute inset-0 bg-brand-gradient opacity-60" />
         </div>
         <div className="relative z-10 container mx-auto max-w-6xl px-4 py-32">
-          <div className="max-w-2xl animate-reveal-up">
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Seu escritório, <span className="text-primary">quando e como</span> você quiser.
+          <div className="max-w-2xl">
+            <div className="flex gap-3 mb-6 animate-reveal-up">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-semibold animate-border-glow">
+                Coworking Premium
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-teal/30 bg-brand-teal/10 text-brand-teal text-xs font-semibold">
+                Caçador – SC
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 animate-reveal-up" style={{ animationDelay: "0.1s" }}>
+              Seu escritório, <span className="text-brand-gradient">quando e como</span> você quiser.
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg animate-reveal-up" style={{ animationDelay: "0.2s" }}>
               Produtividade, criatividade e networking em um coworking moderno no coração de Caçador – SC.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 animate-reveal-up" style={{ animationDelay: "0.3s" }}>
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                 <Button variant="accent" size="xl">Conhecer planos no WhatsApp</Button>
               </a>
@@ -88,19 +106,26 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ============ BRAND SEPARATOR ============ */}
+      <div className="brand-separator w-full" />
+
       {/* ============ BENEFÍCIOS ============ */}
       <ScrollSection>
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-          Por que escolher nosso <span className="text-primary">Workstation</span>?
+          Por que escolher nosso <span className="text-brand-gradient">Workstation</span>?
         </h2>
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
           Tudo que você precisa para trabalhar com conforto, foco e conexão.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {benefits.map((b) => (
-            <div key={b.title} className="bg-card border border-border rounded-xl p-6 hover:border-primary/50 hover:shadow-[0_0_20px_hsl(var(--primary)/0.1)] transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                <b.icon className="w-6 h-6 text-primary" />
+          {benefits.map((b, i) => (
+            <div
+              key={b.title}
+              className={`bg-card border border-border rounded-2xl p-6 brand-card group stagger-${i + 1}`}
+              style={{ animationFillMode: "both" }}
+            >
+              <div className={`w-12 h-12 rounded-xl ${brandBgs[i]} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
+                <b.icon className={`w-6 h-6 ${brandColors[i]}`} />
               </div>
               <h3 className="font-semibold text-lg mb-2">{b.title}</h3>
               <p className="text-sm text-muted-foreground">{b.desc}</p>
@@ -115,7 +140,7 @@ const Index = () => {
         <p className="text-center text-muted-foreground mb-12">Escolha o plano ideal para o seu jeito de trabalhar.</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {plans.map((p) => (
-            <div key={p.name} className={`relative bg-card border rounded-xl p-6 flex flex-col transition-all duration-300 hover:shadow-lg ${p.popular ? "border-primary shadow-[0_0_30px_hsl(var(--primary)/0.15)]" : "border-border hover:border-primary/30"}`}>
+            <div key={p.name} className={`relative bg-card border rounded-2xl p-6 flex flex-col brand-card ${p.popular ? "border-brand-red shadow-[0_0_30px_hsl(var(--brand-red)/0.12)]" : "border-border"}`}>
               {p.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full">
                   Mais Popular
@@ -129,7 +154,7 @@ const Index = () => {
               <ul className="space-y-2 mb-6 flex-1">
                 {p.features.map((f) => (
                   <li key={f} className="text-sm text-muted-foreground flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" /> {f}
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-teal shrink-0" /> {f}
                   </li>
                 ))}
               </ul>
@@ -148,12 +173,11 @@ const Index = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Estrutura</h2>
         <p className="text-center text-muted-foreground mb-12">Conheça nossos espaços pensados para sua produtividade.</p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {/* TODO: Substituir placeholders por fotos reais */}
-          {["Estações de Trabalho", "Sala de Reunião", "Copa & Cozinha", "Área Comum", "Recepção", "Lounge"].map((name) => (
-            <div key={name} className="relative bg-secondary rounded-xl overflow-hidden aspect-[4/3] group">
+          {["Estações de Trabalho", "Sala de Reunião", "Copa & Cozinha", "Área Comum", "Recepção", "Lounge"].map((name, i) => (
+            <div key={name} className="relative bg-secondary rounded-2xl overflow-hidden aspect-[4/3] group brand-card">
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4">
-                <span className="text-sm font-semibold">{name}</span>
+                <span className={`text-sm font-semibold ${brandColors[i]}`}>{name}</span>
               </div>
             </div>
           ))}
@@ -168,9 +192,8 @@ const Index = () => {
       {/* ============ LOCALIZAÇÃO ============ */}
       <ScrollSection className="bg-card/50">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Localização</h2>
-        {/* TODO: Editar o endereço e embed do Google Maps */}
         <p className="text-center text-muted-foreground mb-8">Rua Exemplo, 123 – Centro, Caçador – SC</p>
-        <div className="rounded-xl overflow-hidden border border-border aspect-video max-w-4xl mx-auto">
+        <div className="rounded-2xl overflow-hidden border border-border aspect-video max-w-4xl mx-auto">
           <iframe
             src="https://maps.google.com/maps?q=Caçador,SC,Brazil&output=embed"
             width="100%"
@@ -186,7 +209,7 @@ const Index = () => {
       {/* ============ EVENTOS ============ */}
       <ScrollSection>
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-          Eventos & <span className="text-primary">Comunidade</span>
+          Eventos & <span className="text-brand-gradient">Comunidade</span>
         </h2>
         <p className="text-center text-muted-foreground mb-12">Nosso coworking é palco de eventos incríveis.</p>
         <div className="max-w-2xl mx-auto">

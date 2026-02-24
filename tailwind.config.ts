@@ -14,6 +14,7 @@ export default {
       fontFamily: {
         sans: ["Poppins", "sans-serif"],
         display: ["Orbitron", "sans-serif"],
+        heading: ["Montserrat", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -49,6 +50,10 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "brand-red": "hsl(var(--brand-red))",
+        "brand-blue": "hsl(var(--brand-blue))",
+        "brand-teal": "hsl(var(--brand-teal))",
+        "brand-gold": "hsl(var(--brand-gold))",
         "neon-purple": "hsl(var(--neon-purple))",
         "neon-pink": "hsl(var(--neon-pink))",
         "neon-blue": "hsl(var(--neon-blue))",

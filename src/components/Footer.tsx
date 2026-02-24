@@ -1,9 +1,6 @@
 import { MessageCircle, Instagram, Facebook, MapPin, Phone } from "lucide-react";
+import logo from "@/assets/logo.png";
 
-/* ============================================
- * CONFIGURAÇÃO: Dados do footer
- * Edite endereço, CNPJ, redes sociais aqui
- * ============================================ */
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
 const ADDRESS = "Rua Exemplo, 123 – Centro, Caçador – SC, 89500-000"; // TODO: Editar endereço
@@ -13,14 +10,14 @@ const FACEBOOK_URL = "#"; // TODO: Editar link Facebook
 
 const Footer = () => (
   <footer className="bg-card border-t border-border">
+    {/* Brand separator gradient */}
+    <div className="brand-separator w-full" />
+
     <div className="container mx-auto max-w-7xl px-4 py-12">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Brand */}
         <div>
-          <h3 className="font-bold text-lg mb-2">
-            <span className="text-primary">Meu Escritório</span>
-            <span className="text-muted-foreground"> – WORKSTATION</span>
-          </h3>
+          <img src={logo} alt="Meu Escritório – Workstation" className="h-14 w-auto mb-3" />
           <p className="text-sm text-muted-foreground">
             Seu coworking moderno em Caçador – SC. Produtividade, criatividade e networking.
           </p>
@@ -31,11 +28,11 @@ const Footer = () => (
           <h4 className="font-semibold text-sm mb-3 text-foreground">Contato</h4>
           <div className="space-y-2 text-sm text-muted-foreground">
             <div className="flex items-start gap-2">
-              <MapPin className="w-4 h-4 mt-0.5 text-primary shrink-0" />
+              <MapPin className="w-4 h-4 mt-0.5 text-brand-red shrink-0" />
               <span>{ADDRESS}</span>
             </div>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors">
-              <Phone className="w-4 h-4 text-primary" /> (49) 99947-2868
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-brand-teal transition-colors">
+              <Phone className="w-4 h-4 text-brand-blue" /> (49) 99947-2868
             </a>
           </div>
         </div>
@@ -44,13 +41,13 @@ const Footer = () => (
         <div>
           <h4 className="font-semibold text-sm mb-3 text-foreground">Redes Sociais</h4>
           <div className="flex gap-3">
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-primary/20 transition-colors text-muted-foreground hover:text-primary">
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-brand-teal/20 transition-colors text-muted-foreground hover:text-brand-teal">
               <MessageCircle className="w-5 h-5" />
             </a>
-            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-primary/20 transition-colors text-muted-foreground hover:text-primary">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-brand-red/20 transition-colors text-muted-foreground hover:text-brand-red">
               <Instagram className="w-5 h-5" />
             </a>
-            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-primary/20 transition-colors text-muted-foreground hover:text-primary">
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-brand-blue/20 transition-colors text-muted-foreground hover:text-brand-blue">
               <Facebook className="w-5 h-5" />
             </a>
           </div>

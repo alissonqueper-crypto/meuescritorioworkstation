@@ -12,7 +12,6 @@ const Contato = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Integrar com backend ou serviço de email
     alert("Mensagem enviada! (frontend only – configurar backend)");
   };
 
@@ -21,14 +20,14 @@ const Contato = () => {
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Fale <span className="text-primary">Conosco</span>
+            Fale <span className="text-brand-gradient">Conosco</span>
           </h1>
           <p className="text-muted-foreground max-w-xl mx-auto">
             Entre em contato pelo WhatsApp ou preencha o formulário abaixo.
           </p>
+          <div className="brand-separator w-24 mx-auto mt-6" />
         </div>
 
-        {/* WhatsApp CTA */}
         <div className="text-center mb-12">
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
             <Button variant="whatsapp" size="xl">
@@ -39,8 +38,7 @@ const Contato = () => {
 
         <div ref={ref} className={`transition-all duration-700 ${isVisible ? "scroll-visible" : "scroll-hidden"}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-6 space-y-4">
               <div>
                 <label className="text-sm font-medium mb-1 block">Nome</label>
                 <input
@@ -74,28 +72,31 @@ const Contato = () => {
               <Button type="submit" className="w-full">Enviar mensagem</Button>
             </form>
 
-            {/* Info */}
             <div className="space-y-6">
               <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-primary mt-1 shrink-0" />
+                <div className="w-10 h-10 rounded-xl bg-brand-red/10 flex items-center justify-center shrink-0">
+                  <MapPin className="w-5 h-5 text-brand-red" />
+                </div>
                 <div>
                   <h3 className="font-semibold text-sm mb-1">Endereço</h3>
-                  {/* TODO: Editar endereço */}
                   <p className="text-sm text-muted-foreground">Rua Exemplo, 123 – Centro, Caçador – SC</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-primary mt-1 shrink-0" />
+                <div className="w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center shrink-0">
+                  <Phone className="w-5 h-5 text-brand-blue" />
+                </div>
                 <div>
                   <h3 className="font-semibold text-sm mb-1">Telefone / WhatsApp</h3>
                   <p className="text-sm text-muted-foreground">(49) 99947-2868</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-primary mt-1 shrink-0" />
+                <div className="w-10 h-10 rounded-xl bg-brand-teal/10 flex items-center justify-center shrink-0">
+                  <Mail className="w-5 h-5 text-brand-teal" />
+                </div>
                 <div>
                   <h3 className="font-semibold text-sm mb-1">Email</h3>
-                  {/* TODO: Editar email */}
                   <p className="text-sm text-muted-foreground">contato@meuescritorioworkstation.com.br</p>
                 </div>
               </div>

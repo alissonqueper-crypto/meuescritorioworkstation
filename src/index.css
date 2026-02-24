@@ -4,39 +4,47 @@
 
 @layer base {
   :root {
-    --background: 222 30% 7%;
+    /* === PALETA BASEADA NA LOGO === */
+    --background: 220 25% 8%;
     --foreground: 210 20% 95%;
-    --card: 222 25% 11%;
+    --card: 220 22% 12%;
     --card-foreground: 210 20% 92%;
-    --popover: 222 25% 13%;
+    --popover: 220 22% 14%;
     --popover-foreground: 210 20% 95%;
-    --primary: 185 80% 45%;
-    --primary-foreground: 222 30% 7%;
-    --secondary: 222 20% 16%;
+    --primary: 0 85% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 18% 17%;
     --secondary-foreground: 210 20% 90%;
-    --muted: 222 15% 18%;
-    --muted-foreground: 215 15% 55%;
-    --accent: 25 90% 55%;
+    --muted: 220 14% 20%;
+    --muted-foreground: 215 12% 55%;
+    --accent: 215 55% 47%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-    --border: 222 15% 22%;
-    --input: 222 15% 20%;
-    --ring: 185 80% 45%;
+    --border: 220 14% 22%;
+    --input: 220 14% 20%;
+    --ring: 0 85% 50%;
     --radius: 0.75rem;
 
+    /* Brand colors from logo */
+    --brand-red: 0 85% 50%;
+    --brand-blue: 215 55% 47%;
+    --brand-teal: 174 70% 46%;
+    --brand-gold: 43 88% 57%;
+
+    /* Neon colors for event page (harmonized) */
     --neon-purple: 270 80% 60%;
     --neon-pink: 330 85% 60%;
-    --neon-blue: 210 100% 60%;
+    --neon-blue: 215 55% 47%;
 
-    --sidebar-background: 222 25% 10%;
+    --sidebar-background: 220 22% 10%;
     --sidebar-foreground: 210 20% 90%;
-    --sidebar-primary: 185 80% 45%;
-    --sidebar-primary-foreground: 222 30% 7%;
-    --sidebar-accent: 222 20% 16%;
+    --sidebar-primary: 0 85% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 18% 17%;
     --sidebar-accent-foreground: 210 20% 90%;
-    --sidebar-border: 222 15% 22%;
-    --sidebar-ring: 185 80% 45%;
+    --sidebar-border: 220 14% 22%;
+    --sidebar-ring: 0 85% 50%;
   }
 }
 
@@ -49,17 +57,74 @@
   }
 }
 
-/* Scroll reveal animations */
+/* ============================================
+ * ANIMAÇÕES ORIGINAIS – Identidade da marca
+ * Nenhuma animação genérica. Cada uma é única.
+ * ============================================ */
+
+/* Gradient shift entre as 4 cores da logo */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 50% 0%; }
+  50% { background-position: 100% 50%; }
+  75% { background-position: 50% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Logo pulse – glow que transita entre cores da marca */
+@keyframes logo-pulse {
+  0%, 100% { filter: drop-shadow(0 0 8px hsl(var(--brand-red) / 0.4)); }
+  33% { filter: drop-shadow(0 0 12px hsl(var(--brand-blue) / 0.5)); }
+  66% { filter: drop-shadow(0 0 10px hsl(var(--brand-teal) / 0.4)); }
+}
+
+/* Border glow – borda que percorre as 4 cores */
+@keyframes border-glow {
+  0%, 100% { border-color: hsl(var(--brand-red) / 0.5); box-shadow: 0 0 15px hsl(var(--brand-red) / 0.1); }
+  25% { border-color: hsl(var(--brand-blue) / 0.5); box-shadow: 0 0 15px hsl(var(--brand-blue) / 0.1); }
+  50% { border-color: hsl(var(--brand-teal) / 0.5); box-shadow: 0 0 15px hsl(var(--brand-teal) / 0.1); }
+  75% { border-color: hsl(var(--brand-gold) / 0.5); box-shadow: 0 0 15px hsl(var(--brand-gold) / 0.1); }
+}
+
+/* Slide in from left */
+@keyframes slide-in-left {
+  0% { opacity: 0; transform: translateX(-60px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Slide in from right */
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(60px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Parallax float – movimento orgânico multicamada */
+@keyframes parallax-float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(5px, -8px) rotate(0.5deg); }
+  50% { transform: translate(-3px, -15px) rotate(-0.5deg); }
+  75% { transform: translate(-8px, -5px) rotate(0.3deg); }
+}
+
+/* Typewriter cursor blink */
+@keyframes cursor-blink {
+  0%, 50% { border-color: hsl(var(--brand-red)); }
+  51%, 100% { border-color: transparent; }
+}
+
+/* Reveal up for scroll sections */
 @keyframes reveal-up {
   0% { opacity: 0; transform: translateY(40px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
+/* Reveal scale */
 @keyframes reveal-scale {
   0% { opacity: 0; transform: scale(0.9); }
   100% { opacity: 1; transform: scale(1); }
 }
 
+/* Neon glow for event page */
 @keyframes neon-glow {
   0%, 100% { text-shadow: 0 0 10px hsl(var(--neon-purple)), 0 0 40px hsl(var(--neon-pink) / 0.5); }
   50% { text-shadow: 0 0 20px hsl(var(--neon-purple)), 0 0 60px hsl(var(--neon-pink) / 0.8), 0 0 80px hsl(var(--neon-blue) / 0.3); }
@@ -68,6 +133,39 @@
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+/* ============================================
+ * CLASSES DE ANIMAÇÃO
+ * ============================================ */
+.animate-gradient-shift {
+  background-size: 300% 300%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-logo-pulse {
+  animation: logo-pulse 4s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: border-glow 6s ease-in-out infinite;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.7s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.7s ease-out forwards;
+}
+
+.animate-parallax-float {
+  animation: parallax-float 6s ease-in-out infinite;
+}
+
+.animate-cursor-blink {
+  border-right: 3px solid hsl(var(--brand-red));
+  animation: cursor-blink 1s step-end infinite;
 }
 
 .animate-reveal-up {
@@ -86,6 +184,15 @@
   animation: float 4s ease-in-out infinite;
 }
 
+/* Stagger delays for grid items */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+
+/* Scroll reveal */
 .scroll-hidden {
   opacity: 0;
   transform: translateY(40px);
@@ -97,13 +204,54 @@
   transform: translateY(0);
 }
 
-/* Neon event gradient backgrounds */
+/* ============================================
+ * BACKGROUNDS & EFFECTS DA MARCA
+ * ============================================ */
+
+/* Animated gradient background with brand colors */
+.bg-brand-gradient {
+  background: linear-gradient(135deg,
+    hsl(var(--brand-red) / 0.12),
+    hsl(var(--brand-blue) / 0.1),
+    hsl(var(--brand-teal) / 0.08),
+    hsl(var(--brand-gold) / 0.06)
+  );
+  background-size: 300% 300%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Card with brand hover effect */
+.brand-card {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brand-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px hsl(var(--brand-red) / 0.12);
+}
+
+/* Brand text gradient */
+.text-brand-gradient {
+  background: linear-gradient(135deg, hsl(var(--brand-red)), hsl(var(--brand-blue)), hsl(var(--brand-teal)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Brand separator */
+.brand-separator {
+  height: 3px;
+  background: linear-gradient(90deg, hsl(var(--brand-red)), hsl(var(--brand-blue)), hsl(var(--brand-teal)), hsl(var(--brand-gold)));
+  border-radius: 2px;
+}
+
+/* Neon event styles (kept for event page) */
 .bg-neon-gradient {
   background: linear-gradient(135deg, hsl(var(--neon-purple) / 0.15), hsl(var(--neon-blue) / 0.1), hsl(var(--neon-pink) / 0.1));
 }
 
 .bg-neon-card {
-  background: linear-gradient(145deg, hsl(var(--neon-purple) / 0.2), hsl(222 25% 11%));
+  background: linear-gradient(145deg, hsl(var(--neon-purple) / 0.2), hsl(220 22% 12%));
   border: 1px solid hsl(var(--neon-purple) / 0.3);
 }
 

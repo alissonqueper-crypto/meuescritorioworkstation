@@ -5,23 +5,19 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
 
-/* ============================================
- * CONFIGURAÇÃO: Planos e valores
- * Edite nomes, preços, benefícios aqui
- * ============================================ */
+const planColors = [
+  { border: "border-brand-blue", check: "text-brand-blue", shadow: "" },
+  { border: "border-brand-red", check: "text-brand-red", shadow: "shadow-[0_0_40px_hsl(var(--brand-red)/0.12)]" },
+  { border: "border-brand-teal", check: "text-brand-teal", shadow: "" },
+];
+
 const plans = [
   {
     name: "Diário",
     subtitle: "Para quem precisa de um dia produtivo",
     price: "R$ 49",
     period: "/dia",
-    features: [
-      "1 estação de trabalho compartilhada",
-      "Internet fibra óptica",
-      "Café e água inclusos",
-      "Acesso das 8h às 18h",
-      "Uso de áreas comuns",
-    ],
+    features: ["1 estação de trabalho compartilhada", "Internet fibra óptica", "Café e água inclusos", "Acesso das 8h às 18h", "Uso de áreas comuns"],
     notIncluded: ["Sala de reunião", "Endereço fiscal", "Acesso 24h"],
     popular: false,
   },
@@ -30,14 +26,7 @@ const plans = [
     subtitle: "Ideal para profissionais e freelancers",
     price: "R$ 499",
     period: "/mês",
-    features: [
-      "Estação de trabalho fixa",
-      "Internet fibra óptica dedicada",
-      "2h de sala de reunião por mês",
-      "Café e água inclusos",
-      "Acesso de segunda a sexta",
-      "Armário individual",
-    ],
+    features: ["Estação de trabalho fixa", "Internet fibra óptica dedicada", "2h de sala de reunião por mês", "Café e água inclusos", "Acesso de segunda a sexta", "Armário individual"],
     notIncluded: ["Endereço fiscal", "Acesso 24h"],
     popular: true,
   },
@@ -46,15 +35,7 @@ const plans = [
     subtitle: "Para equipes e empresas",
     price: "R$ 899",
     period: "/mês",
-    features: [
-      "Sala privativa para equipe",
-      "Internet dedicada",
-      "6h de sala de reunião por mês",
-      "Endereço fiscal incluso",
-      "Café e água inclusos",
-      "Acesso 24h, 7 dias por semana",
-      "Armário individual por membro",
-    ],
+    features: ["Sala privativa para equipe", "Internet dedicada", "6h de sala de reunião por mês", "Endereço fiscal incluso", "Café e água inclusos", "Acesso 24h, 7 dias por semana", "Armário individual por membro"],
     notIncluded: [],
     popular: false,
   },
@@ -74,20 +55,21 @@ const Planos = () => (
     <div className="container mx-auto max-w-6xl">
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Nossos <span className="text-primary">Planos</span>
+          Nossos <span className="text-brand-gradient">Planos</span>
         </h1>
         <p className="text-muted-foreground max-w-xl mx-auto">
           Escolha o plano perfeito para o seu ritmo de trabalho. Todos incluem internet rápida e ambiente climatizado.
         </p>
+        <div className="brand-separator w-24 mx-auto mt-6" />
       </div>
 
       <ScrollSection>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((p) => (
+          {plans.map((p, i) => (
             <div
               key={p.name}
-              className={`relative bg-card border rounded-2xl p-8 flex flex-col transition-all duration-300 hover:shadow-xl ${
-                p.popular ? "border-primary shadow-[0_0_40px_hsl(var(--primary)/0.15)] scale-[1.02]" : "border-border hover:border-primary/30"
+              className={`relative bg-card border rounded-2xl p-8 flex flex-col brand-card ${
+                p.popular ? `${planColors[i].border} ${planColors[i].shadow} scale-[1.02]` : `border-border`
               }`}
             >
               {p.popular && (
@@ -104,7 +86,7 @@ const Planos = () => (
               <ul className="space-y-3 mb-8 flex-1">
                 {p.features.map((f) => (
                   <li key={f} className="text-sm flex items-start gap-2">
-                    <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                    <Check className={`w-4 h-4 ${planColors[i].check} mt-0.5 shrink-0`} />
                     <span>{f}</span>
                   </li>
                 ))}
