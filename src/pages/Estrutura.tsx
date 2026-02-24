@@ -3,10 +3,10 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import MediaGallery from "@/components/MediaGallery";
 
 const spaces = [
-  { icon: Monitor, name: "Estações de Trabalho", desc: "Mesas ergonômicas com monitor, cadeira confortável e tomadas.", color: "text-brand-red", bg: "bg-brand-red/10" },
-  { icon: Users, name: "Salas de Reunião", desc: "Salas privativas com TV, quadro branco e videoconferência.", color: "text-brand-blue", bg: "bg-brand-blue/10" },
-  { icon: Coffee, name: "Copa & Cozinha", desc: "Espaço com micro-ondas, geladeira, café e água filtrada.", color: "text-brand-teal", bg: "bg-brand-teal/10" },
-  { icon: Armchair, name: "Área Comum", desc: "Ambiente descontraído para pausas e networking.", color: "text-brand-gold", bg: "bg-brand-gold/10" },
+  { icon: Monitor, name: "Estações de Trabalho", desc: "Mesas ergonômicas com monitor, cadeira confortável e tomadas — ao lado de profissionais de tecnologia, contabilidade, marketing e IA.", color: "text-brand-red", bg: "bg-brand-red/10" },
+  { icon: Users, name: "Salas de Reunião", desc: "Aluguel por hora, equipadas com TV, quadro branco e videoconferência. Ideal para reuniões com clientes e apresentações.", color: "text-brand-blue", bg: "bg-brand-blue/10" },
+  { icon: Coffee, name: "Copa & Cozinha", desc: "Espaço compartilhado com micro-ondas, geladeira, café e água filtrada.", color: "text-brand-teal", bg: "bg-brand-teal/10" },
+  { icon: Armchair, name: "Área Comum", desc: "Ambiente descontraído para pausas e networking entre profissionais de diversas áreas.", color: "text-brand-gold", bg: "bg-brand-gold/10" },
   { icon: DoorOpen, name: "Recepção", desc: "Recepção moderna com atendimento dedicado.", color: "text-brand-red", bg: "bg-brand-red/10" },
   { icon: Sofa, name: "Lounge", desc: "Sofás confortáveis para reuniões informais e descanso.", color: "text-brand-blue", bg: "bg-brand-blue/10" },
 ];
