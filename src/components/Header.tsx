@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
+import logo from "@/assets/logo.png";
 
-/* ============================================
- * CONFIGURAÇÃO: Link do WhatsApp
- * ============================================ */
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
 
@@ -38,9 +36,12 @@ const Header = () => {
     >
       <div className="container mx-auto max-w-7xl flex items-center justify-between px-4 h-16 md:h-20">
         {/* Logo */}
-        <Link to="/" className="font-bold text-lg md:text-xl tracking-tight">
-          <span className="text-primary">Meu Escritório</span>
-          <span className="text-muted-foreground"> – WORKSTATION</span>
+        <Link to="/" className="shrink-0">
+          <img
+            src={logo}
+            alt="Meu Escritório – Workstation"
+            className="h-10 md:h-12 w-auto animate-logo-pulse"
+          />
         </Link>
 
         {/* Desktop nav */}
