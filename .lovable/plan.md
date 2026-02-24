@@ -1,90 +1,63 @@
 
 
-## Plano: Redesign Visual Completo com Identidade da Logo
+## Plano: Adicionar Informações Reais do Coworking
 
-Analisei toda a base de código e a logo enviada. As cores da marca são: **vermelho (#E31E24)**, **azul (#3B6FB6)**, **verde/teal (#2DBDB1)** e **amarelo/dourado (#F2C12E)**. O site atual usa apenas ciano e laranja genéricos. Vou criar uma identidade visual única baseada na logo.
+Com base no que você descreveu, o escritório é um coworking que oferece salas de reunião por hora e abriga profissionais de diversas áreas: software empresarial (OMIE), contabilidade, agência de marketing digital e social media, e uma equipe de desenvolvimento de inteligência artificial para empresas.
 
 ---
 
-### 1. Nova Paleta de Cores (`src/index.css`)
+### Alterações Planejadas
 
-Substituir as variáveis CSS atuais por cores extraídas da logo:
-- **Primary:** Vermelho vibrante da logo (0 85% 50%)
-- **Accent:** Azul da logo (215 55% 47%)
-- **Teal:** Verde/teal da logo (174 70% 46%) — nova cor custom
-- **Gold:** Amarelo da logo (43 88% 57%) — nova cor custom
-- Manter fundo escuro mas ajustar para tons mais sofisticados
+### 1. Nova Seção "Quem Trabalha Aqui" na Home (`Index.tsx`)
 
-### 2. Logo no Header e Footer (`Header.tsx`, `Footer.tsx`)
+Adicionar uma seção entre Benefícios e Planos mostrando as empresas/profissionais residentes:
 
-- Copiar a imagem da logo para `src/assets/logo.png`
-- Substituir o texto "Meu Escritório – WORKSTATION" pela imagem da logo (h-10 no header, h-14 no footer)
-- Manter fallback de texto acessível via `alt`
+- **Software Empresarial (OMIE)** — Implementação e suporte do sistema de gestão OMIE para empresas
+- **Contabilidade** — Escritório contábil com atendimento presencial e digital
+- **Marketing Digital & Social Media** — Agência completa de marketing digital, gestão de redes sociais e criação de conteúdo
+- **Inteligência Artificial** — Equipe de desenvolvimento de soluções de IA para empresas
 
-### 3. Animações Originais (`src/index.css`)
+Cada item será um card com ícone relevante (Code, Calculator, Megaphone, Brain), usando as 4 cores da marca alternadamente.
 
-Remover animações genéricas e criar novas:
-- **`animate-logo-pulse`**: Pulsação sutil com glow nas cores da marca (vermelho → azul → teal)
-- **`animate-gradient-shift`**: Background gradient que muda entre as 4 cores da logo em loop
-- **`animate-slide-in-left` / `animate-slide-in-right`**: Entradas laterais alternadas para cards
-- **`animate-typewriter`**: Efeito de digitação para títulos do hero
-- **`animate-border-glow`**: Borda animada que percorre as 4 cores da marca
-- **`animate-parallax-float`**: Movimento parallax suave em camadas
-- **`animate-stagger`**: Delays escalonados para grids (cada card entra com delay progressivo)
-- Hover em cards: `hover:translate-y-[-4px] hover:shadow-[0_8px_30px_rgba(227,30,36,0.15)]` com transição suave
+### 2. Atualizar Benefícios na Home (`Index.tsx`)
 
-### 4. Hero da Página Inicial (`Index.tsx`)
+Substituir "Comunidade Ativa" (genérico) por algo mais específico:
+- **Networking Multidisciplinar** — "Trabalhe ao lado de profissionais de tecnologia, contabilidade, marketing e IA."
 
-- Adicionar gradient animado no fundo (shift entre as 4 cores da logo)
-- Título com efeito de texto gradiente usando as cores da marca
-- Badges de destaque com border-glow animado
-- CTA buttons: Primary em vermelho, Secondary em azul da logo
+### 3. Seção "Salas de Reunião" na Home (`Index.tsx`)
 
-### 5. Cards e Componentes Globais
+Adicionar destaque para o aluguel de salas de reunião por hora, com CTA para WhatsApp:
+- Equipadas com TV e quadro branco
+- Aluguel por hora avulso (sem necessidade de plano)
+- Ideal para reuniões com clientes, apresentações e videoconferências
 
-- Border-radius mais arredondado nos cards
-- Hover com glow sutil na cor primária
-- Ícones usando as 4 cores da logo alternadamente nos grids (vermelho, azul, teal, dourado)
-- Separadores com gradient horizontal nas cores da marca
+### 4. Atualizar Planos (`Planos.tsx`)
 
-### 6. Página do Evento (`CorridaDeBarEmBar.tsx`)
+Adicionar um novo plano/opção:
+- **Sala de Reunião Avulsa** — R$ sob consulta / por hora — com features: TV, quadro branco, videoconferência, café incluso, até X pessoas
 
-- Manter a estética neon/GTA separada (já tem identidade própria)
-- Apenas atualizar os neon colors para harmonizar com a nova paleta
+### 5. Atualizar Página Estrutura (`Estrutura.tsx`)
 
-### 7. Preparação para Fotos e Vídeos
+Atualizar as descrições dos espaços para refletir os profissionais residentes:
+- Mencionar nas áreas comuns a convivência entre profissionais de diferentes áreas
+- Salas de reunião: enfatizar aluguel por hora
 
-- Criar componente `MediaGallery` reutilizável em `src/components/MediaGallery.tsx`
-- Grid responsivo com lightbox (Dialog) para fotos em tela cheia
-- Suporte a vídeos embed (YouTube/iframe)
-- Seção na página Estrutura com placeholder "Adicione suas fotos aqui"
-- Seção na Index com galeria de destaque
+### 6. Atualizar Textos Gerais
 
-### 8. Tailwind Config (`tailwind.config.ts`)
-
-- Adicionar cores `brand-red`, `brand-blue`, `brand-teal`, `brand-gold`
-- Registrar novas keyframes e animations
-- Adicionar font display alternativa
+- Hero subtitle: mencionar "tecnologia, contabilidade, marketing e IA" ao invés de genérico
+- Footer: atualizar descrição para refletir as áreas de atuação
 
 ---
 
 ### Detalhes Técnicos
 
 **Arquivos modificados:**
-- `src/index.css` — nova paleta + animações customizadas
-- `tailwind.config.ts` — cores da marca + keyframes
-- `src/components/Header.tsx` — logo image + animação sutil
-- `src/components/Footer.tsx` — logo image
-- `src/pages/Index.tsx` — hero redesign + gradient animado + galeria preview
-- `src/pages/Estrutura.tsx` — preparação para galeria de fotos
-- `src/pages/Planos.tsx` — cards com cores da marca
-- `src/pages/Contato.tsx` — accent colors atualizados
+- `src/pages/Index.tsx` — nova seção "Quem Trabalha Aqui", seção salas de reunião, atualizar benefícios e hero
+- `src/pages/Planos.tsx` — adicionar opção de sala de reunião avulsa
+- `src/pages/Estrutura.tsx` — atualizar descrições dos espaços
+- `src/components/Footer.tsx` — atualizar texto descritivo
 
-**Novo arquivo:**
-- `src/components/MediaGallery.tsx` — componente de galeria reutilizável
+**Ícones novos do Lucide:** `Code`, `Calculator`, `Megaphone`, `Brain`, `Clock`
 
-**Asset copiado:**
-- `user-uploads://Design_sem_nome_10-2.png` → `src/assets/logo.png`
-
-As animações são todas CSS puro (keyframes), sem bibliotecas externas. Cada animação é única e pensada para o contexto do coworking — nada genérico de template.
+**Sem novos arquivos ou dependências.** Apenas alterações em dados estáticos e textos.
 
