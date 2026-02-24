@@ -1,12 +1,214 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Link } from "react-router-dom";
+import { Wifi, Users, Coffee, MapPin, Thermometer, Building2, ArrowRight, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import heroImg from "@/assets/coworking-hero.jpg";
+
+/* ============================================
+ * CONFIGURAÇÃO: Link do WhatsApp
+ * ============================================ */
+const WHATSAPP_URL =
+  "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
+
+const ScrollSection = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => {
+  const { ref, isVisible } = useScrollAnimation();
+  return (
+    <section id={id} ref={ref} className={`py-16 md:py-24 px-4 transition-all duration-700 ${isVisible ? "scroll-visible" : "scroll-hidden"} ${className}`}>
+      <div className="container mx-auto max-w-6xl">{children}</div>
+    </section>
+  );
+};
+
+/* ============================================
+ * BENEFÍCIOS
+ * Edite ícones, títulos e descrições aqui
+ * ============================================ */
+const benefits = [
+  { icon: Wifi, title: "Internet Ultra Rápida", desc: "Fibra óptica dedicada para sua produtividade." },
+  { icon: Users, title: "Salas de Reunião", desc: "Espaços privativos equipados com TV e quadro branco." },
+  { icon: Coffee, title: "Cozinha Compartilhada", desc: "Café, micro-ondas e geladeira sempre disponíveis." },
+  { icon: Building2, title: "Comunidade Ativa", desc: "Networking com profissionais de diversas áreas." },
+  { icon: Thermometer, title: "Ambiente Climatizado", desc: "Ar-condicionado em todos os espaços do coworking." },
+  { icon: MapPin, title: "Localização Central", desc: "No coração de Caçador – SC, fácil acesso." },
+];
+
+/* ============================================
+ * PLANOS – Valores fictícios. Edite aqui.
+ * ============================================ */
+const plans = [
+  {
+    name: "Diário",
+    price: "R$ 49",
+    period: "/dia",
+    features: ["1 estação de trabalho", "Internet rápida", "Café incluso", "Acesso das 8h às 18h"],
+    popular: false,
+  },
+  {
+    name: "Mensal",
+    price: "R$ 499",
+    period: "/mês",
+    features: ["Estação fixa", "Internet rápida", "2h sala de reunião/mês", "Café incluso", "Acesso de seg a sex"],
+    popular: true,
+  },
+  {
+    name: "Empresa",
+    price: "R$ 899",
+    period: "/mês",
+    features: ["Sala privativa", "Internet dedicada", "6h sala de reunião/mês", "Endereço fiscal", "Acesso 24h"],
+    popular: false,
+  },
+];
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div>
+      {/* ============ HERO ============ */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroImg} alt="Coworking moderno" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/50" />
+        </div>
+        <div className="relative z-10 container mx-auto max-w-6xl px-4 py-32">
+          <div className="max-w-2xl animate-reveal-up">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+              Seu escritório, <span className="text-primary">quando e como</span> você quiser.
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg">
+              Produtividade, criatividade e networking em um coworking moderno no coração de Caçador – SC.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                <Button variant="accent" size="xl">Conhecer planos no WhatsApp</Button>
+              </a>
+              <Link to="/planos">
+                <Button variant="outline" size="xl">Ver planos <ArrowRight className="w-5 h-5" /></Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ BENEFÍCIOS ============ */}
+      <ScrollSection>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+          Por que escolher nosso <span className="text-primary">Workstation</span>?
+        </h2>
+        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          Tudo que você precisa para trabalhar com conforto, foco e conexão.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {benefits.map((b) => (
+            <div key={b.title} className="bg-card border border-border rounded-xl p-6 hover:border-primary/50 hover:shadow-[0_0_20px_hsl(var(--primary)/0.1)] transition-all duration-300 group">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <b.icon className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">{b.title}</h3>
+              <p className="text-sm text-muted-foreground">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </ScrollSection>
+
+      {/* ============ PLANOS PREVIEW ============ */}
+      <ScrollSection className="bg-card/50">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Planos</h2>
+        <p className="text-center text-muted-foreground mb-12">Escolha o plano ideal para o seu jeito de trabalhar.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {plans.map((p) => (
+            <div key={p.name} className={`relative bg-card border rounded-xl p-6 flex flex-col transition-all duration-300 hover:shadow-lg ${p.popular ? "border-primary shadow-[0_0_30px_hsl(var(--primary)/0.15)]" : "border-border hover:border-primary/30"}`}>
+              {p.popular && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full">
+                  Mais Popular
+                </span>
+              )}
+              <h3 className="text-xl font-bold mb-1">{p.name}</h3>
+              <div className="mb-4">
+                <span className="text-3xl font-bold text-primary">{p.price}</span>
+                <span className="text-muted-foreground text-sm">{p.period}</span>
+              </div>
+              <ul className="space-y-2 mb-6 flex-1">
+                {p.features.map((f) => (
+                  <li key={f} className="text-sm text-muted-foreground flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" /> {f}
+                  </li>
+                ))}
+              </ul>
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                <Button variant={p.popular ? "accent" : "outline"} className="w-full">
+                  Quero este plano
+                </Button>
+              </a>
+            </div>
+          ))}
+        </div>
+      </ScrollSection>
+
+      {/* ============ ESTRUTURA PREVIEW ============ */}
+      <ScrollSection>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Estrutura</h2>
+        <p className="text-center text-muted-foreground mb-12">Conheça nossos espaços pensados para sua produtividade.</p>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {/* TODO: Substituir placeholders por fotos reais */}
+          {["Estações de Trabalho", "Sala de Reunião", "Copa & Cozinha", "Área Comum", "Recepção", "Lounge"].map((name) => (
+            <div key={name} className="relative bg-secondary rounded-xl overflow-hidden aspect-[4/3] group">
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <span className="text-sm font-semibold">{name}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="text-center mt-8">
+          <Link to="/estrutura">
+            <Button variant="outline">Ver mais detalhes <ArrowRight className="w-4 h-4" /></Button>
+          </Link>
+        </div>
+      </ScrollSection>
+
+      {/* ============ LOCALIZAÇÃO ============ */}
+      <ScrollSection className="bg-card/50">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Localização</h2>
+        {/* TODO: Editar o endereço e embed do Google Maps */}
+        <p className="text-center text-muted-foreground mb-8">Rua Exemplo, 123 – Centro, Caçador – SC</p>
+        <div className="rounded-xl overflow-hidden border border-border aspect-video max-w-4xl mx-auto">
+          <iframe
+            src="https://maps.google.com/maps?q=Caçador,SC,Brazil&output=embed"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            title="Localização"
+          />
+        </div>
+      </ScrollSection>
+
+      {/* ============ EVENTOS ============ */}
+      <ScrollSection>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+          Eventos & <span className="text-primary">Comunidade</span>
+        </h2>
+        <p className="text-center text-muted-foreground mb-12">Nosso coworking é palco de eventos incríveis.</p>
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-neon-card rounded-2xl p-6 md:p-8 transition-all duration-300">
+            <div className="flex items-center gap-2 mb-3">
+              <Calendar className="w-5 h-5 text-neon-pink" />
+              <span className="text-xs font-semibold text-neon-purple uppercase tracking-wider">Evento em Destaque</span>
+            </div>
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-neon-gradient mb-3">
+              Corrida de Bar em Bar
+            </h3>
+            <p className="text-muted-foreground text-sm mb-6">
+              A corrida mais insana de Caçador! Percorra os melhores bares da cidade em uma noite épica de diversão, drinks e prêmios.
+            </p>
+            <Link to="/eventos/corrida-de-bar-em-bar">
+              <Button variant="neon" size="lg">
+                Ver página do evento <ArrowRight className="w-5 h-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </ScrollSection>
     </div>
   );
 };
