@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   ArrowRight, Beer, Gift, Trophy, Music, MapPin, Clock, Shield, Users,
-  ChevronDown, CreditCard, Calendar, Star, Zap, Check, Loader2
+  ChevronDown, CreditCard, Calendar, Star, Zap, Check, Loader2, Timer, Route, Sticker, Award
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -27,38 +27,53 @@ const tickets = [
     id: "masculino",
     name: "Masculino",
     price: "R$ 110,00",
-    desc: "Ingresso masculino para a Corrida de Bar em Bar.",
-    features: ["Pulseira de acesso", "Mapa do circuito", "1 drink de boas-vindas", "Copo personalizado"],
+    desc: "Ingresso masculino – volume total: 2,2 litros no circuito.",
+    features: ["Placa de identificação individual", "Mapa do circuito", "Copos em cada bar", "Adesivos de controle"],
     highlight: false,
   },
   {
     id: "feminino",
     name: "Feminino",
     price: "R$ 55,00",
-    desc: "Ingresso feminino para a Corrida de Bar em Bar.",
-    features: ["Pulseira de acesso", "Mapa do circuito", "1 drink de boas-vindas", "Copo personalizado"],
+    desc: "Ingresso feminino – volume total: 1,1 litro no circuito.",
+    features: ["Placa de identificação individual", "Mapa do circuito", "Copos em cada bar", "Adesivos de controle"],
     highlight: true,
   },
 ];
 
 const bars = [
-  { name: "Bar do João", desc: "Drinks autorais e petiscos.", bairro: "Centro" },
-  { name: "Cervejaria Artesanal", desc: "As melhores IPAs da cidade.", bairro: "Santa Catarina" },
-  { name: "Boteco da Esquina", desc: "Chopps gelados e tira-gosto.", bairro: "Centro" },
-  { name: "Lounge Neon", desc: "Cocktails e música eletrônica.", bairro: "Alto Bonito" },
-  { name: "Pub Rock & Roll", desc: "Bandas ao vivo e cervejas.", bairro: "Santa Cruz" },
-  { name: "Destilaria 88", desc: "Gin tônica e drinks premium.", bairro: "Centro" },
+  { num: 1, name: "Cena Indie Bar" },
+  { num: 2, name: "Meu Escritório – Workstation" },
+  { num: 3, name: "Oeste Pub" },
+  { num: 4, name: "Galgo" },
+  { num: 5, name: "Pix" },
+  { num: 6, name: "Pulse" },
+  { num: 7, name: "Império Hamburgueria" },
+  { num: 8, name: "Bravo Pub" },
+  { num: 9, name: "Kazah Oz" },
+  { num: 10, name: "Garagem Bar e Lanchonete" },
+  { num: 11, name: "O Boteco dos Amigos" },
+];
+
+const mesasDinamica = [
+  { mesa: "1ª Mesa", copo: "300ml", adesivo: "Quadrado ■", color: "text-neon-purple" },
+  { mesa: "2ª Mesa", copo: "200ml", adesivo: "Triângulo ▲", color: "text-neon-pink" },
+  { mesa: "3ª Mesa", copo: "100ml ou shot", adesivo: "Bolinha ●", color: "text-neon-blue" },
+  { mesa: "4ª Mesa", copo: "Passagem (sem consumo)", adesivo: "X ✕", color: "text-muted-foreground" },
 ];
 
 const faq = [
-  { q: "Qual a idade mínima para participar?", a: "É necessário ter 18 anos completos e apresentar documento com foto." },
-  { q: "O que está incluso no ingresso?", a: "Pulseira de acesso ao circuito, mapa dos bares e pelo menos 1 drink de boas-vindas." },
+  { q: "Qual a idade mínima para participar?", a: "É necessário ter 18 anos completos e apresentar documento com foto na retirada do kit." },
+  { q: "O que está incluso no ingresso?", a: "Placa de identificação individual, mapa do circuito, copos em cada bar e adesivos de controle de passagem." },
   { q: "Quais formas de pagamento são aceitas?", a: "Pagamento online via InfinitePay: cartão de crédito, débito e Pix." },
   { q: "Posso transferir meu ingresso para outra pessoa?", a: "Sim, desde que informe a organização com antecedência." },
-  { q: "Como funciona o circuito?", a: "Você retira sua pulseira no ponto de concentração e percorre os bares parceiros, aproveitando drinks e promoções exclusivas." },
-  { q: "Tem after party?", a: "Sim! Ao final do circuito, todos os participantes se encontram no local do after com DJ e sorteios." },
+  { q: "Quantos bares fazem parte do circuito?", a: "São 11 bares participantes, com um percurso total de aproximadamente 2,5 km." },
+  { q: "Qual o volume total de bebida no circuito?", a: "Masculino: 2,2 litros (300ml + 200ml por bar). Feminino: 1,1 litro (100ml + passagem por bar). A 4ª mesa é apenas passagem sem consumo." },
+  { q: "Quanto tempo tenho para completar o circuito?", a: "O tempo máximo é de 2 horas a partir da largada às 17h." },
+  { q: "Como funciona a validação nos bares?", a: "Em cada bar existem 4 mesas. Ao beber ou registrar passagem, você devolve o copo ao garçom e recebe um adesivo na placa. Sem devolver o copo, não recebe o adesivo." },
   { q: "E se chover?", a: "O evento acontece chuva ou sol. Os bares são ambientes cobertos." },
   { q: "Qual a política de reembolso?", a: "Reembolso integral até 7 dias antes do evento. Após, não haverá devolução." },
+  { q: "Tem after party?", a: "Sim! Ao final do circuito, todos os participantes se encontram no local do after com DJ e sorteios." },
 ];
 
 const CorridaDeBarEmBar = () => {
@@ -123,14 +138,31 @@ const CorridaDeBarEmBar = () => {
         <div className="relative z-10 container mx-auto max-w-5xl px-4 py-32 text-center">
           <div className="animate-reveal-up">
             <span className="inline-block bg-neon-card rounded-full px-4 py-1 text-xs font-semibold text-neon-pink uppercase tracking-widest mb-6">
-              Evento Exclusivo
+              14 de Março de 2026 · Caçador/SC
             </span>
-            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black mb-6 animate-neon-glow leading-tight">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-black mb-4 animate-neon-glow leading-tight">
               CORRIDA DE BAR<br />EM BAR
             </h1>
-            <p className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto mb-10">
-              A corrida mais insana de bar em bar de Caçador! Percorra os melhores bares da cidade em uma noite épica.
+            <p className="text-sm md:text-base text-neon-purple font-semibold uppercase tracking-wider mb-4">
+              Em busca do Litrão MAPA 2026
             </p>
+            <p className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto mb-6">
+              Percorra 11 bares em um circuito de ~2,5 km pela cidade de Caçador em uma noite épica!
+            </p>
+            {/* Info badges */}
+            <div className="flex flex-wrap gap-3 justify-center mb-10">
+              {[
+                { icon: Calendar, label: "14/03 · Sexta" },
+                { icon: Clock, label: "Largada 17h" },
+                { icon: Timer, label: "Máx. 2 horas" },
+                { icon: Route, label: "~2,5 km" },
+                { icon: Beer, label: "11 bares" },
+              ].map((b) => (
+                <span key={b.label} className="inline-flex items-center gap-1.5 bg-neon-card rounded-full px-3 py-1.5 text-xs font-medium">
+                  <b.icon className="w-3.5 h-3.5 text-neon-pink" /> {b.label}
+                </span>
+              ))}
+            </div>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button variant="neon" size="xl" onClick={() => document.getElementById("ingressos")?.scrollIntoView({ behavior: "smooth" })}>
                 <CreditCard className="w-5 h-5" /> Comprar ingresso agora
@@ -148,10 +180,10 @@ const CorridaDeBarEmBar = () => {
         <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">Como Funciona?</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { n: "01", icon: CreditCard, title: "Inscrição", desc: "Compre seu ingresso online de forma rápida e segura." },
-            { n: "02", icon: Calendar, title: "Retirada do Kit", desc: "No dia do evento, retire sua pulseira e mapa no ponto de concentração." },
-            { n: "03", icon: Beer, title: "Circuito", desc: "Percorra os bares parceiros e aproveite drinks e promoções exclusivas." },
-            { n: "04", icon: Music, title: "After Party", desc: "Encontre todos no local do after com DJ, sorteios e muita diversão." },
+            { n: "01", icon: CreditCard, title: "Inscrição", desc: "Compre seu ingresso online e garanta sua placa de identificação." },
+            { n: "02", icon: Calendar, title: "Retirada do Kit", desc: "No dia do evento, retire sua placa e mapa no ponto de concentração às 17h." },
+            { n: "03", icon: Beer, title: "Circuito de 11 Bares", desc: "Percorra os 11 bares, passe pelas 4 mesas de cada um e colecione adesivos." },
+            { n: "04", icon: Trophy, title: "Classificação & After", desc: "Menor tempo + todos os bares + volume completo = pódio! Depois, after party." },
           ].map((step) => (
             <div key={step.n} className="bg-neon-card rounded-xl p-6 text-center transition-all duration-300">
               <span className="font-display text-5xl font-black text-neon-purple/40">{step.n}</span>
@@ -165,19 +197,60 @@ const CorridaDeBarEmBar = () => {
         </div>
       </ScrollSection>
 
+      {/* DINÂMICA DO CIRCUITO */}
+      <ScrollSection className="bg-card/30">
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 text-neon-gradient">Dinâmica do Circuito</h2>
+        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          Em cada bar existem <strong className="text-foreground">4 mesas</strong>. Você escolhe em quais consumir e em qual apenas registrar passagem. O adesivo só é entregue após devolver o copo ao garçom.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          {mesasDinamica.map((m) => (
+            <div key={m.mesa} className="bg-neon-card rounded-xl p-6 text-center transition-all duration-300">
+              <span className={`text-3xl font-bold ${m.color}`}>{m.adesivo}</span>
+              <h3 className="font-semibold text-lg mt-3 mb-1">{m.mesa}</h3>
+              <p className="text-sm text-muted-foreground">{m.copo}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 max-w-2xl mx-auto bg-neon-card rounded-xl p-6 text-sm text-muted-foreground space-y-2">
+          <p><strong className="text-foreground">Volume total Masculino:</strong> 2,2 litros (300ml + 200ml em cada bar × 11 bares, com opção de shot e passagem)</p>
+          <p><strong className="text-foreground">Volume total Feminino:</strong> 1,1 litro (volume reduzido no circuito)</p>
+          <p className="text-neon-pink font-medium pt-2">⚠ Sem devolver o copo, você não recebe o adesivo!</p>
+        </div>
+      </ScrollSection>
+
+      {/* BARES PARTICIPANTES */}
+      <ScrollSection>
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 text-neon-gradient">11 Bares do Circuito</h2>
+        <p className="text-center text-muted-foreground mb-12">Na ordem oficial do percurso</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {bars.map((bar) => (
+            <div key={bar.num} className="bg-neon-card rounded-xl p-5 transition-all duration-300 flex items-center gap-4">
+              <span className="font-display text-2xl font-black text-neon-purple/60 w-8 text-center shrink-0">
+                {String(bar.num).padStart(2, "0")}
+              </span>
+              <div className="flex items-center gap-2">
+                <Beer className="w-4 h-4 text-neon-pink shrink-0" />
+                <h3 className="font-semibold">{bar.name}</h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </ScrollSection>
+
       {/* O QUE ESTÁ INCLUSO */}
       <ScrollSection className="bg-card/30">
         <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">O Que Está Incluso</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
           {[
-            { icon: Beer, label: "Bares parceiros" },
-            { icon: Gift, label: "Brindes exclusivos" },
-            { icon: Trophy, label: "Sorteios e prêmios" },
-            { icon: Music, label: "After party" },
-            { icon: Star, label: "Drinks promocionais" },
-            { icon: Zap, label: "Experiências únicas" },
-            { icon: Users, label: "Networking" },
+            { icon: Award, label: "Placa de identificação" },
             { icon: MapPin, label: "Mapa do circuito" },
+            { icon: Beer, label: "Copos em cada bar" },
+            { icon: Star, label: "Adesivos de controle" },
+            { icon: Trophy, label: "Sorteios e prêmios" },
+            { icon: Music, label: "After party com DJ" },
+            { icon: Shield, label: "Segurança no percurso" },
+            { icon: Users, label: "Networking épico" },
           ].map((item) => (
             <div key={item.label} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-neon-card text-center transition-all duration-300">
               <item.icon className="w-7 h-7 text-neon-pink" />
@@ -187,18 +260,25 @@ const CorridaDeBarEmBar = () => {
         </div>
       </ScrollSection>
 
-      {/* BARES PARTICIPANTES */}
+      {/* CRITÉRIOS DE CLASSIFICAÇÃO */}
       <ScrollSection>
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-12 text-neon-gradient">Bares Participantes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {bars.map((bar) => (
-            <div key={bar.name} className="bg-neon-card rounded-xl p-6 transition-all duration-300">
-              <div className="flex items-center gap-2 mb-1">
-                <Beer className="w-5 h-5 text-neon-purple" />
-                <h3 className="font-semibold text-lg">{bar.name}</h3>
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 text-neon-gradient">Critérios de Classificação</h2>
+        <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">Para subir no pódio, você precisa cumprir todos os requisitos abaixo:</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+          {[
+            { icon: Timer, title: "Menor tempo", desc: "Completar o circuito no menor tempo possível." },
+            { icon: Beer, title: "Todos os 11 bares", desc: "Passar por todos os bares do circuito, sem pular nenhum." },
+            { icon: Clock, title: "Máximo 2 horas", desc: "Concluir todo o percurso em até 2 horas a partir da largada." },
+            { icon: Zap, title: "Volume completo", desc: "Masc: 2,2L · Fem: 1,1L – atingir o volume exato do seu ingresso." },
+          ].map((c) => (
+            <div key={c.title} className="bg-neon-card rounded-xl p-6 flex gap-4 items-start transition-all duration-300">
+              <div className="w-10 h-10 rounded-full bg-neon-purple/20 flex items-center justify-center shrink-0">
+                <c.icon className="w-5 h-5 text-neon-pink" />
               </div>
-              <p className="text-sm text-muted-foreground mb-2">{bar.desc}</p>
-              <span className="text-xs bg-neon-purple/20 text-neon-purple px-2 py-0.5 rounded-full">{bar.bairro}</span>
+              <div>
+                <h3 className="font-semibold mb-1">{c.title}</h3>
+                <p className="text-sm text-muted-foreground">{c.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -248,35 +328,15 @@ const CorridaDeBarEmBar = () => {
           <form onSubmit={handleSubmit} className="space-y-4 mt-2">
             <div className="space-y-2">
               <Label htmlFor="nome">Nome completo</Label>
-              <Input
-                id="nome"
-                required
-                placeholder="Seu nome completo"
-                value={form.nome}
-                onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))}
-              />
+              <Input id="nome" required placeholder="Seu nome completo" value={form.nome} onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="telefone">Telefone / WhatsApp</Label>
-              <Input
-                id="telefone"
-                required
-                placeholder="(49) 99999-9999"
-                value={form.telefone}
-                onChange={(e) => setForm((f) => ({ ...f, telefone: e.target.value }))}
-              />
+              <Input id="telefone" required placeholder="(49) 99999-9999" value={form.telefone} onChange={(e) => setForm((f) => ({ ...f, telefone: e.target.value }))} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="numero_placa">Número desejado da placa</Label>
-              <Input
-                id="numero_placa"
-                type="number"
-                required
-                min={1}
-                placeholder="Ex: 42"
-                value={form.numero_placa}
-                onChange={(e) => setForm((f) => ({ ...f, numero_placa: e.target.value }))}
-              />
+              <Input id="numero_placa" type="number" required min={1} placeholder="Ex: 42" value={form.numero_placa} onChange={(e) => setForm((f) => ({ ...f, numero_placa: e.target.value }))} />
             </div>
             <Button type="submit" variant="neon" size="lg" className="w-full" disabled={loading}>
               {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processando...</> : "Ir para pagamento"}
@@ -285,15 +345,28 @@ const CorridaDeBarEmBar = () => {
         </DialogContent>
       </Dialog>
 
-      {/* REGRAS E TERMOS */}
+      {/* REGRAS, SEGURANÇA & TERMOS */}
       <ScrollSection>
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-8 text-neon-gradient">Regras & Termos</h2>
-        <div className="max-w-3xl mx-auto bg-neon-card rounded-xl p-6 md:p-8 text-sm text-muted-foreground space-y-3">
-          <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Idade mínima:</strong> 18 anos. Documento com foto obrigatório.</p>
-          <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Consumo responsável:</strong> O evento incentiva o consumo moderado de bebidas alcoólicas.</p>
-          <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Pulseira:</strong> A pulseira é pessoal e intransferível. Não a remova durante o evento.</p>
-          <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Reembolso:</strong> Reembolso integral até 7 dias antes do evento. Após esse prazo, não haverá devolução.</p>
-          <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Responsabilidade:</strong> A organização não se responsabiliza por pertences pessoais.</p>
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-8 text-neon-gradient">Regras & Segurança</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="bg-neon-card rounded-xl p-6 md:p-8 text-sm text-muted-foreground space-y-3">
+            <h3 className="text-foreground font-semibold text-base mb-3">📋 Regras do Circuito</h3>
+            <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Idade mínima:</strong> 18 anos com documento com foto.</p>
+            <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Copos:</strong> Plásticos e não reutilizáveis. Devolução obrigatória ao garçom.</p>
+            <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Proibido:</strong> Portar copos fora do ponto de consumo.</p>
+            <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Bares:</strong> Participantes só entram nos bares para uso do sanitário.</p>
+            <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Responsabilidade:</strong> Cada participante é responsável por sua condição física.</p>
+            <p><Shield className="w-4 h-4 inline text-neon-purple mr-1" /> <strong className="text-foreground">Reembolso:</strong> Integral até 7 dias antes. Após, sem devolução.</p>
+          </div>
+          <div className="bg-neon-card rounded-xl p-6 md:p-8 text-sm text-muted-foreground space-y-3">
+            <h3 className="text-foreground font-semibold text-base mb-3">🛡️ Segurança</h3>
+            <p><Check className="w-4 h-4 inline text-neon-pink mr-1" /> Equipe de organização em todas as esquinas do percurso.</p>
+            <p><Check className="w-4 h-4 inline text-neon-pink mr-1" /> Ambulância e profissional de enfermagem no local.</p>
+            <p><Check className="w-4 h-4 inline text-neon-pink mr-1" /> Apoio da Guarda Municipal durante todo o evento.</p>
+            <p><Check className="w-4 h-4 inline text-neon-pink mr-1" /> Fiscais em cada bar e cronômetro oficial.</p>
+            <p><Check className="w-4 h-4 inline text-neon-pink mr-1" /> Consumo responsável incentivado pela organização.</p>
+            <p><Check className="w-4 h-4 inline text-neon-pink mr-1" /> A organização não se responsabiliza por pertences pessoais.</p>
+          </div>
         </div>
       </ScrollSection>
 
@@ -315,7 +388,7 @@ const CorridaDeBarEmBar = () => {
       {/* MAPA */}
       <ScrollSection>
         <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-4 text-neon-gradient">Local de Concentração</h2>
-        <p className="text-center text-muted-foreground mb-8">Praça Central – Caçador, SC (endereço placeholder)</p>
+        <p className="text-center text-muted-foreground mb-8">Caçador, SC – Ponto de largada às 17h</p>
         <div className="rounded-xl overflow-hidden border border-border aspect-video max-w-4xl mx-auto">
           <iframe
             src="https://maps.google.com/maps?q=Caçador,SC,Brazil&output=embed"
