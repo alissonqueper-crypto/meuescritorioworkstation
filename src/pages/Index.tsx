@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Wifi, Users, Coffee, MapPin, Thermometer, Building2, ArrowRight, Calendar, Code, Calculator, Megaphone, Brain, Clock, Tv, MonitorSmartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import heroImg from "@/assets/coworking-hero.jpg";
+import { LampContainer } from "@/components/ui/lamp";
+import logoImg from "@/assets/logo.png";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
@@ -77,39 +79,42 @@ const Index = () => {
   return (
     <div>
       {/* ============ HERO ============ */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={heroImg} alt="Coworking moderno" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
-          <div className="absolute inset-0 bg-brand-gradient opacity-60" />
-        </div>
-        <div className="relative z-10 container mx-auto max-w-6xl px-4 py-32">
-          <div className="max-w-2xl">
-            <div className="flex gap-3 mb-6 animate-reveal-up">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-semibold animate-border-glow">
-                Coworking Premium
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-teal/30 bg-brand-teal/10 text-brand-teal text-xs font-semibold">
-                Caçador – SC
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 animate-reveal-up" style={{ animationDelay: "0.1s" }}>
-              Seu escritório, <span className="text-brand-gradient">quando e como</span> você quiser.
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg animate-reveal-up" style={{ animationDelay: "0.2s" }}>
-              Tecnologia, contabilidade, marketing e inteligência artificial — tudo em um coworking moderno no coração de Caçador – SC.
-            </p>
-            <div className="flex flex-wrap gap-4 animate-reveal-up" style={{ animationDelay: "0.3s" }}>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                <Button variant="accent" size="xl">Conhecer planos no WhatsApp</Button>
-              </a>
-              <Link to="/planos">
-                <Button variant="outline" size="xl">Ver planos <ArrowRight className="w-5 h-5" /></Button>
-              </Link>
-            </div>
+      <LampContainer>
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.3,
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          className="flex flex-col items-center text-center"
+        >
+          <img src={logoImg} alt="Meu Escritório Workstation" className="w-40 md:w-56 mb-8" />
+
+          <div className="flex gap-3 mb-6">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-semibold">
+              Coworking Premium
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-teal/30 bg-brand-teal/10 text-brand-teal text-xs font-semibold">
+              Caçador – SC
+            </span>
           </div>
-        </div>
-      </section>
+
+          <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg">
+            Tecnologia, contabilidade, marketing e IA — tudo em um coworking moderno.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              <Button variant="accent" size="xl">Conhecer planos no WhatsApp</Button>
+            </a>
+            <Link to="/planos">
+              <Button variant="outline" size="xl">Ver planos <ArrowRight className="w-5 h-5" /></Button>
+            </Link>
+          </div>
+        </motion.div>
+      </LampContainer>
 
       <div className="brand-separator w-full" />
 
