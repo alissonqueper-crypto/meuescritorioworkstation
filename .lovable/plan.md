@@ -1,43 +1,42 @@
 
 
-## Plano: Efeito Lamp no Hero com Logo Subindo
+## Plano: Reorganizar Hero com Lamp — Layout conforme o print
 
-A ideia é adaptar o componente Lamp (Aceternity UI) ao hero da home. Em vez de um título subindo, a **logo** sobe com a animação de luz cônica, e as informações do hero (badges, subtítulo, CTAs) ficam distribuídas de forma minimalista ao redor.
+Entendi as 3 anotações do print:
+
+1. **"quero que o início comece aqui"** — O efeito lamp (feixes de luz) deve começar mais acima, perto do topo da página, não no meio da tela
+2. **"a logo aqui no meio subindo"** — A logo deve ficar centralizada na área do efeito lamp, subindo com a animação
+3. **"os botões no meio após a logo"** — Os CTAs (WhatsApp + Ver planos) ficam logo abaixo da logo, no centro
+4. **"as informações adicionais do site minimalista nos cantos"** — Badges e subtítulo posicionados nos cantos inferiores da seção hero, de forma minimalista
 
 ---
 
-### O que muda
+### Alterações
 
-**1. Instalar `framer-motion`**
-- Nova dependência necessária para o efeito Lamp.
+#### 1. `src/components/ui/lamp.tsx` — Ajustar posicionamento vertical
 
-**2. Criar `src/components/ui/lamp.tsx`**
-- Componente LampContainer adaptado com as **cores da marca** (vermelho, azul, teal) no gradiente cônico em vez das cores padrão cyan.
-- O feixe de luz usa `--brand-red` e `--brand-blue` para manter identidade visual.
-- Fundo escuro (`--background`) para o efeito funcionar bem.
+- Reduzir `min-h-screen` para `min-h-[85vh]` para que o efeito não ocupe tanta altura
+- Mover o ponto de origem dos feixes de luz para mais acima (ajustar `top-1/2` e `translate-y` dos elementos do gradiente cônico para ficarem mais próximos do topo)
+- Ajustar o `translate-y` do container de children para que o conteúdo fique mais centralizado verticalmente
 
-**3. Redesenhar o Hero em `src/pages/Index.tsx`**
-- Substituir o hero atual pelo LampContainer.
-- A **logo** (`src/assets/logo.png`) é o elemento central que sobe com `motion.div` (translateY de 100px para 0, com spring).
-- Remover a imagem `coworking-hero.jpg` do hero (o efeito de luz substitui).
-- Layout minimalista:
-  - Logo centralizada sobe com a animação.
-  - Abaixo da logo: subtítulo curto em texto pequeno e elegante.
-  - Badges "Coworking Premium" e "Caçador – SC" posicionados sutilmente.
-  - CTAs centralizados abaixo, aparecendo com fade-in após a logo subir.
+#### 2. `src/pages/Index.tsx` — Reorganizar layout do hero
+
+**Centro (dentro do motion.div que sobe):**
+- Logo (animação de subida)
+- Botões CTA logo abaixo da logo
+
+**Cantos inferiores (fora do motion.div, posicionados com absolute):**
+- Badge "Coworking Premium" no canto inferior esquerdo
+- Badge "Caçador – SC" no canto inferior direito
+- Subtítulo "Tecnologia, contabilidade, marketing e IA..." posicionado discretamente embaixo, centralizado
+
+---
 
 ### Detalhes Técnicos
 
-**Nova dependência:** `framer-motion`
+**Arquivos modificados:**
+- `src/components/ui/lamp.tsx` — ajuste de posição vertical dos feixes e do container
+- `src/pages/Index.tsx` — reorganização do layout hero: logo + botões no centro, badges nos cantos
 
-**Novo arquivo:** `src/components/ui/lamp.tsx`
-
-**Arquivo modificado:** `src/pages/Index.tsx` — hero redesenhado com LampContainer + logo animada
-
-**Cores do efeito lamp:**
-- Gradiente cônico: `--brand-red` (vermelho) e `--brand-blue` (azul)
-- Linha horizontal de luz: `--brand-teal`
-- Glow central: `--brand-gold`
-
-O restante da página (benefícios, residentes, planos, etc.) permanece inalterado.
+Sem novas dependências ou arquivos.
 
