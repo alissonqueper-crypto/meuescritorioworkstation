@@ -1,42 +1,36 @@
 
 
-## Plano: Reorganizar Hero com Lamp — Layout conforme o print
+## Plano: Remover preços/planos e ajustar Hero
 
-Entendi as 3 anotações do print:
+### Resumo
 
-1. **"quero que o início comece aqui"** — O efeito lamp (feixes de luz) deve começar mais acima, perto do topo da página, não no meio da tela
-2. **"a logo aqui no meio subindo"** — A logo deve ficar centralizada na área do efeito lamp, subindo com a animação
-3. **"os botões no meio após a logo"** — Os CTAs (WhatsApp + Ver planos) ficam logo abaixo da logo, no centro
-4. **"as informações adicionais do site minimalista nos cantos"** — Badges e subtítulo posicionados nos cantos inferiores da seção hero, de forma minimalista
+Três mudanças principais:
+1. **Remover botão "Ver planos"** do hero — fica só o botão WhatsApp
+2. **Remover seção inteira de Planos** da página inicial (com preços R$ 49, R$ 499, R$ 899) e o array `plans`
+3. **Hero**: logo maior (`w-72 md:w-96`), botão WhatsApp desce mais (maior `mb` entre logo e botão)
 
----
-
-### Alterações
-
-#### 1. `src/components/ui/lamp.tsx` — Ajustar posicionamento vertical
-
-- Reduzir `min-h-screen` para `min-h-[85vh]` para que o efeito não ocupe tanta altura
-- Mover o ponto de origem dos feixes de luz para mais acima (ajustar `top-1/2` e `translate-y` dos elementos do gradiente cônico para ficarem mais próximos do topo)
-- Ajustar o `translate-y` do container de children para que o conteúdo fique mais centralizado verticalmente
-
-#### 2. `src/pages/Index.tsx` — Reorganizar layout do hero
-
-**Centro (dentro do motion.div que sobe):**
-- Logo (animação de subida)
-- Botões CTA logo abaixo da logo
-
-**Cantos inferiores (fora do motion.div, posicionados com absolute):**
-- Badge "Coworking Premium" no canto inferior esquerdo
-- Badge "Caçador – SC" no canto inferior direito
-- Subtítulo "Tecnologia, contabilidade, marketing e IA..." posicionado discretamente embaixo, centralizado
+Também vou:
+- Remover link "Planos" do Header (`src/components/Header.tsx`)
+- Remover rota `/planos` do `App.tsx` e o import de `Planos`
+- Remover `src/pages/Planos.tsx`
 
 ---
 
-### Detalhes Técnicos
+### Alterações por arquivo
 
-**Arquivos modificados:**
-- `src/components/ui/lamp.tsx` — ajuste de posição vertical dos feixes e do container
-- `src/pages/Index.tsx` — reorganização do layout hero: logo + botões no centro, badges nos cantos
+**`src/pages/Index.tsx`**
+- Remover array `plans` (linhas 54-76)
+- Hero: aumentar logo para `w-72 md:w-96`, adicionar `mb-16` para empurrar o botão pra baixo
+- Remover botão "Ver planos" e o `Link to="/planos"`
+- Remover seção "PLANOS PREVIEW" inteira (linhas 221-253)
+- Remover import de `ArrowRight` se não usado em outro lugar (ainda é usado nas salas de reunião, então mantém)
 
-Sem novas dependências ou arquivos.
+**`src/components/Header.tsx`**
+- Remover `{ to: "/planos", label: "Planos" }` do array `navLinks`
+
+**`src/App.tsx`**
+- Remover `import Planos` e a `<Route path="/planos" ...>`
+
+**`src/pages/Planos.tsx`**
+- Deletar o arquivo
 
