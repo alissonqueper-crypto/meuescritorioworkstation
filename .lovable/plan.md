@@ -1,64 +1,31 @@
 
 
-## Plano: Remover cards e adicionar 6 blocos de carrosséis
+## Plano: Expandir os carrosséis para 6-8 fotos cada
 
 ### O que será feito
 
-Remover a grid de 6 cards com ícones (linhas 69-84). Manter a seção "Galeria de Fotos" como está (linhas 86-104). Adicionar abaixo dela uma nova seção "Nossa Estrutura" com 6 blocos empilhados verticalmente, cada um com título + ícone e seu próprio `CircularTestimonials` com 3 fotos Unsplash representativas do espaço.
+Adicionar mais fotos em cada um dos 6 arrays de `structureBlocks` no arquivo `src/pages/Estrutura.tsx`. Atualmente cada bloco tem 3 fotos — vamos expandir para 6 fotos cada, adicionando 3 novas entradas com fotos Unsplash diferentes e descrições relevantes.
 
-### Alterações em `src/pages/Estrutura.tsx`
+O componente `CircularTestimonials` já suporta qualquer quantidade de itens sem alteração — ele exibe 3 por vez (ativo + 2 laterais) e navega pelo array completo.
 
-- **Remover** o bloco `<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">` com os 6 cards (linhas 69-84)
-- **Manter** a seção "Galeria de Fotos" intacta (linhas 86-104)
-- **Adicionar** após a galeria uma nova seção com título "Nossa Estrutura" e 6 blocos verticais:
+### Alterações
 
-Cada bloco terá:
-- Título com ícone (ex: `<Monitor />` + "Estações de Trabalho") e descrição curta
-- Um `CircularTestimonials` próprio com 3 fotos Unsplash daquele espaço
-- Envolvido em `ScrollDiv` para animação de entrada
-- Espaçamento `mt-16` entre blocos
+**`src/pages/Estrutura.tsx`**
 
-Os 6 blocos e suas fotos:
+Adicionar 3 novas entradas em cada array `photos` dentro de `structureBlocks`:
 
-1. **Estações de Trabalho** — 3 fotos de mesas/desks de coworking
-2. **Salas de Reunião** — 3 fotos de salas de reunião
-3. **Copa & Cozinha** — 3 fotos de copa/cozinha de escritório
-4. **Área Comum** — 3 fotos de áreas de convivência
-5. **Recepção** — 3 fotos de recepções
-6. **Lounge** — 3 fotos de lounges
+1. **Estações de Trabalho** — adicionar: Mesa Compartilhada, Estação Dupla, Área de Foco
+2. **Salas de Reunião** — adicionar: Sala Compacta, Sala de Brainstorm, Sala de Treinamento
+3. **Copa & Cozinha** — adicionar: Área de Snacks, Bancada de Preparo, Espaço Social
+4. **Área Comum** — adicionar: Terraço, Área de Jogos, Espaço de Leitura
+5. **Recepção** — adicionar: Corredor Principal, Área de Credenciamento, Fachada
+6. **Lounge** — adicionar: Varanda Lounge, Espaço Meditação, Bar de Café
 
-Cada carrossel usará as mesmas cores de branding já configuradas. O array `spaces` será mantido para referência de ícones/cores nos títulos dos blocos.
+Cada nova entrada segue o formato existente: `{ name, designation, quote, src }` com foto Unsplash relevante.
 
-```text
-┌─────────────────────────────────────┐
-│     Nossa Estrutura (título H1)      │
-├─────────────────────────────────────┤
-│     Galeria de Fotos (existente)     │
-│     [Carrossel 3D geral]             │
-├─────────────────────────────────────┤
-│     Nossa Estrutura (título H2)      │
-├─────────────────────────────────────┤
-│  📺 Estações de Trabalho             │
-│  [Carrossel 3D · 3 fotos]           │
-├─────────────────────────────────────┤
-│  👥 Salas de Reunião                 │
-│  [Carrossel 3D · 3 fotos]           │
-├─────────────────────────────────────┤
-│  ☕ Copa & Cozinha                   │
-│  [Carrossel 3D · 3 fotos]           │
-├─────────────────────────────────────┤
-│  🪑 Área Comum                      │
-│  [Carrossel 3D · 3 fotos]           │
-├─────────────────────────────────────┤
-│  🚪 Recepção                        │
-│  [Carrossel 3D · 3 fotos]           │
-├─────────────────────────────────────┤
-│  🛋 Lounge                          │
-│  [Carrossel 3D · 3 fotos]           │
-└─────────────────────────────────────┘
-```
+Nenhuma alteração no componente `CircularTestimonials` — ele já funciona com qualquer número de itens.
 
 ### Resultado esperado
 
-Página com a galeria geral no topo seguida de 6 carrosséis dedicados empilhados, cada um mostrando fotos específicas de um espaço do escritório com animação de scroll e cores da marca.
+Cada carrossel terá 6 fotos para navegar em vez de 3, oferecendo uma apresentação mais completa de cada espaço do escritório.
 
