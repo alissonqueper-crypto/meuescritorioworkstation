@@ -62,11 +62,6 @@ const Header = () => {
 
         {/* WhatsApp CTA + mobile toggle */}
         <div className="flex items-center gap-2">
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-            <Button variant="whatsapp" size="sm" className="hidden sm:inline-flex">
-              <MessageCircle className="w-4 h-4" /> Fale no WhatsApp
-            </Button>
-          </a>
           <button
             className="md:hidden p-2 rounded-md hover:bg-secondary text-foreground"
             onClick={() => setMobileOpen(!mobileOpen)}
