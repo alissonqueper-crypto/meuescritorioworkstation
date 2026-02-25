@@ -51,29 +51,7 @@ const residents = [
   { icon: Brain, title: "Inteligência Artificial", desc: "Equipe especializada em desenvolvimento de soluções de IA sob medida para empresas.", color: "text-brand-gold", bg: "bg-brand-gold/10" },
 ];
 
-const plans = [
-  {
-    name: "Diário",
-    price: "R$ 49",
-    period: "/dia",
-    features: ["1 estação de trabalho", "Internet rápida", "Café incluso", "Acesso das 8h às 18h"],
-    popular: false,
-  },
-  {
-    name: "Mensal",
-    price: "R$ 499",
-    period: "/mês",
-    features: ["Estação fixa", "Internet rápida", "2h sala de reunião/mês", "Café incluso", "Acesso de seg a sex"],
-    popular: true,
-  },
-  {
-    name: "Empresa",
-    price: "R$ 899",
-    period: "/mês",
-    features: ["Sala privativa", "Internet dedicada", "6h sala de reunião/mês", "Endereço fiscal", "Acesso 24h"],
-    popular: false,
-  },
-];
+
 
 const Index = () => {
   return (
@@ -91,16 +69,11 @@ const Index = () => {
             }}
             className="flex flex-col items-center text-center"
           >
-            <img src={logoImg} alt="Meu Escritório Workstation" className="w-56 md:w-72 mb-10" />
+            <img src={logoImg} alt="Meu Escritório Workstation" className="w-72 md:w-96 mb-16" />
 
-            <div className="flex flex-wrap justify-center gap-3">
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                <Button variant="accent" size="lg">Conhecer planos no WhatsApp</Button>
-              </a>
-              <Link to="/planos">
-                <Button variant="outline" size="lg">Ver planos <ArrowRight className="w-4 h-4" /></Button>
-              </Link>
-            </div>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              <Button variant="accent" size="lg">Conhecer planos no WhatsApp</Button>
+            </a>
           </motion.div>
         </LampContainer>
 
@@ -215,40 +188,6 @@ const Index = () => {
               <Users className="w-16 h-16 text-muted-foreground/20" />
             </div>
           </div>
-        </div>
-      </ScrollSection>
-
-      {/* ============ PLANOS PREVIEW ============ */}
-      <ScrollSection className="bg-card/50">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Planos</h2>
-        <p className="text-center text-muted-foreground mb-12">Escolha o plano ideal para o seu jeito de trabalhar.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {plans.map((p) => (
-            <div key={p.name} className={`relative bg-card border rounded-2xl p-6 flex flex-col brand-card ${p.popular ? "border-brand-red shadow-[0_0_30px_hsl(var(--brand-red)/0.12)]" : "border-border"}`}>
-              {p.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full">
-                  Mais Popular
-                </span>
-              )}
-              <h3 className="text-xl font-bold mb-1">{p.name}</h3>
-              <div className="mb-4">
-                <span className="text-3xl font-bold text-primary">{p.price}</span>
-                <span className="text-muted-foreground text-sm">{p.period}</span>
-              </div>
-              <ul className="space-y-2 mb-6 flex-1">
-                {p.features.map((f) => (
-                  <li key={f} className="text-sm text-muted-foreground flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-teal shrink-0" /> {f}
-                  </li>
-                ))}
-              </ul>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                <Button variant={p.popular ? "accent" : "outline"} className="w-full">
-                  Quero este plano
-                </Button>
-              </a>
-            </div>
-          ))}
         </div>
       </ScrollSection>
 
