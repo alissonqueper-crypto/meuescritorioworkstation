@@ -1,20 +1,30 @@
 
 
-## Plano: Mover o efeito Lamp para mais acima (barra teal no topo, conteúdo mais embaixo)
+## Plano: Reescrever o efeito Lamp fiel ao original Aceternity
 
-O objetivo é que a **barra horizontal teal** (a linha de luz) fique posicionada mais acima, logo abaixo do header, e o conteúdo (logo + botão) desça naturalmente para o centro/parte inferior da seção hero.
+### Problema atual
+O componente `lamp.tsx` foi modificado de forma que perdeu o visual original do efeito Aceternity. Faltam propriedades cruciais como `scale-y-125` e `flex-1` no container dos feixes, e o posicionamento manual com valores fixos (`top-[10rem]`, `top-[2rem]`, `top-[14rem]`) quebrou o layout fluido do efeito.
+
+### O que o efeito original faz (referência 21st.dev)
+- Barra teal horizontal no topo
+- Dois feixes cônicos (esquerdo e direito) que se expandem para baixo, como uma luminária de teto
+- O conteúdo (logo + botão) aparece **abaixo** da barra, iluminado pela luz
+- A animação faz o conteúdo subir suavemente com fade-in
 
 ### Alterações em `src/components/ui/lamp.tsx`
 
-**Reposicionar os feixes de luz e a barra para o topo da seção:**
+Restaurar o componente para ser fiel ao original Aceternity, com nossas cores:
 
-1. Mudar o container dos feixes de `items-center` para `items-start` com padding-top, para que os gradientes cônicos fiquem ancorados no topo
-2. Ajustar a barra teal (`-translate-y-[7rem]`) para ficar mais acima — algo como `top-[10rem]` em vez de centrada
-3. Ajustar o bloco de background que mascara acima da barra (`-translate-y-[12.5rem]`) proporcionalmente
-4. Mover o `translate-y` do container de children de `-translate-y-48` para algo menor (ex: `-translate-y-20` ou `translate-y-0`) para que a logo e botão fiquem mais abaixo, no centro visual da seção
+1. **Container dos feixes**: restaurar `flex-1 scale-y-125 items-center` (em vez de `items-start pt-8`)
+2. **Feixes cônicos**: remover `top-8` manual, usar o posicionamento original com `inset-auto`
+3. **Elementos de blur/máscara**: restaurar `translate-y-12` e posicionamento relativo ao `top-1/2` (em vez de valores fixos `top-[14rem]`)
+4. **Barra teal**: restaurar `-translate-y-[7rem]` (em vez de `top-[10rem]`)
+5. **Máscara de background**: restaurar `-translate-y-[12.5rem]` (em vez de `top-[2rem]`)
+6. **Container de children**: usar animação de subida com `initial y: 10` (mantendo o `-translate-y-20` ou ajustando para o conteúdo ficar centralizado abaixo da barra)
 
-**Resultado visual:** Os feixes de luz saem do topo (como se a barra teal estivesse logo após o header), e a logo com o botão ficam mais abaixo no hero, com mais espaço respirando.
+### Resultado esperado
+Visualmente idêntico à referência do 21st.dev: barra teal brilhante no topo, feixes de luz vermelho/azul se expandindo para baixo, logo grande centralizada abaixo da luz, botão WhatsApp embaixo.
 
 ### Arquivo modificado
-- `src/components/ui/lamp.tsx` — reposicionamento vertical dos feixes, barra teal e conteúdo
+- `src/components/ui/lamp.tsx`
 
