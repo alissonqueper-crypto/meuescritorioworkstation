@@ -1,36 +1,20 @@
 
 
-## Plano: Remover preços/planos e ajustar Hero
+## Plano: Mover o efeito Lamp para mais acima (barra teal no topo, conteúdo mais embaixo)
 
-### Resumo
+O objetivo é que a **barra horizontal teal** (a linha de luz) fique posicionada mais acima, logo abaixo do header, e o conteúdo (logo + botão) desça naturalmente para o centro/parte inferior da seção hero.
 
-Três mudanças principais:
-1. **Remover botão "Ver planos"** do hero — fica só o botão WhatsApp
-2. **Remover seção inteira de Planos** da página inicial (com preços R$ 49, R$ 499, R$ 899) e o array `plans`
-3. **Hero**: logo maior (`w-72 md:w-96`), botão WhatsApp desce mais (maior `mb` entre logo e botão)
+### Alterações em `src/components/ui/lamp.tsx`
 
-Também vou:
-- Remover link "Planos" do Header (`src/components/Header.tsx`)
-- Remover rota `/planos` do `App.tsx` e o import de `Planos`
-- Remover `src/pages/Planos.tsx`
+**Reposicionar os feixes de luz e a barra para o topo da seção:**
 
----
+1. Mudar o container dos feixes de `items-center` para `items-start` com padding-top, para que os gradientes cônicos fiquem ancorados no topo
+2. Ajustar a barra teal (`-translate-y-[7rem]`) para ficar mais acima — algo como `top-[10rem]` em vez de centrada
+3. Ajustar o bloco de background que mascara acima da barra (`-translate-y-[12.5rem]`) proporcionalmente
+4. Mover o `translate-y` do container de children de `-translate-y-48` para algo menor (ex: `-translate-y-20` ou `translate-y-0`) para que a logo e botão fiquem mais abaixo, no centro visual da seção
 
-### Alterações por arquivo
+**Resultado visual:** Os feixes de luz saem do topo (como se a barra teal estivesse logo após o header), e a logo com o botão ficam mais abaixo no hero, com mais espaço respirando.
 
-**`src/pages/Index.tsx`**
-- Remover array `plans` (linhas 54-76)
-- Hero: aumentar logo para `w-72 md:w-96`, adicionar `mb-16` para empurrar o botão pra baixo
-- Remover botão "Ver planos" e o `Link to="/planos"`
-- Remover seção "PLANOS PREVIEW" inteira (linhas 221-253)
-- Remover import de `ArrowRight` se não usado em outro lugar (ainda é usado nas salas de reunião, então mantém)
-
-**`src/components/Header.tsx`**
-- Remover `{ to: "/planos", label: "Planos" }` do array `navLinks`
-
-**`src/App.tsx`**
-- Remover `import Planos` e a `<Route path="/planos" ...>`
-
-**`src/pages/Planos.tsx`**
-- Deletar o arquivo
+### Arquivo modificado
+- `src/components/ui/lamp.tsx` — reposicionamento vertical dos feixes, barra teal e conteúdo
 
