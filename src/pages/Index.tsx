@@ -63,8 +63,8 @@ const Index = () => {
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{
-              delay: 0.3,
-              duration: 0.8,
+              delay: 0.6,
+              duration: 1.6,
               ease: "easeInOut",
             }}
             className="flex flex-col items-center text-center"
