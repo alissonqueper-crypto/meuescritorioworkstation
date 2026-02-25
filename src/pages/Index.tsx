@@ -88,7 +88,7 @@ const Index = () => {
             Caçador – SC
           </span>
         </div>
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50">
           <p className="text-xs md:text-sm text-muted-foreground text-center whitespace-nowrap">
             Tecnologia · Contabilidade · Marketing · IA
           </p>
