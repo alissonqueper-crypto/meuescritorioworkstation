@@ -1,16 +1,14 @@
 
 
-## Plano: Descer a logo e conteúdo no Hero
+## Plano: Ajustar botão no Hero
 
-### Problema
-A logo está colada no topo do hero, sobrepondo o header, porque o container de children usa `-translate-y-48` que puxa tudo para cima demais.
+### O que será feito
 
-### Alteração em `src/components/ui/lamp.tsx`
+No arquivo `src/pages/Index.tsx`, dentro do hero (LampContainer):
 
-Reduzir o `translate-y` negativo do container de children de `-translate-y-48` para `-translate-y-20` (ou até `translate-y-0`), fazendo a logo descer para o centro/meio-inferior da seção hero, abaixo da barra teal e dos feixes de luz.
+1. **Reduzir o espaçamento** entre a logo e o botão "Conhecer planos no WhatsApp" — mudar `mb-16` da imagem para `mb-6`, aproximando o botão da logo
+2. O botão permanece, apenas fica mais próximo da logo para um visual mais coeso
 
-**Linha afetada:** a div que envolve `{children}` — mudar de `-translate-y-48` para `-translate-y-20`.
-
-### Resultado esperado
-Logo centralizada verticalmente no hero, abaixo do efeito de luz, com espaço adequado entre a barra teal e a logo.
+### Arquivo modificado
+- `src/pages/Index.tsx` — linha 72, alterar `mb-16` para `mb-6`
 
