@@ -69,7 +69,7 @@ const Index = () => {
             }}
             className="flex flex-col items-center text-center"
           >
-            <img src={logoImg} alt="Meu Escritório Workstation" className="w-72 md:w-96 mb-16" />
+            <img src={logoImg} alt="Meu Escritório Workstation" className="w-72 md:w-96 mb-6" />
 
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
               <Button variant="accent" size="lg">Conhecer planos no WhatsApp</Button>
