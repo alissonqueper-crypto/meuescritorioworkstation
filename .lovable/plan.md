@@ -1,25 +1,64 @@
 
 
-## Plano: Melhorar os cards da página Estrutura com animações
+## Plano: Remover cards e adicionar 6 blocos de carrosséis
 
 ### O que será feito
 
-Transformar os 6 cards da página `/estrutura` para usar o mesmo estilo animado dos cards de benefícios da página inicial — removendo a área cinza de placeholder (aspect-[4/3]) e aplicando o layout com ícone colorido, hover scale e stagger animations, igual aos cards "Por que escolher nosso Workstation".
+Remover a grid de 6 cards com ícones (linhas 69-84). Manter a seção "Galeria de Fotos" como está (linhas 86-104). Adicionar abaixo dela uma nova seção "Nossa Estrutura" com 6 blocos empilhados verticalmente, cada um com título + ícone e seu próprio `CircularTestimonials` com 3 fotos Unsplash representativas do espaço.
 
-### Alterações
+### Alterações em `src/pages/Estrutura.tsx`
 
-**`src/pages/Estrutura.tsx`**
+- **Remover** o bloco `<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">` com os 6 cards (linhas 69-84)
+- **Manter** a seção "Galeria de Fotos" intacta (linhas 86-104)
+- **Adicionar** após a galeria uma nova seção com título "Nossa Estrutura" e 6 blocos verticais:
 
-- Remover o bloco de imagem placeholder (`aspect-[4/3] bg-secondary`) de cada card
-- Reestruturar cada card para seguir o layout dos cards de benefícios do Index:
-  - Ícone em caixa colorida com `group-hover:scale-110`
-  - Título em `text-lg font-semibold`
-  - Descrição em `text-sm text-muted-foreground`
-- Manter as classes `brand-card`, `stagger-{i+1}` e o `ScrollDiv` para animação de scroll
-- Adicionar `group` ao card e `transition-transform group-hover:scale-110` ao ícone
-- Usar `animationFillMode: "both"` como nos cards do Index
+Cada bloco terá:
+- Título com ícone (ex: `<Monitor />` + "Estações de Trabalho") e descrição curta
+- Um `CircularTestimonials` próprio com 3 fotos Unsplash daquele espaço
+- Envolvido em `ScrollDiv` para animação de entrada
+- Espaçamento `mt-16` entre blocos
+
+Os 6 blocos e suas fotos:
+
+1. **Estações de Trabalho** — 3 fotos de mesas/desks de coworking
+2. **Salas de Reunião** — 3 fotos de salas de reunião
+3. **Copa & Cozinha** — 3 fotos de copa/cozinha de escritório
+4. **Área Comum** — 3 fotos de áreas de convivência
+5. **Recepção** — 3 fotos de recepções
+6. **Lounge** — 3 fotos de lounges
+
+Cada carrossel usará as mesmas cores de branding já configuradas. O array `spaces` será mantido para referência de ícones/cores nos títulos dos blocos.
+
+```text
+┌─────────────────────────────────────┐
+│     Nossa Estrutura (título H1)      │
+├─────────────────────────────────────┤
+│     Galeria de Fotos (existente)     │
+│     [Carrossel 3D geral]             │
+├─────────────────────────────────────┤
+│     Nossa Estrutura (título H2)      │
+├─────────────────────────────────────┤
+│  📺 Estações de Trabalho             │
+│  [Carrossel 3D · 3 fotos]           │
+├─────────────────────────────────────┤
+│  👥 Salas de Reunião                 │
+│  [Carrossel 3D · 3 fotos]           │
+├─────────────────────────────────────┤
+│  ☕ Copa & Cozinha                   │
+│  [Carrossel 3D · 3 fotos]           │
+├─────────────────────────────────────┤
+│  🪑 Área Comum                      │
+│  [Carrossel 3D · 3 fotos]           │
+├─────────────────────────────────────┤
+│  🚪 Recepção                        │
+│  [Carrossel 3D · 3 fotos]           │
+├─────────────────────────────────────┤
+│  🛋 Lounge                          │
+│  [Carrossel 3D · 3 fotos]           │
+└─────────────────────────────────────┘
+```
 
 ### Resultado esperado
 
-Cards limpos e animados, sem os placeholders cinzas, com hover suave no ícone e aparecimento escalonado ao rolar — mesmo padrão visual da página inicial.
+Página com a galeria geral no topo seguida de 6 carrosséis dedicados empilhados, cada um mostrando fotos específicas de um espaço do escritório com animação de scroll e cores da marca.
 
