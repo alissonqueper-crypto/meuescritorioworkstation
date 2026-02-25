@@ -69,23 +69,15 @@ const Estrutura = () => (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {spaces.map((s, i) => (
           <ScrollDiv key={s.name}>
-            <div className={`bg-card border border-border rounded-2xl overflow-hidden brand-card stagger-${i + 1}`}>
-              {/* TODO: Substituir por imagem real */}
-              <div className="aspect-[4/3] bg-secondary relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <s.icon className="w-16 h-16 text-muted-foreground/20" />
-                </div>
+            <div
+              className={`bg-card border border-border rounded-2xl p-6 brand-card group stagger-${i + 1}`}
+              style={{ animationFillMode: "both" }}
+            >
+              <div className={`w-12 h-12 rounded-xl ${s.bg} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
+                <s.icon className={`w-6 h-6 ${s.color}`} />
               </div>
-              <div className="p-5">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className={`w-8 h-8 rounded-lg ${s.bg} flex items-center justify-center`}>
-                    <s.icon className={`w-4 h-4 ${s.color}`} />
-                  </div>
-                  <h3 className="font-semibold">{s.name}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground">{s.desc}</p>
-              </div>
+              <h3 className="font-semibold text-lg mb-2">{s.name}</h3>
+              <p className="text-sm text-muted-foreground">{s.desc}</p>
             </div>
           </ScrollDiv>
         ))}
