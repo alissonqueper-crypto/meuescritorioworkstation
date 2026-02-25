@@ -64,6 +64,9 @@ const structureBlocks = [
       { name: "Mesa Individual", designation: "Plano mensal", quote: "Mesa ergonômica com monitor dedicado, cadeira confortável e tomadas individuais para máxima produtividade.", src: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=800&auto=format&fit=crop&q=80" },
       { name: "Área de Trabalho Compartilhada", designation: "Hot desk disponível", quote: "Ambiente aberto e colaborativo ao lado de profissionais de tecnologia, contabilidade, marketing e IA.", src: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&auto=format&fit=crop&q=80" },
       { name: "Estação Premium", designation: "Plano fixo", quote: "Estação dedicada com gaveta, monitor ultrawide e cadeira ergonômica de alto padrão.", src: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&auto=format&fit=crop&q=80" },
+      { name: "Mesa Compartilhada", designation: "Flexível e acessível", quote: "Mesas amplas em ambiente compartilhado, ideais para freelancers e profissionais autônomos.", src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop&q=80" },
+      { name: "Estação Dupla", designation: "Para equipes de 2", quote: "Estação lado a lado com dois monitores, perfeita para duplas que precisam colaborar de perto.", src: "https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=800&auto=format&fit=crop&q=80" },
+      { name: "Área de Foco", designation: "Silêncio garantido", quote: "Zona reservada para trabalho concentrado, com divisórias acústicas e iluminação controlada.", src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop&q=80" },
     ],
   },
   {
@@ -76,6 +79,9 @@ const structureBlocks = [
       { name: "Sala Executiva", designation: "Até 8 pessoas", quote: "Sala equipada com TV 55\" para apresentações e videoconferências, quadro branco e ar-condicionado.", src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=80" },
       { name: "Sala de Equipe", designation: "Até 6 pessoas", quote: "Espaço intimista com TV e conexão de alta velocidade. Perfeito para calls e reuniões de equipe.", src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=80" },
       { name: "Sala de Conferência", designation: "Até 12 pessoas", quote: "Nossa maior sala com layout flexível, projeção e som integrado para workshops e treinamentos.", src: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&auto=format&fit=crop&q=80" },
+      { name: "Sala Compacta", designation: "Até 4 pessoas", quote: "Sala reservada para calls rápidas, entrevistas e reuniões one-on-one com privacidade total.", src: "https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=800&auto=format&fit=crop&q=80" },
+      { name: "Sala de Brainstorm", designation: "Criatividade em grupo", quote: "Ambiente com quadro branco panorâmico, post-its e layout informal para sessões criativas.", src: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop&q=80" },
+      { name: "Sala de Treinamento", designation: "Até 20 pessoas", quote: "Espaço amplo com projetor, microfone e cadeiras móveis para palestras, workshops e treinamentos.", src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&auto=format&fit=crop&q=80" },
     ],
   },
   {
@@ -88,6 +94,9 @@ const structureBlocks = [
       { name: "Área do Café", designation: "Café premium incluso", quote: "Máquina de café expresso, chás variados e água filtrada disponíveis o dia todo para os coworkers.", src: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&auto=format&fit=crop&q=80" },
       { name: "Cozinha Compartilhada", designation: "Equipada e limpa", quote: "Micro-ondas, geladeira, pia e utensílios básicos para suas refeições durante o expediente.", src: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80" },
       { name: "Mesa de Refeições", designation: "Almoço no escritório", quote: "Espaço confortável para refeições com mesa ampla e ambiente agradável.", src: "https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&auto=format&fit=crop&q=80" },
+      { name: "Área de Snacks", designation: "Lanches rápidos", quote: "Dispensers de snacks, frutas frescas e bebidas para um lanche rápido entre as tarefas.", src: "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=800&auto=format&fit=crop&q=80" },
+      { name: "Bancada de Preparo", designation: "Praticidade total", quote: "Bancada com pia, purificador de água e espaço para preparo de refeições leves.", src: "https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=800&auto=format&fit=crop&q=80" },
+      { name: "Espaço Social", designation: "Convivência na copa", quote: "Área de convivência integrada à copa para conversas informais e networking durante o café.", src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80" },
     ],
   },
   {
@@ -100,6 +109,9 @@ const structureBlocks = [
       { name: "Espaço de Convivência", designation: "Networking natural", quote: "Ambiente descontraído para pausas e conversas entre profissionais de diversas áreas.", src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80" },
       { name: "Área de Descompressão", designation: "Relaxe e recarregue", quote: "Espaço pensado para pausas produtivas com poltronas confortáveis e iluminação suave.", src: "https://images.unsplash.com/photo-1519974719765-e6559eac2575?w=800&auto=format&fit=crop&q=80" },
       { name: "Espaço Colaborativo", designation: "Ideias e criatividade", quote: "Mesas informais para brainstorming, reuniões rápidas e troca de ideias entre coworkers.", src: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&auto=format&fit=crop&q=80" },
+      { name: "Terraço", designation: "Ar livre no escritório", quote: "Área externa com mesas e cadeiras para trabalhar ou relaxar ao ar livre nos dias bonitos.", src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=80" },
+      { name: "Área de Jogos", designation: "Diversão e descontração", quote: "Mesa de pingue-pongue e jogos de tabuleiro para pausas divertidas e team building.", src: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=800&auto=format&fit=crop&q=80" },
+      { name: "Espaço de Leitura", designation: "Silêncio e concentração", quote: "Cantinho reservado com estante de livros, poltronas e iluminação ideal para leitura.", src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80" },
     ],
   },
   {
@@ -112,6 +124,9 @@ const structureBlocks = [
       { name: "Recepção Principal", designation: "Primeiro contato", quote: "Recepção moderna e acolhedora com atendimento dedicado para você e seus visitantes.", src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=80" },
       { name: "Área de Espera", designation: "Conforto para visitantes", quote: "Espaço confortável para seus clientes e visitantes aguardarem com café e Wi-Fi disponível.", src: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&auto=format&fit=crop&q=80" },
       { name: "Hall de Entrada", designation: "Identidade profissional", quote: "Ambiente profissional que transmite credibilidade e seriedade para seus clientes.", src: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop&q=80" },
+      { name: "Corredor Principal", designation: "Circulação elegante", quote: "Corredor amplo e bem iluminado conectando todos os ambientes do escritório.", src: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&auto=format&fit=crop&q=80" },
+      { name: "Área de Credenciamento", designation: "Controle de acesso", quote: "Sistema de credenciamento digital com catracas e identificação por QR code para segurança.", src: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&auto=format&fit=crop&q=80" },
+      { name: "Fachada", designation: "Primeira impressão", quote: "Fachada moderna com identidade visual marcante e sinalização profissional.", src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=80" },
     ],
   },
   {
@@ -124,6 +139,9 @@ const structureBlocks = [
       { name: "Lounge Principal", designation: "Conforto e estilo", quote: "Sofás confortáveis em ambiente climatizado para reuniões informais, leitura e descanso.", src: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&auto=format&fit=crop&q=80" },
       { name: "Área de Descanso", designation: "Recarregue energias", quote: "Espaço reservado para momentos de descanso com iluminação suave e poltronas reclináveis.", src: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&auto=format&fit=crop&q=80" },
       { name: "Lounge de Networking", designation: "Conexões profissionais", quote: "Ambiente descontraído ideal para conversas de negócios, happy hours e eventos de networking.", src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80" },
+      { name: "Varanda Lounge", designation: "Ar livre premium", quote: "Varanda coberta com sofás e vista para a cidade, perfeita para pausas ao ar livre.", src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=80" },
+      { name: "Espaço Meditação", designation: "Bem-estar no trabalho", quote: "Sala silenciosa com almofadas e iluminação zen para meditação e momentos de mindfulness.", src: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&auto=format&fit=crop&q=80" },
+      { name: "Bar de Café", designation: "Café especial", quote: "Balcão estilo coffee shop com café especial, chás artesanais e drinks não alcoólicos.", src: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop&q=80" },
     ],
   },
 ];
