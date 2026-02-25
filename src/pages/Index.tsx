@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Wifi, Users, Coffee, MapPin, Thermometer, Building2, ArrowRight, Calendar, Code, Calculator, Megaphone, Brain, Clock, Tv, MonitorSmartphone } from "lucide-react";
+import { Wifi, Users, Coffee, MapPin, Thermometer, Building2, ArrowRight, Calendar, Code, Calculator, Megaphone, Brain } from "lucide-react";
+import { CircularTestimonials } from "@/components/ui/circular-testimonials";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { LampContainer } from "@/components/ui/lamp";
@@ -51,7 +52,38 @@ const residents = [
   { icon: Brain, title: "Inteligência Artificial", desc: "Equipe especializada em desenvolvimento de soluções de IA sob medida para empresas.", color: "text-brand-gold", bg: "bg-brand-gold/10" },
 ];
 
-
+const officeSpaces = [
+  {
+    name: "Sala de Reunião 1",
+    designation: "Aluguel por hora · Até 8 pessoas",
+    quote: "Sala equipada com TV para apresentações e videoconferências, quadro branco, ar-condicionado e café incluso. Ideal para reuniões com clientes.",
+    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=80",
+  },
+  {
+    name: "Sala de Reunião 2",
+    designation: "Aluguel por hora · Até 6 pessoas",
+    quote: "Espaço intimista com TV e conexão de alta velocidade. Perfeito para calls, entrevistas e reuniões de equipe.",
+    src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=80",
+  },
+  {
+    name: "Sala de Reunião 3",
+    designation: "Aluguel por hora · Até 12 pessoas",
+    quote: "Nossa maior sala de conferência, com layout flexível, projeção e som integrado para workshops e treinamentos.",
+    src: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&auto=format&fit=crop&q=80",
+  },
+  {
+    name: "Mesas de Coworking",
+    designation: "Planos mensais disponíveis",
+    quote: "Mesas ergonômicas com monitor, cadeira confortável e tomadas. Trabalhe ao lado de profissionais de tecnologia, contabilidade, marketing e IA.",
+    src: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=800&auto=format&fit=crop&q=80",
+  },
+  {
+    name: "Visão Geral do Escritório",
+    designation: "Ambiente moderno e climatizado",
+    quote: "Espaço completo com internet ultra rápida, cozinha compartilhada, recepção e áreas de convivência. Tudo pensado para sua produtividade.",
+    src: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&auto=format&fit=crop&q=80",
+  },
+];
 
 const Index = () => {
   return (
@@ -151,60 +183,26 @@ const Index = () => {
         </div>
       </ScrollSection>
 
-      {/* ============ SALAS DE REUNIÃO ============ */}
+      {/* ============ NOSSOS ESPAÇOS ============ */}
       <ScrollSection>
-        <div className="bg-card border border-border rounded-2xl p-8 md:p-12 brand-card max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-3">
-                <Clock className="w-5 h-5 text-brand-gold" />
-                <span className="text-xs font-semibold text-brand-gold uppercase tracking-wider">Aluguel por hora</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Salas de <span className="text-brand-gradient">Reunião</span>
-              </h2>
-              <p className="text-muted-foreground mb-6">
-                Precisa de um espaço profissional para reuniões com clientes, apresentações ou videoconferências? Alugue nossas salas por hora, sem necessidade de plano mensal.
-              </p>
-              <ul className="space-y-2 mb-6">
-                {[
-                  { icon: Tv, text: "TV para apresentações e videoconferências" },
-                  { icon: MonitorSmartphone, text: "Quadro branco e material de apoio" },
-                  { icon: Coffee, text: "Café e água inclusos" },
-                ].map((item) => (
-                  <li key={item.text} className="flex items-center gap-3 text-sm">
-                    <item.icon className="w-4 h-4 text-brand-teal shrink-0" />
-                    <span>{item.text}</span>
-                  </li>
-                ))}
-              </ul>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                <Button variant="accent" size="lg">
-                  Reservar pelo WhatsApp <ArrowRight className="w-4 h-4" />
-                </Button>
-              </a>
-            </div>
-            <div className="w-full md:w-64 h-48 md:h-64 bg-secondary rounded-xl flex items-center justify-center shrink-0">
-              <Users className="w-16 h-16 text-muted-foreground/20" />
-            </div>
-          </div>
-        </div>
-      </ScrollSection>
-
-      {/* ============ ESTRUTURA PREVIEW ============ */}
-      <ScrollSection>
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Estrutura</h2>
-        <p className="text-center text-muted-foreground mb-12">Conheça nossos espaços pensados para sua produtividade.</p>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {["Estações de Trabalho", "Sala de Reunião", "Copa & Cozinha", "Área Comum", "Recepção", "Lounge"].map((name, i) => (
-            <div key={name} className="relative bg-secondary rounded-2xl overflow-hidden aspect-[4/3] group brand-card">
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-4">
-                <span className={`text-sm font-semibold ${brandColors[i]}`}>{name}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
+          Nossos <span className="text-brand-gradient">Espaços</span>
+        </h2>
+        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          Conheça nossa estrutura pensada para sua produtividade e conforto.
+        </p>
+        <CircularTestimonials
+          testimonials={officeSpaces}
+          autoplay
+          colors={{
+            name: "hsl(0, 85%, 60%)",
+            designation: "hsl(174, 70%, 46%)",
+            testimony: "hsl(0, 0%, 80%)",
+            arrowBackground: "hsl(215, 55%, 47%)",
+            arrowHoverBackground: "hsl(0, 85%, 50%)",
+            arrowForeground: "#ffffff",
+          }}
+        />
         <div className="text-center mt-8">
           <Link to="/estrutura">
             <Button variant="outline">Ver mais detalhes <ArrowRight className="w-4 h-4" /></Button>
