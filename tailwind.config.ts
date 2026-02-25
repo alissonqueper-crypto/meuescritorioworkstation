@@ -15,6 +15,7 @@ export default {
         sans: ["Poppins", "sans-serif"],
         display: ["Orbitron", "sans-serif"],
         heading: ["Montserrat", "sans-serif"],
+        gta: ["Bungee", "Impact", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -57,6 +58,10 @@ export default {
         "neon-purple": "hsl(var(--neon-purple))",
         "neon-pink": "hsl(var(--neon-pink))",
         "neon-blue": "hsl(var(--neon-blue))",
+        "gta-green": "hsl(var(--gta-green))",
+        "gta-red": "hsl(var(--gta-red))",
+        "gta-gold": "hsl(var(--gta-gold))",
+        "gta-green-light": "hsl(var(--gta-green-light))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

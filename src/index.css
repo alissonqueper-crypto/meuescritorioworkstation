@@ -37,6 +37,13 @@
     --neon-pink: 330 85% 60%;
     --neon-blue: 215 55% 47%;
 
+    /* GTA San Andreas HUD palette */
+    --gta-green: 112 40% 29%;
+    --gta-red: 358 75% 39%;
+    --gta-gold: 37 82% 30%;
+    --gta-green-light: 112 50% 45%;
+    --gta-bg: 220 20% 6%;
+
     --sidebar-background: 220 22% 10%;
     --sidebar-foreground: 210 20% 90%;
     --sidebar-primary: 0 85% 50%;
@@ -278,4 +285,74 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* ============================================
+ * GTA SAN ANDREAS THEME
+ * ============================================ */
+
+.bg-gta-gradient {
+  background: linear-gradient(180deg, hsl(220 20% 4%), hsl(220 20% 8%) 50%, hsl(var(--gta-green) / 0.08));
+}
+
+.bg-gta-card {
+  background: hsl(220 18% 10%);
+  border: 1px solid hsl(var(--gta-green) / 0.3);
+  transition: all 0.3s ease;
+}
+
+.bg-gta-card:hover {
+  border-color: hsl(var(--gta-green-light) / 0.6);
+  box-shadow: 0 0 20px hsl(var(--gta-green) / 0.15);
+}
+
+.btn-gta {
+  background: linear-gradient(135deg, hsl(var(--gta-green)), hsl(var(--gta-green-light)));
+  color: white;
+  font-family: "Bungee", Impact, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  box-shadow: 0 0 20px hsl(var(--gta-green) / 0.4), inset 0 1px 0 hsl(var(--gta-green-light) / 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-gta:hover {
+  box-shadow: 0 0 35px hsl(var(--gta-green-light) / 0.6), inset 0 1px 0 hsl(var(--gta-green-light) / 0.5);
+  transform: translateY(-2px);
+}
+
+.text-gta-gradient {
+  background: linear-gradient(135deg, hsl(var(--gta-green-light)), hsl(var(--gta-gold)), hsl(var(--gta-green-light)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gta-hud-chip {
+  background: hsl(220 18% 10% / 0.85);
+  border: 1px solid hsl(var(--gta-green) / 0.5);
+  color: hsl(var(--gta-green-light));
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.gta-mission-card {
+  background: linear-gradient(145deg, hsl(220 18% 10%), hsl(220 20% 8%));
+  border: 1px solid hsl(var(--gta-green) / 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.gta-mission-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, hsl(var(--gta-green-light)), transparent);
 }
