@@ -1,6 +1,6 @@
 import { Monitor, Users, Coffee, Armchair, DoorOpen, Sofa } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import MediaGallery from "@/components/MediaGallery";
+import { CircularTestimonials } from "@/components/ui/circular-testimonials";
 
 const spaces = [
   { icon: Monitor, name: "Estações de Trabalho", desc: "Mesas ergonômicas com monitor, cadeira confortável e tomadas — ao lado de profissionais de tecnologia, contabilidade, marketing e IA.", color: "text-brand-red", bg: "bg-brand-red/10" },
@@ -20,8 +20,38 @@ const ScrollDiv = ({ children, className = "" }: { children: React.ReactNode; cl
   );
 };
 
-/* TODO: Adicione fotos reais aqui */
-const galleryItems: { type: "image" | "video"; src: string; alt?: string; embedUrl?: string }[] = [];
+const gallerySpaces = [
+  {
+    name: "Sala de Reunião 1",
+    designation: "Aluguel por hora · Até 8 pessoas",
+    quote: "Sala equipada com TV para apresentações e videoconferências, quadro branco, ar-condicionado e café incluso.",
+    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=80",
+  },
+  {
+    name: "Sala de Reunião 2",
+    designation: "Aluguel por hora · Até 6 pessoas",
+    quote: "Espaço intimista com TV e conexão de alta velocidade. Perfeito para calls, entrevistas e reuniões de equipe.",
+    src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=80",
+  },
+  {
+    name: "Sala de Reunião 3",
+    designation: "Aluguel por hora · Até 12 pessoas",
+    quote: "Nossa maior sala de conferência, com layout flexível, projeção e som integrado para workshops e treinamentos.",
+    src: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&auto=format&fit=crop&q=80",
+  },
+  {
+    name: "Mesas de Coworking",
+    designation: "Planos mensais disponíveis",
+    quote: "Mesas ergonômicas com monitor, cadeira confortável e tomadas. Networking multidisciplinar.",
+    src: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=800&auto=format&fit=crop&q=80",
+  },
+  {
+    name: "Visão Geral do Escritório",
+    designation: "Ambiente moderno e climatizado",
+    quote: "Espaço completo com internet ultra rápida, cozinha compartilhada, recepção e áreas de convivência.",
+    src: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&auto=format&fit=crop&q=80",
+  },
+];
 
 const Estrutura = () => (
   <div className="pt-24 pb-16 px-4">
@@ -64,10 +94,21 @@ const Estrutura = () => (
       {/* Galeria de fotos e vídeos */}
       <ScrollDiv className="mt-20">
         <h2 className="text-3xl font-bold text-center mb-4">
-          Galeria de <span className="text-brand-gradient">Fotos & Vídeos</span>
+          Galeria de <span className="text-brand-gradient">Fotos</span>
         </h2>
         <p className="text-center text-muted-foreground mb-8">Veja nosso espaço por dentro.</p>
-        <MediaGallery items={galleryItems} columns={3} />
+        <CircularTestimonials
+          testimonials={gallerySpaces}
+          autoplay
+          colors={{
+            name: "hsl(0, 85%, 60%)",
+            designation: "hsl(174, 70%, 46%)",
+            testimony: "hsl(0, 0%, 80%)",
+            arrowBackground: "hsl(215, 55%, 47%)",
+            arrowHoverBackground: "hsl(0, 85%, 50%)",
+            arrowForeground: "#ffffff",
+          }}
+        />
       </ScrollDiv>
     </div>
   </div>
