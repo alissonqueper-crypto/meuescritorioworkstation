@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
-import Planos from "./pages/Planos";
+
 import Estrutura from "./pages/Estrutura";
 import Contato from "./pages/Contato";
 import CorridaDeBarEmBar from "./pages/CorridaDeBarEmBar";
@@ -25,7 +25,7 @@ const App = () => (
         <main className="min-h-screen">
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/planos" element={<Planos />} />
+            
             <Route path="/estrutura" element={<Estrutura />} />
             <Route path="/contato" element={<Contato />} />
             <Route path="/eventos/corrida-de-bar-em-bar" element={<CorridaDeBarEmBar />} />

@@ -9,7 +9,6 @@ const WHATSAPP_URL =
 
 const navLinks = [
   { to: "/", label: "Início" },
-  { to: "/planos", label: "Planos" },
   { to: "/estrutura", label: "Estrutura" },
   { to: "/eventos/corrida-de-bar-em-bar", label: "Eventos" },
   { to: "/contato", label: "Contato" },
