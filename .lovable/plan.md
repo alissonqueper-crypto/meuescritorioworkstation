@@ -1,14 +1,17 @@
 
 
-## Plano: Substituir fotos das Salas de Reunião na página Estrutura
+## Plano: Substituir fotos da Recepção por fotos reais
 
 ### Alterações
 
-**`src/pages/Estrutura.tsx`** — No bloco "Salas de Reunião" do array `structureBlocks`:
-- As imagens `sala1`, `sala2`, `sala3` já estão importadas no arquivo
-- Reduzir o array `photos` de 6 itens para 3, usando as fotos reais já salvas em `src/assets/`
-- Atualizar nomes e descrições:
-  - Foto 1 (`sala1`): "Sala Executiva" — mesa ampla com vista para a rua
-  - Foto 2 (`sala2`): "Sala de Reunião Compacta" — poltrona e cadeira
-  - Foto 3 (`sala3`): "Escritório Privativo" — estação com estante e impressora
+1. **Copiar 2 fotos** para `src/assets/`:
+   - `user-uploads://WhatsApp_Image_2026-02-26_at_20.18.51.jpeg` → `src/assets/recepcao-1.jpg` (sofá cinza, TV de boas-vindas, logo na parede, sala ao fundo)
+   - `user-uploads://WhatsApp_Image_2026-02-26_at_20.18.38.jpeg` → `src/assets/recepcao-2.jpg` (estações de trabalho, planta, teto decorado)
+
+2. **`src/pages/Estrutura.tsx`**:
+   - Importar `recepcao1` e `recepcao2` de `@/assets/`
+   - No bloco "Recepção" do `structureBlocks`, reduzir de 6 fotos para 2:
+     - Foto 1: "Recepção & Lounge" — sofá, TV com mensagem de boas-vindas e vista para as salas
+     - Foto 2: "Área de Coworking" — estações de trabalho em ambiente amplo e moderno
+   - Atualizar descrições para refletir o que aparece nas fotos reais
 
