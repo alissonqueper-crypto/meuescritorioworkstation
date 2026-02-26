@@ -13,7 +13,7 @@ const WHATSAPP_URL =
 const ScrollSection = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
   return (
-    <section id={id} ref={ref} className={`py-16 md:py-24 px-4 transition-all duration-700 ${isVisible ? "scroll-visible" : "scroll-hidden"} ${className}`}>
+    <section id={id} ref={ref} className={`py-10 md:py-24 px-4 transition-all duration-700 ${isVisible ? "scroll-visible" : "scroll-hidden"} ${className}`}>
       <div className="container mx-auto max-w-6xl">{children}</div>
     </section>
   );
@@ -101,27 +101,27 @@ const Index = () => {
             }}
             className="flex flex-col items-center text-center"
           >
-            <img src={logoImg} alt="Meu Escritório Workstation" className="w-72 md:w-96 mb-6" />
+            <img src={logoImg} alt="Meu Escritório Workstation" className="w-56 md:w-96 mb-6" />
 
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              <Button variant="accent" size="lg">Conhecer planos no WhatsApp</Button>
+              <Button variant="accent" size="lg" className="w-full sm:w-auto">Conhecer planos no WhatsApp</Button>
             </a>
           </motion.div>
         </LampContainer>
 
         {/* Badges nos cantos inferiores */}
-        <div className="absolute bottom-8 left-6 md:left-12 z-50">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-xs font-semibold">
+        <div className="absolute bottom-4 md:bottom-8 left-6 md:left-12 z-50">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-[10px] md:text-xs font-semibold">
             Coworking Premium
           </span>
         </div>
-        <div className="absolute bottom-8 right-6 md:right-12 z-50">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-teal/30 bg-brand-teal/10 text-brand-teal text-xs font-semibold">
+        <div className="absolute bottom-4 md:bottom-8 right-6 md:right-12 z-50">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-teal/30 bg-brand-teal/10 text-brand-teal text-[10px] md:text-xs font-semibold">
             Caçador – SC
           </span>
         </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50">
-          <p className="text-xs md:text-sm text-muted-foreground text-center whitespace-nowrap">
+        <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2 z-50">
+          <p className="text-[10px] md:text-sm text-muted-foreground text-center whitespace-nowrap">
             Tecnologia · Contabilidade · Marketing · IA
           </p>
         </div>
@@ -134,21 +134,21 @@ const Index = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Por que escolher nosso <span className="text-brand-gradient">Workstation</span>?
         </h2>
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-muted-foreground mb-8 md:mb-12 max-w-2xl mx-auto">
           Tudo que você precisa para trabalhar com conforto, foco e conexão.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {benefits.map((b, i) => (
             <div
               key={b.title}
-              className={`bg-card border border-border rounded-2xl p-6 brand-card group stagger-${i + 1}`}
+              className={`bg-card border border-border rounded-2xl p-4 md:p-6 brand-card group stagger-${i + 1}`}
               style={{ animationFillMode: "both" }}
             >
-              <div className={`w-12 h-12 rounded-xl ${brandBgs[i]} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
-                <b.icon className={`w-6 h-6 ${brandColors[i]}`} />
+              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl ${brandBgs[i]} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
+                <b.icon className={`w-5 h-5 md:w-6 md:h-6 ${brandColors[i]}`} />
               </div>
-              <h3 className="font-semibold text-lg mb-2">{b.title}</h3>
-              <p className="text-sm text-muted-foreground">{b.desc}</p>
+              <h3 className="font-semibold text-sm md:text-lg mb-2">{b.title}</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">{b.desc}</p>
             </div>
           ))}
         </div>
@@ -159,19 +159,19 @@ const Index = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Quem <span className="text-brand-gradient">Trabalha Aqui</span>
         </h2>
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-muted-foreground mb-8 md:mb-12 max-w-2xl mx-auto">
           Profissionais de diversas áreas reunidos em um só lugar, prontos para atender sua empresa.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
           {residents.map((r, i) => (
             <div
               key={r.title}
-              className={`bg-card border border-border rounded-2xl p-6 brand-card group stagger-${i + 1}`}
+              className={`bg-card border border-border rounded-2xl p-4 md:p-6 brand-card group stagger-${i + 1}`}
               style={{ animationFillMode: "both" }}
             >
               <div className="flex items-start gap-4">
-                <div className={`w-14 h-14 rounded-xl ${r.bg} flex items-center justify-center shrink-0 transition-transform group-hover:scale-110`}>
-                  <r.icon className={`w-7 h-7 ${r.color}`} />
+                <div className={`w-10 h-10 md:w-14 md:h-14 rounded-xl ${r.bg} flex items-center justify-center shrink-0 transition-transform group-hover:scale-110`}>
+                  <r.icon className={`w-5 h-5 md:w-7 md:h-7 ${r.color}`} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-1">{r.title}</h3>
@@ -188,7 +188,7 @@ const Index = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Nossos <span className="text-brand-gradient">Espaços</span>
         </h2>
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-muted-foreground mb-8 md:mb-12 max-w-2xl mx-auto">
           Conheça nossa estrutura pensada para sua produtividade e conforto.
         </p>
         <CircularTestimonials
@@ -214,7 +214,7 @@ const Index = () => {
       <ScrollSection className="bg-card/50">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Localização</h2>
         <p className="text-center text-muted-foreground mb-8">Rua Exemplo, 123 – Centro, Caçador – SC</p>
-        <div className="rounded-2xl overflow-hidden border border-border aspect-video max-w-4xl mx-auto">
+        <div className="rounded-2xl overflow-hidden border border-border aspect-video min-h-[250px] max-w-4xl mx-auto">
           <iframe
             src="https://maps.google.com/maps?q=Caçador,SC,Brazil&output=embed"
             width="100%"
@@ -232,7 +232,7 @@ const Index = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Eventos & <span className="text-brand-gradient">Comunidade</span>
         </h2>
-        <p className="text-center text-muted-foreground mb-12">Nosso coworking é palco de eventos incríveis.</p>
+        <p className="text-center text-muted-foreground mb-8 md:mb-12">Nosso coworking é palco de eventos incríveis.</p>
         <div className="max-w-2xl mx-auto">
           <div className="bg-neon-card rounded-2xl p-6 md:p-8 transition-all duration-300">
             <div className="flex items-center gap-2 mb-3">
@@ -246,7 +246,7 @@ const Index = () => {
               A corrida mais insana de Caçador! Percorra os melhores bares da cidade em uma noite épica de diversão, drinks e prêmios.
             </p>
             <Link to="/eventos/corrida-de-bar-em-bar">
-              <Button variant="neon" size="lg">
+              <Button variant="neon" size="lg" className="w-full sm:w-auto">
                 Ver página do evento <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
