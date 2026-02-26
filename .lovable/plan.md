@@ -1,34 +1,39 @@
 
 
-## Plano: Hero full-screen no mobile com elementos bem distribuídos
+## Plano: Corrigir hero fullscreen mobile — elementos bem posicionados
 
 ### Problema
 
-Na screenshot, o hero ocupa ~60vh no mobile, deixando espaço desperdiçado. O usuário quer que o hero ocupe **100% da tela** (100dvh) no mobile, com logo, botão CTA e badges bem distribuídos verticalmente, criando uma experiência imersiva de "tela cheia". Ao rolar, aparecem as demais seções.
+Na screenshot, o efeito lamp (gradientes cônicos vermelho/azul) está dominando toda a metade superior da tela com cores sólidas. Isso acontece porque:
+1. O container do efeito lamp usa `flex-1` que expande para preencher 100dvh inteiro
+2. O `scale-y-125` amplifica os gradientes além do necessário no mobile
+3. O conteúdo (logo + botão) fica empurrado para baixo, quase colidindo com os badges
+4. Os badges e o botão CTA se sobrepõem no rodapé
 
 ### Alterações
 
-#### 1. `src/components/ui/lamp.tsx`
+#### 1. `src/components/ui/lamp.tsx` — Reestruturar para mobile
 
-- Mudar altura mobile de `min-h-[60vh]` para `min-h-[100dvh]` (dynamic viewport height para lidar com barra de navegação do browser): `min-h-[100dvh] md:min-h-[85vh]`
-- Usar `justify-between` em vez de `justify-center` no container principal para distribuir o efeito lamp e o conteúdo verticalmente
-- Ajustar translate do conteúdo: de `-translate-y-8 md:-translate-y-20` para `-translate-y-4 md:-translate-y-20` para o conteúdo ficar mais centralizado na tela cheia
+- Reduzir o `scale-y-125` para `scale-y-100 md:scale-y-125` no container do efeito lamp, evitando que os gradientes ocupem área excessiva no mobile
+- Limitar a altura do container do efeito: adicionar `max-h-[40vh] md:max-h-none` para que o efeito lamp ocupe no máximo 40% da tela no mobile
+- Remover `flex-1` e usar altura fixa no container do efeito: `h-[35vh] md:flex-1` para controlar melhor a distribuição
+- Ajustar o container do conteúdo: trocar `-translate-y-4` por `translate-y-0` e usar `pb-24 md:pb-0` para dar espaço aos badges no bottom
+- Mudar o layout geral para `justify-end md:justify-center` no mobile, posicionando o conteúdo na metade inferior da tela com o efeito lamp acima
 
-#### 2. `src/pages/Index.tsx` — Hero
+#### 2. `src/pages/Index.tsx` — Ajustar posicionamento
 
-- Logo: aumentar de `w-64` para `w-72 md:w-96` para maior impacto em tela cheia
-- Botão CTA: manter `w-full sm:w-auto` com padding lateral `px-6`
-- Badges: mover de `bottom-3` para `bottom-6 md:bottom-8` para ficarem com mais respiro do fundo da tela
-- Adicionar `mb-4` ao botão CTA para separar mais da logo
+- Logo: manter `w-72 md:w-96` (tamanho bom)
+- Botão CTA: adicionar `mb-16 md:mb-0` para criar espaço entre o botão e os badges no mobile
+- Badges container: manter `bottom-6` mas garantir que não colide com o botão adicionando espaço via margin no conteúdo acima
 
 ### Detalhes técnicos
 
-- `100dvh` (dynamic viewport height) é preferível a `100vh` no mobile pois desconta a barra de endereço do navegador, evitando scroll indesejado
-- O efeito lamp (conic gradients) continua ocupando a parte superior, com o conteúdo (logo + botão) centralizado abaixo
-- Os badges ficam ancorados no bottom do container fullscreen
-- Desktop permanece inalterado com `md:min-h-[85vh]`
+- O problema principal é o `scale-y-125` no div do efeito lamp — ele escala os gradientes cônicos de 224px (h-56) para quase 280px, e como o container é `flex-1` dentro de 100dvh, os gradientes preenchem a tela toda com vermelho/azul sólido
+- A solução limita a altura do efeito lamp no mobile e remove a escala vertical, mantendo o efeito visual mas sem dominar a tela
+- Desktop continua com `md:scale-y-125` e `md:flex-1` preservando o layout original
+- O conteúdo (logo + CTA) fica centralizado verticalmente abaixo do efeito lamp, com badges ancorados no bottom
 
 ### Resultado esperado
 
-Hero ocupando 100% da tela no mobile, com logo grande e centralizada, botão CTA abaixo, e badges no rodapé da seção. Ao rolar, o usuário vê a seção de benefícios e demais conteúdo.
+Hero fullscreen no mobile com: efeito lamp contido na parte superior (~35% da tela), logo grande e centralizada no meio, botão CTA abaixo da logo, e badges no rodapé — tudo sem sobreposição e com boa distribuição visual.
 
