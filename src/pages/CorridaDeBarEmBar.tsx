@@ -18,7 +18,7 @@ import eventHeroImg from "@/assets/corrida-hero-gta.png";
 const ScrollSection = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
   return (
-    <section id={id} ref={ref} className={`py-16 md:py-24 px-4 transition-all duration-700 ${isVisible ? "scroll-visible" : "scroll-hidden"} ${className}`}>
+    <section id={id} ref={ref} className={`py-10 md:py-24 px-4 transition-all duration-700 ${isVisible ? "scroll-visible" : "scroll-hidden"} ${className}`}>
       <div className="container mx-auto max-w-6xl">{children}</div>
     </section>
   );
@@ -141,7 +141,7 @@ const CorridaDeBarEmBar = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220_20%_4%)] via-[hsl(220_20%_4%/0.5)] to-[hsl(220_20%_4%/0.2)]" />
           <div className="absolute inset-0 bg-gradient-to-r from-[hsl(112_40%_29%/0.08)] to-[hsl(37_82%_30%/0.05)]" />
         </div>
-        <div className="relative z-10 container mx-auto max-w-5xl px-4 pt-40 pb-20 text-center">
+        <div className="relative z-10 container mx-auto max-w-5xl px-4 pt-24 md:pt-40 pb-12 md:pb-20 text-center">
           <div className="animate-reveal-up">
             {/* HUD chip top */}
             <span className="inline-block gta-hud-chip rounded px-4 py-1.5 text-xs tracking-widest mb-6 uppercase font-gta-hud font-bold italic">
@@ -162,7 +162,7 @@ const CorridaDeBarEmBar = () => {
             </p>
 
             {/* HUD info chips */}
-            <div className="flex flex-wrap gap-3 justify-center mb-10">
+            <div className="flex flex-wrap gap-2 justify-center mb-10">
               {[
                 { icon: Calendar, label: "14/03 · 17h" },
                 { icon: MapPin, label: "Caçador/SC" },
@@ -170,16 +170,16 @@ const CorridaDeBarEmBar = () => {
                 { icon: Beer, label: "11 bares" },
                 { icon: Timer, label: "Máx. 2h" },
               ].map((b) => (
-                <span key={b.label} className="inline-flex items-center gap-1.5 gta-hud-chip rounded px-3 py-1.5">
-                  <b.icon className="w-3.5 h-3.5" /> {b.label}
+                <span key={b.label} className="inline-flex items-center gap-1.5 gta-hud-chip rounded px-2.5 py-1 text-[10px] sm:text-xs sm:px-3 sm:py-1.5">
+                  <b.icon className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {b.label}
                 </span>
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="xl"
-                className="btn-gta rounded-lg px-8 py-4 text-base"
+                className="btn-gta rounded-lg px-8 py-4 text-base w-full sm:w-auto"
                 onClick={() => document.getElementById("ingressos")?.scrollIntoView({ behavior: "smooth" })}
               >
                 <Crosshair className="w-5 h-5" /> Iniciar missão
@@ -187,7 +187,7 @@ const CorridaDeBarEmBar = () => {
               <Button
                 variant="outline"
                 size="xl"
-                className="border-gta-green/50 text-gta-green-light hover:bg-gta-green/10 rounded-lg"
+                className="border-gta-green/50 text-gta-green-light hover:bg-gta-green/10 rounded-lg w-full sm:w-auto"
                 onClick={() => document.getElementById("como-funciona")?.scrollIntoView({ behavior: "smooth" })}
               >
                 Ver briefing <ArrowRight className="w-5 h-5" />
@@ -202,20 +202,20 @@ const CorridaDeBarEmBar = () => {
 
       {/* SUA MISSÃO */}
       <ScrollSection id="como-funciona">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">BRIEFING</span>
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Sua Missão</h2>
           <p className="text-muted-foreground max-w-lg mx-auto">em Los Santos (Caçador Edition)</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {[
             { n: "01", icon: User, title: "Check-in do personagem", desc: "No dia do evento, pegue sua placa e mapa no ponto de partida a partir das 17h." },
             { n: "02", icon: Map, title: "Mapa liberado", desc: "Siga o circuito passando pelos 11 bares. Em cada bar, cumpra o objetivo e ganhe um adesivo na placa." },
             { n: "03", icon: Beer, title: "Complete o circuito", desc: "Passe por todos os bares dentro do tempo limite, respeitando o volume do seu tipo de ingresso." },
             { n: "04", icon: Trophy, title: "Missão concluída", desc: "Quem completar o circuito entra na disputa do pódio e curte o after com DJ." },
           ].map((step) => (
-            <div key={step.n} className="gta-mission-card rounded-xl p-6 text-center">
-              <span className="font-gta-hud text-4xl font-black text-gta-green/30">{step.n}</span>
+            <div key={step.n} className="gta-mission-card rounded-xl p-4 md:p-6 text-center">
+              <span className="font-gta-hud text-2xl md:text-4xl font-black text-gta-green/30">{step.n}</span>
               <div className="w-12 h-12 mx-auto rounded-full bg-gta-green/20 flex items-center justify-center my-4 border border-gta-green/30">
                 <step.icon className="w-6 h-6 text-gta-green-light" />
               </div>
@@ -228,23 +228,23 @@ const CorridaDeBarEmBar = () => {
 
       {/* DINÂMICA DO CIRCUITO */}
       <ScrollSection className="bg-[hsl(220_18%_6%)]">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">MECÂNICAS</span>
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-4" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Dinâmica do Circuito</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Em cada bar existem <strong className="text-foreground">4 mesas</strong>. Você escolhe em quais consumir e em qual apenas registrar passagem. O adesivo só é entregue após devolver o copo ao garçom.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
           {mesasDinamica.map((m) => (
-            <div key={m.mesa} className="bg-gta-card rounded-xl p-6 text-center">
-              <span className={`text-3xl font-bold ${m.color}`}>{m.adesivo}</span>
-              <h3 className="font-semibold text-lg mt-3 mb-1">{m.mesa}</h3>
-              <p className="text-sm text-muted-foreground">{m.copo}</p>
+            <div key={m.mesa} className="bg-gta-card rounded-xl p-4 md:p-6 text-center">
+              <span className={`text-2xl md:text-3xl font-bold ${m.color}`}>{m.adesivo}</span>
+              <h3 className="font-semibold text-base md:text-lg mt-3 mb-1">{m.mesa}</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">{m.copo}</p>
             </div>
           ))}
         </div>
-        <div className="mt-8 max-w-2xl mx-auto bg-gta-card rounded-xl p-6 text-sm text-muted-foreground space-y-2">
+        <div className="mt-8 max-w-2xl mx-auto bg-gta-card rounded-xl p-4 md:p-6 text-sm text-muted-foreground space-y-2">
           <p><strong className="text-foreground">Volume total Masculino (CJ):</strong> 2,2 litros no circuito</p>
           <p><strong className="text-foreground">Volume total Feminino (Sweet):</strong> 1,1 litro no circuito</p>
           <p className="text-[#ef4444] font-medium pt-2">⚠ Sem devolver o copo, você não recebe o adesivo!</p>
@@ -253,12 +253,12 @@ const CorridaDeBarEmBar = () => {
 
       {/* BARES – PONTOS DO MAPA */}
       <ScrollSection>
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">MAPA</span>
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>11 Pontos no Mapa</h2>
           <p className="text-muted-foreground">Na ordem oficial do percurso</p>
         </div>
-        <img src={mapaCircuito} alt="Mapa do circuito - 11 bares" className="w-full max-w-3xl mx-auto rounded-sm border border-gta-green/30 mb-8" />
+        <img src={mapaCircuito} alt="Mapa do circuito - 11 bares" className="w-full max-w-full md:max-w-3xl mx-auto rounded-sm border border-gta-green/30 mb-8" />
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
           {bars.map((bar) => (
             <div key={bar.num} className="bg-gta-card rounded-xl p-2 flex items-center gap-2">
@@ -276,11 +276,11 @@ const CorridaDeBarEmBar = () => {
 
       {/* O QUE ESTÁ INCLUSO */}
       <ScrollSection className="bg-[hsl(220_18%_6%)]">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">INVENTÁRIO</span>
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>O Que Está Incluso</h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
           {[
             { icon: Award, label: "Placa de identificação" },
             { icon: Map, label: "Mapa do circuito" },
@@ -291,7 +291,7 @@ const CorridaDeBarEmBar = () => {
             { icon: Shield, label: "Segurança no percurso" },
             { icon: Users, label: "Networking épico" },
           ].map((item) => (
-            <div key={item.label} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gta-card text-center">
+            <div key={item.label} className="flex flex-col items-center gap-2 p-3 md:p-4 rounded-xl bg-gta-card text-center">
               <item.icon className="w-7 h-7 text-gta-green-light" />
               <span className="text-sm font-medium">{item.label}</span>
             </div>
@@ -301,7 +301,7 @@ const CorridaDeBarEmBar = () => {
 
       {/* CRITÉRIOS DE CLASSIFICAÇÃO */}
       <ScrollSection>
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">RANKING</span>
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Critérios de Classificação</h2>
           <p className="text-muted-foreground max-w-xl mx-auto">Para subir no pódio, complete todos os objetivos:</p>
@@ -328,14 +328,14 @@ const CorridaDeBarEmBar = () => {
 
       {/* ESCOLHA SEU PERSONAGEM (INGRESSOS) */}
       <ScrollSection id="ingressos" className="bg-[hsl(220_18%_6%)]">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">SELEÇÃO DE PERSONAGEM</span>
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Escolha seu Personagem</h2>
           <p className="text-muted-foreground">Garanta sua vaga antes que o lobby feche!</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
           {tickets.map((t) => (
-            <div key={t.id} className={`relative gta-mission-card rounded-2xl p-8 flex flex-col ${t.highlight ? "ring-2 ring-gta-green-light shadow-[0_0_40px_hsl(var(--gta-green)/0.2)]" : ""}`}>
+            <div key={t.id} className={`relative gta-mission-card rounded-2xl p-5 md:p-8 flex flex-col ${t.highlight ? "ring-2 ring-gta-green-light shadow-[0_0_40px_hsl(var(--gta-green)/0.2)]" : ""}`}>
               {t.highlight && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 btn-gta text-xs font-bold px-4 py-1 rounded-full">
                   Melhor Preço
@@ -345,7 +345,7 @@ const CorridaDeBarEmBar = () => {
               <h3 className="font-gta-title text-xl mb-2 text-foreground">{t.name}</h3>
               <p className="text-sm text-muted-foreground mb-4 leading-snug">{t.desc}</p>
               <div className="mb-6">
-                <span className="text-4xl font-bold text-[#22c55e]">{t.price}</span>
+                <span className="text-3xl md:text-4xl font-bold text-[#22c55e]">{t.price}</span>
               </div>
               <ul className="space-y-2 mb-8 flex-1">
                 {t.features.map((f) => (
@@ -433,14 +433,14 @@ const CorridaDeBarEmBar = () => {
 
       {/* FAQ */}
       <ScrollSection className="bg-[hsl(220_18%_6%)]">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 md:mb-12">
           <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">AJUDA</span>
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Perguntas Frequentes</h2>
         </div>
         <div className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="space-y-3">
             {faq.map((item, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="bg-gta-card rounded-xl border-none px-6">
+              <AccordionItem key={i} value={`faq-${i}`} className="bg-gta-card rounded-xl border-none px-4 md:px-6">
                 <AccordionTrigger className="text-left font-medium text-sm hover:no-underline py-4">{item.q}</AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground pb-4">{item.a}</AccordionContent>
               </AccordionItem>
@@ -456,7 +456,7 @@ const CorridaDeBarEmBar = () => {
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Ponto de Largada</h2>
           <p className="text-muted-foreground">Caçador, SC – Concentração às 17h</p>
         </div>
-        <div className="rounded-xl overflow-hidden border border-gta-green/20 aspect-video max-w-4xl mx-auto">
+        <div className="rounded-xl overflow-hidden border border-gta-green/20 aspect-video min-h-[250px] max-w-4xl mx-auto">
           <iframe
             src="https://maps.google.com/maps?q=Caçador,SC,Brazil&output=embed"
             width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title="Local do evento"
