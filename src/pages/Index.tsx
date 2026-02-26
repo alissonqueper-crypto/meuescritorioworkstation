@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { LampContainer } from "@/components/ui/lamp";
 import logoImg from "@/assets/logo.png";
+import sala1 from "@/assets/sala-1.jpg";
+import sala2 from "@/assets/sala-2.jpg";
+import sala3 from "@/assets/sala-3.jpg";
 
 const WHATSAPP_URL =
   "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
@@ -54,22 +57,22 @@ const residents = [
 
 const officeSpaces = [
   {
-    name: "Sala de Reunião 1",
-    designation: "Aluguel por hora · Até 8 pessoas",
-    quote: "Sala equipada com TV para apresentações e videoconferências, quadro branco, ar-condicionado e café incluso. Ideal para reuniões com clientes.",
-    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=80",
+    name: "Sala Executiva",
+    designation: "Aluguel por hora · Mesa ampla com vista",
+    quote: "Sala com mesa ampla, cadeira executiva e vista para a rua. Ideal para reuniões com clientes e videoconferências.",
+    src: sala1,
   },
   {
-    name: "Sala de Reunião 2",
-    designation: "Aluguel por hora · Até 6 pessoas",
-    quote: "Espaço intimista com TV e conexão de alta velocidade. Perfeito para calls, entrevistas e reuniões de equipe.",
-    src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=80",
+    name: "Sala de Reunião Compacta",
+    designation: "Aluguel por hora · Reuniões intimistas",
+    quote: "Espaço aconchegante com poltrona e cadeira, perfeito para calls, entrevistas e reuniões de equipe.",
+    src: sala2,
   },
   {
-    name: "Sala de Reunião 3",
-    designation: "Aluguel por hora · Até 12 pessoas",
-    quote: "Nossa maior sala de conferência, com layout flexível, projeção e som integrado para workshops e treinamentos.",
-    src: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&auto=format&fit=crop&q=80",
+    name: "Escritório Privativo",
+    designation: "Aluguel por hora · Estação completa",
+    quote: "Escritório equipado com estante, mesa de trabalho e impressora. Ideal para quem precisa de privacidade e foco.",
+    src: sala3,
   },
   {
     name: "Mesas de Coworking",
