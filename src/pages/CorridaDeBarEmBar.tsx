@@ -143,20 +143,20 @@ const CorridaDeBarEmBar = () => {
         <div className="relative z-10 container mx-auto max-w-5xl px-4 pt-40 pb-20 text-center">
           <div className="animate-reveal-up">
             {/* HUD chip top */}
-            <span className="inline-block gta-hud-chip rounded px-4 py-1.5 text-xs tracking-widest mb-6 uppercase">
+            <span className="inline-block gta-hud-chip rounded px-4 py-1.5 text-xs tracking-widest mb-6 uppercase font-gta-hud font-bold italic">
               ★ NOVA MISSÃO DISPONÍVEL ★
             </span>
 
-            <h1 className="font-gta text-3xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 leading-tight text-gta-gradient tracking-wide">
+            <h1 className="font-gta-title text-3xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 leading-tight text-gta-gradient tracking-wide" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>
               CORRIDA DE BAR<br />EM BAR
             </h1>
-            <p className="font-gta text-sm md:text-base text-gta-gold uppercase tracking-widest mb-3">
+            <p className="font-gta-script text-sm md:text-base text-gta-gold uppercase tracking-widest mb-3">
               GTA San Andreas Edition
             </p>
-            <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto mb-3 leading-relaxed">
+            <p className="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto mb-3 leading-snug">
               A primeira corrida temática de Caçador inspirada em Los Santos: 11 bares, 2,5 km e uma missão inteira pra cumprir com a sua gangue.
             </p>
-            <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-8">
+            <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-8 leading-snug">
               Escolha seu personagem, pegue sua placa, siga o mapa e complete o circuito antes que o relógio zere. Vagas limitadas.
             </p>
 
@@ -202,8 +202,8 @@ const CorridaDeBarEmBar = () => {
       {/* SUA MISSÃO */}
       <ScrollSection id="como-funciona">
         <div className="text-center mb-12">
-          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block">BRIEFING</span>
-          <h2 className="font-gta text-2xl md:text-4xl text-gta-gradient mb-3">Sua Missão</h2>
+          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">BRIEFING</span>
+          <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Sua Missão</h2>
           <p className="text-muted-foreground max-w-lg mx-auto">em Los Santos (Caçador Edition)</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -214,12 +214,12 @@ const CorridaDeBarEmBar = () => {
             { n: "04", icon: Trophy, title: "Missão concluída", desc: "Quem completar o circuito entra na disputa do pódio e curte o after com DJ." },
           ].map((step) => (
             <div key={step.n} className="gta-mission-card rounded-xl p-6 text-center">
-              <span className="font-gta text-4xl font-black text-gta-green/30">{step.n}</span>
+              <span className="font-gta-hud text-4xl font-black text-gta-green/30">{step.n}</span>
               <div className="w-12 h-12 mx-auto rounded-full bg-gta-green/20 flex items-center justify-center my-4 border border-gta-green/30">
                 <step.icon className="w-6 h-6 text-gta-green-light" />
               </div>
               <h3 className="font-semibold text-lg mb-2 text-foreground">{step.title}</h3>
-              <p className="text-sm text-muted-foreground">{step.desc}</p>
+              <p className="text-sm text-muted-foreground leading-snug">{step.desc}</p>
             </div>
           ))}
         </div>
@@ -228,8 +228,8 @@ const CorridaDeBarEmBar = () => {
       {/* DINÂMICA DO CIRCUITO */}
       <ScrollSection className="bg-[hsl(220_18%_6%)]">
         <div className="text-center mb-12">
-          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block">MECÂNICAS</span>
-          <h2 className="font-gta text-2xl md:text-4xl text-gta-gradient mb-4">Dinâmica do Circuito</h2>
+          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">MECÂNICAS</span>
+          <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-4" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Dinâmica do Circuito</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Em cada bar existem <strong className="text-foreground">4 mesas</strong>. Você escolhe em quais consumir e em qual apenas registrar passagem. O adesivo só é entregue após devolver o copo ao garçom.
           </p>
@@ -246,21 +246,21 @@ const CorridaDeBarEmBar = () => {
         <div className="mt-8 max-w-2xl mx-auto bg-gta-card rounded-xl p-6 text-sm text-muted-foreground space-y-2">
           <p><strong className="text-foreground">Volume total Masculino (CJ):</strong> 2,2 litros no circuito</p>
           <p><strong className="text-foreground">Volume total Feminino (Sweet):</strong> 1,1 litro no circuito</p>
-          <p className="text-gta-red font-medium pt-2">⚠ Sem devolver o copo, você não recebe o adesivo!</p>
+          <p className="text-[#ef4444] font-medium pt-2">⚠ Sem devolver o copo, você não recebe o adesivo!</p>
         </div>
       </ScrollSection>
 
       {/* BARES – PONTOS DO MAPA */}
       <ScrollSection>
         <div className="text-center mb-12">
-          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block">MAPA</span>
-          <h2 className="font-gta text-2xl md:text-4xl text-gta-gradient mb-3">11 Pontos no Mapa</h2>
+          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">MAPA</span>
+          <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>11 Pontos no Mapa</h2>
           <p className="text-muted-foreground">Na ordem oficial do percurso</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {bars.map((bar) => (
             <div key={bar.num} className="bg-gta-card rounded-xl p-5 flex items-center gap-4">
-              <span className="font-gta text-xl text-gta-green/60 w-8 text-center shrink-0">
+              <span className="font-gta-hud text-xl text-gta-green/60 w-8 text-center shrink-0 font-bold">
                 {String(bar.num).padStart(2, "0")}
               </span>
               <div className="flex items-center gap-2">
@@ -275,8 +275,8 @@ const CorridaDeBarEmBar = () => {
       {/* O QUE ESTÁ INCLUSO */}
       <ScrollSection className="bg-[hsl(220_18%_6%)]">
         <div className="text-center mb-12">
-          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block">INVENTÁRIO</span>
-          <h2 className="font-gta text-2xl md:text-4xl text-gta-gradient">O Que Está Incluso</h2>
+          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">INVENTÁRIO</span>
+          <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>O Que Está Incluso</h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
           {[
@@ -300,8 +300,8 @@ const CorridaDeBarEmBar = () => {
       {/* CRITÉRIOS DE CLASSIFICAÇÃO */}
       <ScrollSection>
         <div className="text-center mb-12">
-          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block">RANKING</span>
-          <h2 className="font-gta text-2xl md:text-4xl text-gta-gradient mb-3">Critérios de Classificação</h2>
+          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">RANKING</span>
+          <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Critérios de Classificação</h2>
           <p className="text-muted-foreground max-w-xl mx-auto">Para subir no pódio, complete todos os objetivos:</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
@@ -317,7 +317,7 @@ const CorridaDeBarEmBar = () => {
               </div>
               <div>
                 <h3 className="font-semibold mb-1">{c.title}</h3>
-                <p className="text-sm text-muted-foreground">{c.desc}</p>
+                <p className="text-sm text-muted-foreground leading-snug">{c.desc}</p>
               </div>
             </div>
           ))}
@@ -327,8 +327,8 @@ const CorridaDeBarEmBar = () => {
       {/* ESCOLHA SEU PERSONAGEM (INGRESSOS) */}
       <ScrollSection id="ingressos" className="bg-[hsl(220_18%_6%)]">
         <div className="text-center mb-12">
-          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block">SELEÇÃO DE PERSONAGEM</span>
-          <h2 className="font-gta text-2xl md:text-4xl text-gta-gradient mb-3">Escolha seu Personagem</h2>
+          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">SELEÇÃO DE PERSONAGEM</span>
+          <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Escolha seu Personagem</h2>
           <p className="text-muted-foreground">Garanta sua vaga antes que o lobby feche!</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
@@ -339,11 +339,11 @@ const CorridaDeBarEmBar = () => {
                   Melhor Preço
                 </span>
               )}
-              <span className="text-xs uppercase tracking-widest text-gta-gold mb-1 font-semibold">{t.subtitle}</span>
-              <h3 className="font-gta text-xl mb-2 text-foreground">{t.name}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{t.desc}</p>
+              <span className="text-xs uppercase tracking-widest text-gta-gold mb-1 font-gta-hud font-bold italic">{t.subtitle}</span>
+              <h3 className="font-gta-title text-xl mb-2 text-foreground">{t.name}</h3>
+              <p className="text-sm text-muted-foreground mb-4 leading-snug">{t.desc}</p>
               <div className="mb-6">
-                <span className="text-4xl font-bold text-gta-green-light">{t.price}</span>
+                <span className="text-4xl font-bold text-[#22c55e]">{t.price}</span>
               </div>
               <ul className="space-y-2 mb-8 flex-1">
                 {t.features.map((f) => (
@@ -371,7 +371,7 @@ const CorridaDeBarEmBar = () => {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="gta-mission-card border-gta-green/30 sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="font-gta text-xl text-gta-gradient">
+            <DialogTitle className="font-gta-title text-xl text-gta-gradient">
               {selectedTicket === "masculino" ? "CJ Hardcore (R$ 110,00)" : "Sweet Light (R$ 55,00)"}
             </DialogTitle>
             <DialogDescription>Preencha seus dados para prosseguir ao pagamento.</DialogDescription>
@@ -399,23 +399,23 @@ const CorridaDeBarEmBar = () => {
       {/* CÓDIGO DE RUA (REGRAS & SEGURANÇA) */}
       <ScrollSection>
         <div className="text-center mb-8">
-          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block">RESPEITE O CÓDIGO</span>
-          <h2 className="font-gta text-2xl md:text-4xl text-gta-gradient">Código de Rua</h2>
+          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">RESPEITE O CÓDIGO</span>
+          <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Código de Rua</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <div className="gta-mission-card rounded-xl p-6 md:p-8 text-sm text-muted-foreground space-y-3">
-            <h3 className="text-foreground font-gta text-base mb-3 text-gta-gold">Idade mínima e documentos</h3>
-            <p><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Idade mínima:</strong> 18 anos com documento com foto.</p>
-            <h3 className="text-foreground font-gta text-base mb-1 mt-4 text-gta-gold">Consumo responsável</h3>
-            <p><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Copos:</strong> Plásticos e não reutilizáveis. Devolução obrigatória ao garçom.</p>
-            <p><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Proibido:</strong> Portar copos fora do ponto de consumo.</p>
-            <p><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Bares:</strong> Participantes só entram nos bares para uso do sanitário.</p>
-            <h3 className="text-foreground font-gta text-base mb-1 mt-4 text-gta-gold">Responsabilidades</h3>
+            <h3 className="text-foreground font-gta-title text-base mb-3 text-gta-gold">Idade mínima e documentos</h3>
+            <p className="leading-snug"><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Idade mínima:</strong> 18 anos com documento com foto.</p>
+            <h3 className="text-foreground font-gta-title text-base mb-1 mt-4 text-gta-gold">Consumo responsável</h3>
+            <p className="leading-snug"><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Copos:</strong> Plásticos e não reutilizáveis. Devolução obrigatória ao garçom.</p>
+            <p className="leading-snug"><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Proibido:</strong> Portar copos fora do ponto de consumo.</p>
+            <p className="leading-snug"><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Bares:</strong> Participantes só entram nos bares para uso do sanitário.</p>
+            <h3 className="text-foreground font-gta-title text-base mb-1 mt-4 text-gta-gold">Responsabilidades</h3>
             <p><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Responsabilidade:</strong> Cada participante é responsável por sua condição física.</p>
             <p><Shield className="w-4 h-4 inline text-gta-green-light mr-1" /> <strong className="text-foreground">Reembolso:</strong> Integral até 7 dias antes. Após, sem devolução.</p>
           </div>
           <div className="gta-mission-card rounded-xl p-6 md:p-8 text-sm text-muted-foreground space-y-3">
-            <h3 className="text-foreground font-gta text-base mb-3 text-gta-gold">Cuidados com saúde e segurança</h3>
+            <h3 className="text-foreground font-gta-title text-base mb-3 text-gta-gold">Cuidados com saúde e segurança</h3>
             <p><Check className="w-4 h-4 inline text-gta-green-light mr-1" /> Equipe de organização em todas as esquinas do percurso.</p>
             <p><Check className="w-4 h-4 inline text-gta-green-light mr-1" /> Ambulância e profissional de enfermagem no local.</p>
             <p><Check className="w-4 h-4 inline text-gta-green-light mr-1" /> Apoio da Guarda Municipal durante todo o evento.</p>
@@ -432,8 +432,8 @@ const CorridaDeBarEmBar = () => {
       {/* FAQ */}
       <ScrollSection className="bg-[hsl(220_18%_6%)]">
         <div className="text-center mb-12">
-          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block">AJUDA</span>
-          <h2 className="font-gta text-2xl md:text-4xl text-gta-gradient">Perguntas Frequentes</h2>
+          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">AJUDA</span>
+          <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Perguntas Frequentes</h2>
         </div>
         <div className="max-w-3xl mx-auto">
           <Accordion type="single" collapsible className="space-y-3">
@@ -450,8 +450,8 @@ const CorridaDeBarEmBar = () => {
       {/* MAPA */}
       <ScrollSection>
         <div className="text-center mb-8">
-          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block">LOCALIZAÇÃO</span>
-          <h2 className="font-gta text-2xl md:text-4xl text-gta-gradient mb-3">Ponto de Largada</h2>
+          <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">LOCALIZAÇÃO</span>
+          <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Ponto de Largada</h2>
           <p className="text-muted-foreground">Caçador, SC – Concentração às 17h</p>
         </div>
         <div className="rounded-xl overflow-hidden border border-gta-green/20 aspect-video max-w-4xl mx-auto">
