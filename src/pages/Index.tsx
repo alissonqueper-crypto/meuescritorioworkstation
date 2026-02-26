@@ -101,16 +101,16 @@ const Index = () => {
             }}
             className="flex flex-col items-center text-center"
           >
-            <img src={logoImg} alt="Meu Escritório Workstation" className="w-64 md:w-96 mb-6" />
+            <img src={logoImg} alt="Meu Escritório Workstation" className="w-72 md:w-96 mb-6" />
 
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              <Button variant="accent" size="lg" className="w-full sm:w-auto mb-6 md:mb-0">Conhecer planos no WhatsApp</Button>
+              <Button variant="accent" size="lg" className="w-full sm:w-auto mb-4 md:mb-0">Conhecer planos no WhatsApp</Button>
             </a>
           </motion.div>
         </LampContainer>
 
         {/* Badges nos cantos inferiores */}
-        <div className="absolute bottom-3 md:bottom-8 left-0 right-0 z-50 flex flex-col items-center gap-1 px-4">
+        <div className="absolute bottom-6 md:bottom-8 left-0 right-0 z-50 flex flex-col items-center gap-1 px-4">
           <div className="flex gap-2 flex-wrap justify-center">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-brand-red/30 bg-brand-red/10 text-brand-red text-[10px] md:text-xs font-semibold">
               Coworking Premium
