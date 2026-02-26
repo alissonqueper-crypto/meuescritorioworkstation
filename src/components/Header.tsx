@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
@@ -36,10 +36,7 @@ const Header = () => {
       <div className="container mx-auto max-w-7xl flex items-center justify-between px-4 h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="shrink-0">
-          
-
-
-
+          <img src={logo} alt="Meu Escritório Workstation" className="h-8 md:h-10" />
 
         </Link>
 
@@ -74,20 +71,21 @@ const Header = () => {
 
       {/* Mobile menu */}
       {mobileOpen &&
-      <nav className="md:hidden bg-background/98 backdrop-blur-md border-t border-border animate-reveal-up">
-          <div className="container mx-auto px-4 py-4 flex flex-col gap-1">
-            {navLinks.map((l) =>
-          <Link
-            key={l.to}
-            to={l.to}
-            className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-            location.pathname === l.to ?
-            "text-primary bg-primary/10" :
-            "text-muted-foreground hover:text-foreground hover:bg-secondary"}`
-            }>
-
+      <nav className="md:hidden bg-background backdrop-blur-md border-t border-border animate-reveal-up">
+          <div className="container mx-auto px-4 py-4 flex flex-col gap-0">
+            {navLinks.map((l, i) =>
+          <React.Fragment key={l.to}>
+            <Link
+              to={l.to}
+              className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+              location.pathname === l.to ?
+              "text-primary bg-primary/10" :
+              "text-muted-foreground hover:text-foreground hover:bg-secondary"}`
+              }>
                 {l.label}
               </Link>
+            {i < navLinks.length - 1 && <div className="h-px bg-border mx-2" />}
+          </React.Fragment>
           )}
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-2">
               <Button variant="whatsapp" className="w-full">
