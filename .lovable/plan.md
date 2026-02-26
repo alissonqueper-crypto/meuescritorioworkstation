@@ -1,18 +1,19 @@
 
 
-## Plano: Ajustar título em 3 linhas com espaçamento compacto
+## Plano: Substituir fotos da Copa & Cozinha por fotos reais
 
-### Alteração
+### Alterações
 
-**`src/pages/CorridaDeBarEmBar.tsx`** linha 151-153 — Mudar a quebra de linha e o espaçamento:
+1. **Copiar 3 fotos** para `src/assets/`:
+   - `user-uploads://WhatsApp_Image_2026-02-26_at_19.55.47_1.jpeg` → `src/assets/copa-1.jpg` (visão geral copa com geladeira e balcão)
+   - `user-uploads://WhatsApp_Image_2026-02-26_at_19.55.47_2.jpeg` → `src/assets/copa-2.jpg` (geladeira com bebidas)
+   - `user-uploads://WhatsApp_Image_2026-02-26_at_19.55.47.jpeg` → `src/assets/copa-3.jpg` (cozinha com pia e armários)
 
-- Quebrar o título em 3 linhas: `CORRIDA` / `DE BAR` / `EM BAR`
-- Trocar `leading-tight` por `leading-[0.85]` (linhas bem próximas)
-- Trocar `tracking-wide` por `tracking-tight` (letras compactas)
-
-```tsx
-<h1 className="font-gta-price text-3xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 leading-[0.85] text-gta-gradient tracking-tight uppercase" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>
-  CORRIDA<br />DE BAR<br />EM BAR
-</h1>
-```
+2. **`src/pages/Estrutura.tsx`** — No bloco "Copa & Cozinha" do array `structureBlocks`:
+   - Importar as 3 imagens no topo do arquivo
+   - Reduzir o array `photos` de 6 itens para 3, usando as fotos reais como `src`
+   - Atualizar nomes e descrições para refletir o espaço real:
+     - Foto 1: "Copa & Recepção" — visão geral do balcão com geladeira e canecas
+     - Foto 2: "Geladeira de Bebidas" — produtos disponíveis para compra
+     - Foto 3: "Cozinha Compartilhada" — pia, purificador e utensílios
 
