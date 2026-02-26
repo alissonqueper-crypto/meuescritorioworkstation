@@ -16,10 +16,10 @@ const Contato = () => {
   };
 
   return (
-    <div className="pt-24 pb-16 px-4">
+    <div className="pt-20 md:pt-24 pb-16 px-4">
       <div className="container mx-auto max-w-4xl">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 md:mb-16">
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">
             Fale <span className="text-brand-gradient">Conosco</span>
           </h1>
           <p className="text-muted-foreground max-w-xl mx-auto">
@@ -30,14 +30,14 @@ const Contato = () => {
 
         <div className="text-center mb-12">
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-            <Button variant="whatsapp" size="xl">
+            <Button variant="whatsapp" size="xl" className="w-full sm:w-auto">
               <MessageCircle className="w-5 h-5" /> Falar no WhatsApp
             </Button>
           </a>
         </div>
 
         <div ref={ref} className={`transition-all duration-700 ${isVisible ? "scroll-visible" : "scroll-hidden"}`}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-6 space-y-4">
               <div>
                 <label className="text-sm font-medium mb-1 block">Nome</label>

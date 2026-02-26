@@ -147,10 +147,10 @@ const structureBlocks = [
 ];
 
 const Estrutura = () => (
-  <div className="pt-24 pb-16 px-4">
+  <div className="pt-20 md:pt-24 pb-16 px-4">
     <div className="container mx-auto max-w-6xl">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+      <div className="text-center mb-10 md:mb-16">
+        <h1 className="text-3xl md:text-5xl font-bold mb-4">
           Nossa <span className="text-brand-gradient">Estrutura</span>
         </h1>
         <p className="text-muted-foreground max-w-xl mx-auto">
@@ -164,25 +164,25 @@ const Estrutura = () => (
         <h2 className="text-3xl font-bold text-center mb-4">
           Galeria de <span className="text-brand-gradient">Fotos</span>
         </h2>
-        <p className="text-center text-muted-foreground mb-8">Veja nosso espaço por dentro.</p>
+        <p className="text-center text-muted-foreground mb-6 md:mb-8">Veja nosso espaço por dentro.</p>
         <CircularTestimonials testimonials={gallerySpaces} autoplay colors={carouselColors} />
       </ScrollDiv>
 
       {/* 6 blocos de carrosséis */}
-      <div className="mt-20">
+      <div className="mt-12 md:mt-20">
         <h2 className="text-3xl font-bold text-center mb-4">
           Conheça Nossos <span className="text-brand-gradient">Espaços</span>
         </h2>
-        <p className="text-center text-muted-foreground mb-12">Explore cada ambiente do escritório em detalhes.</p>
+        <p className="text-center text-muted-foreground mb-8 md:mb-12">Explore cada ambiente do escritório em detalhes.</p>
 
         {structureBlocks.map((block, i) => (
-          <ScrollDiv key={block.name} className={i > 0 ? "mt-16" : ""}>
+          <ScrollDiv key={block.name} className={i > 0 ? "mt-10 md:mt-16" : ""}>
             <div className="flex items-center gap-3 mb-6">
               <div className={`w-10 h-10 rounded-xl ${block.bg} flex items-center justify-center`}>
                 <block.icon className={`w-5 h-5 ${block.color}`} />
               </div>
               <div>
-                <h3 className="text-xl font-bold">{block.name}</h3>
+                <h3 className="text-lg md:text-xl font-bold">{block.name}</h3>
                 <p className="text-sm text-muted-foreground">{block.desc}</p>
               </div>
             </div>

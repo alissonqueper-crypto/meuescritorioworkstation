@@ -13,11 +13,11 @@ const Footer = () => (
     {/* Brand separator gradient */}
     <div className="brand-separator w-full" />
 
-    <div className="container mx-auto max-w-7xl px-4 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div className="container mx-auto max-w-7xl px-4 py-8 md:py-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         {/* Brand */}
         <div>
-          <img src={logo} alt="Meu Escritório – Workstation" className="h-14 w-auto mb-3" />
+          <img src={logo} alt="Meu Escritório – Workstation" className="h-10 md:h-14 w-auto mb-3" />
           <p className="text-sm text-muted-foreground">
             Coworking em Caçador – SC reunindo profissionais de tecnologia (OMIE), contabilidade, marketing digital e inteligência artificial. Salas de reunião por hora.
           </p>
