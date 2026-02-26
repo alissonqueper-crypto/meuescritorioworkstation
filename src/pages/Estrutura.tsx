@@ -4,6 +4,9 @@ import { CircularTestimonials } from "@/components/ui/circular-testimonials";
 import copa1 from "@/assets/copa-1.jpg";
 import copa2 from "@/assets/copa-2.jpg";
 import copa3 from "@/assets/copa-3.jpg";
+import sala1 from "@/assets/sala-1.jpg";
+import sala2 from "@/assets/sala-2.jpg";
+import sala3 from "@/assets/sala-3.jpg";
 
 const ScrollDiv = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
@@ -79,12 +82,9 @@ const structureBlocks = [
     color: "text-brand-blue",
     bg: "bg-brand-blue/10",
     photos: [
-      { name: "Sala Executiva", designation: "Até 8 pessoas", quote: "Sala equipada com TV 55\" para apresentações e videoconferências, quadro branco e ar-condicionado.", src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=80" },
-      { name: "Sala de Equipe", designation: "Até 6 pessoas", quote: "Espaço intimista com TV e conexão de alta velocidade. Perfeito para calls e reuniões de equipe.", src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=80" },
-      { name: "Sala de Conferência", designation: "Até 12 pessoas", quote: "Nossa maior sala com layout flexível, projeção e som integrado para workshops e treinamentos.", src: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&auto=format&fit=crop&q=80" },
-      { name: "Sala Compacta", designation: "Até 4 pessoas", quote: "Sala reservada para calls rápidas, entrevistas e reuniões one-on-one com privacidade total.", src: "https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=800&auto=format&fit=crop&q=80" },
-      { name: "Sala de Brainstorm", designation: "Criatividade em grupo", quote: "Ambiente com quadro branco panorâmico, post-its e layout informal para sessões criativas.", src: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop&q=80" },
-      { name: "Sala de Treinamento", designation: "Até 20 pessoas", quote: "Espaço amplo com projetor, microfone e cadeiras móveis para palestras, workshops e treinamentos.", src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&auto=format&fit=crop&q=80" },
+      { name: "Sala Executiva", designation: "Mesa ampla com vista", quote: "Sala com mesa ampla, cadeira executiva e vista para a rua. Ideal para reuniões com clientes e videoconferências.", src: sala1 },
+      { name: "Sala de Reunião Compacta", designation: "Reuniões intimistas", quote: "Espaço aconchegante com poltrona e cadeira, perfeito para calls, entrevistas e reuniões de equipe.", src: sala2 },
+      { name: "Escritório Privativo", designation: "Estação completa", quote: "Escritório equipado com estante, mesa de trabalho e impressora. Ideal para quem precisa de privacidade e foco.", src: sala3 },
     ],
   },
   {
