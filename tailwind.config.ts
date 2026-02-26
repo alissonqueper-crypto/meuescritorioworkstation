@@ -16,7 +16,7 @@ export default {
         display: ["Orbitron", "sans-serif"],
         heading: ["Montserrat", "sans-serif"],
         gta: ["Bungee", "Impact", "sans-serif"],
-        "gta-title": ["Pricedown", "Bungee", "Impact", "sans-serif"],
+        "gta-title": ["Black Ops One", "Bungee", "Impact", "sans-serif"],
         "gta-script": ["Diplomata SC", "serif"],
         "gta-hud": ["Chivo", "sans-serif"],
       },
