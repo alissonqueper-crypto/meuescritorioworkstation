@@ -63,7 +63,7 @@ const structureBlocks = [
   {
     icon: Monitor,
     name: "Estações de Trabalho",
-    desc: "Mesas ergonômicas com monitor, cadeira confortável e tomadas.",
+    desc: "Mesas ergonômicas com cadeira confortável e tomadas.",
     color: "text-brand-red",
     bg: "bg-brand-red/10",
     photos: [
