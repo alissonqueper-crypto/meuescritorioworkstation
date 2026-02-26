@@ -1,6 +1,9 @@
 import { Monitor, Users, Coffee, Armchair, DoorOpen, Sofa } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { CircularTestimonials } from "@/components/ui/circular-testimonials";
+import copa1 from "@/assets/copa-1.jpg";
+import copa2 from "@/assets/copa-2.jpg";
+import copa3 from "@/assets/copa-3.jpg";
 
 const ScrollDiv = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
@@ -91,12 +94,9 @@ const structureBlocks = [
     color: "text-brand-teal",
     bg: "bg-brand-teal/10",
     photos: [
-      { name: "Área do Café", designation: "Café premium incluso", quote: "Máquina de café expresso, chás variados e água filtrada disponíveis o dia todo para os coworkers.", src: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&auto=format&fit=crop&q=80" },
-      { name: "Cozinha Compartilhada", designation: "Equipada e limpa", quote: "Micro-ondas, geladeira, pia e utensílios básicos para suas refeições durante o expediente.", src: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80" },
-      { name: "Mesa de Refeições", designation: "Almoço no escritório", quote: "Espaço confortável para refeições com mesa ampla e ambiente agradável.", src: "https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&auto=format&fit=crop&q=80" },
-      { name: "Área de Snacks", designation: "Lanches rápidos", quote: "Dispensers de snacks, frutas frescas e bebidas para um lanche rápido entre as tarefas.", src: "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=800&auto=format&fit=crop&q=80" },
-      { name: "Bancada de Preparo", designation: "Praticidade total", quote: "Bancada com pia, purificador de água e espaço para preparo de refeições leves.", src: "https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=800&auto=format&fit=crop&q=80" },
-      { name: "Espaço Social", designation: "Convivência na copa", quote: "Área de convivência integrada à copa para conversas informais e networking durante o café.", src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80" },
+      { name: "Copa & Recepção", designation: "Visão geral", quote: "Balcão com geladeira, canecas e tudo que você precisa para um café durante o expediente.", src: copa1 },
+      { name: "Geladeira de Bebidas", designation: "Produtos disponíveis", quote: "Bebidas variadas disponíveis para compra, sempre geladas e prontas para consumo.", src: copa2 },
+      { name: "Cozinha Compartilhada", designation: "Equipada e prática", quote: "Pia, purificador de água e utensílios básicos para suas refeições durante o expediente.", src: copa3 },
     ],
   },
   {
