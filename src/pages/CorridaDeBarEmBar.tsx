@@ -1,4 +1,5 @@
 import { useState } from "react";
+import mapaCircuito from "@/assets/mapa-circuito.png";
 import {
   ArrowRight, Beer, Gift, Trophy, Music, MapPin, Clock, Shield, Users,
   ChevronDown, CreditCard, Calendar, Star, Zap, Check, Loader2, Timer, Route, Sticker, Award,
@@ -257,15 +258,16 @@ const CorridaDeBarEmBar = () => {
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>11 Pontos no Mapa</h2>
           <p className="text-muted-foreground">Na ordem oficial do percurso</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <img src={mapaCircuito} alt="Mapa do circuito - 11 bares" className="w-full max-w-3xl mx-auto rounded-sm border border-gta-green/30 mb-8" />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
           {bars.map((bar) => (
-            <div key={bar.num} className="bg-gta-card rounded-xl p-5 flex items-center gap-4">
-              <span className="font-gta-hud text-xl text-gta-green/60 w-8 text-center shrink-0 font-bold">
+            <div key={bar.num} className="bg-gta-card rounded-xl p-2 flex items-center gap-2">
+              <span className="font-gta-hud text-sm text-gta-green/60 w-6 text-center shrink-0 font-bold">
                 {String(bar.num).padStart(2, "0")}
               </span>
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-gta-green-light shrink-0" />
-                <h3 className="font-semibold">{bar.name}</h3>
+              <div className="flex items-center gap-1">
+                <MapPin className="w-3 h-3 text-gta-green-light shrink-0" />
+                <h3 className="text-xs font-medium">{bar.name}</h3>
               </div>
             </div>
           ))}
