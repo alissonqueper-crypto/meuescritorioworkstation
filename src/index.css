@@ -309,16 +309,17 @@
 .btn-gta {
   background: linear-gradient(135deg, hsl(var(--gta-green)), hsl(var(--gta-green-light)));
   color: white;
-  font-family: "Bungee", Impact, sans-serif;
+  font-family: "Pricedown", "Bungee", Impact, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-  box-shadow: 0 0 20px hsl(var(--gta-green) / 0.4), inset 0 1px 0 hsl(var(--gta-green-light) / 0.3);
+  border: 2px solid #000;
+  box-shadow: 0 0 10px rgba(34,197,94,0.3), 0 0 20px hsl(var(--gta-green) / 0.4), inset 0 1px 0 hsl(var(--gta-green-light) / 0.3);
   transition: all 0.3s ease;
 }
 
 .btn-gta:hover {
-  box-shadow: 0 0 35px hsl(var(--gta-green-light) / 0.6), inset 0 1px 0 hsl(var(--gta-green-light) / 0.5);
+  box-shadow: 0 0 15px rgba(34,197,94,0.5), 0 0 35px hsl(var(--gta-green-light) / 0.6), inset 0 1px 0 hsl(var(--gta-green-light) / 0.5);
   transform: translateY(-2px);
 }
 
@@ -341,8 +342,10 @@
 }
 
 .gta-mission-card {
-  background: linear-gradient(145deg, hsl(220 18% 10%), hsl(220 20% 8%));
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
   border: 1px solid hsl(var(--gta-green) / 0.25);
+  border-radius: 0.75rem;
   position: relative;
   overflow: hidden;
 }
