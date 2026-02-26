@@ -1,66 +1,52 @@
 
 
-## Plano: Refinar tipografia e UI com fontes icônicas do GTA San Andreas
+## Plano: Substituir Pricedown por Black Ops One + aplicar text-stroke + refinar glow e cards
 
 ### Resumo
 
-Adicionar as fontes **Pricedown** (via CDN), **Diplomata SC** e **Chivo** (Google Fonts), configurá-las no Tailwind e aplicá-las na página "Corrida de Bar em Bar" para títulos, destaques e elementos de HUD. Também refinar os cards, botões e cores para se aproximar ainda mais da estética do jogo.
+Trocar a fonte Pricedown (CDN externo instável) pela **Black Ops One** do Google Fonts para os títulos GTA. Aplicar `-webkit-text-stroke` para o efeito de contorno autêntico. Aumentar o contraste do glow dourado nos títulos e deixar os cards com bordas mais anguladas/urban.
 
 ### Alterações
 
-#### 1. `index.html` — Carregar fontes
+#### 1. `index.html` — Trocar Pricedown por Black Ops One
 
-- Adicionar `<link>` para **Diplomata SC** e **Chivo** do Google Fonts (junto ao `<link>` existente de Poppins/Orbitron/Bungee)
-- Adicionar `<link>` para a fonte **Pricedown** via CDN do onlinewebfonts.com
-- Usar `rel="preload"` ou `media="print" onload` para carregamento assíncrono sem bloquear render
+- Adicionar `Black+Ops+One` ao `<link>` do Google Fonts existente (linha 14)
+- **Remover** o `<link>` do CDN Pricedown (linhas 15-16) — elimina dependência de CDN externo instável
 
-#### 2. `tailwind.config.ts` — Registrar novas famílias
+#### 2. `tailwind.config.ts` — Atualizar font-family
 
-Adicionar ao `fontFamily`:
-- `"gta-title": ["Pricedown", "Bungee", "Impact", "sans-serif"]`
-- `"gta-script": ["Diplomata SC", "serif"]`
-- `"gta-hud": ["Chivo", "sans-serif"]`
+- Alterar `"gta-title"` de `["Pricedown", "Bungee", ...]` para `["Black Ops One", "Bungee", "Impact", "sans-serif"]`
 
-#### 3. `src/pages/CorridaDeBarEmBar.tsx` — Aplicar tipografia e refinamentos visuais
+#### 3. `src/pages/CorridaDeBarEmBar.tsx` — Aplicar text-stroke + glow dourado + cards angulados
 
-**Títulos (H1, H2):**
-- Trocar `font-gta` por `font-gta-title` em todos os `<h1>` e `<h2>`
-- Adicionar `style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}` nos títulos principais para o efeito de contorno clássico
+**Títulos (todas as ocorrências de `style={{ textShadow: ... }}`):**
+- Substituir o `textShadow` simples por um combo de `-webkit-text-stroke` + glow dourado mais intenso:
+```
+style={{
+  WebkitTextStroke: "3px #000000",
+  textShadow: "0 0 20px hsl(37 82% 30% / 0.6), 0 0 40px hsl(37 82% 30% / 0.3), 3px 3px 0 #000"
+}}
+```
+- Isso aplica o contorno preto de 3px (estilo logo GTA) + glow dourado com mais contraste
 
-**Destaque "San Andreas Edition":**
-- Trocar `font-gta` por `font-gta-script` na linha do subtítulo "GTA San Andreas Edition"
+**Cards (gta-mission-card e bg-gta-card):**
+- Trocar `rounded-xl` / `rounded-2xl` por `rounded-sm` nos cards para bordas mais anguladas/pixel/urban
+- Adicionar `border border-gta-green/30` onde faltar
 
-**Elementos de HUD (chips, labels, botões):**
-- Trocar `font-gta` por `font-gta-hud` nos chips HUD, números de passos, e labels de interface
-- Adicionar `uppercase italic font-bold` onde apropriado
+#### 4. `src/index.css` — Refinar utilitários
 
-**Corpo de texto:**
-- Reduzir `leading` nos parágrafos descritivos para `leading-snug` (mais compacto, estilo menu de jogo)
-
-**Botões principais:**
-- Adicionar `border-2 border-black shadow-[0_0_10px_rgba(34,197,94,0.3)]` nos `.btn-gta` para borda preta + brilho externo
-
-**Cards de personagem (ingressos):**
-- Adicionar `bg-black/60 backdrop-blur-sm` para fundo semi-transparente escuro estilo menu de pausa
-- Bordas levemente mais arredondadas
-
-**Cores de valor monetário:**
-- Preços: trocar `text-gta-green-light` por `text-[#22c55e]` (verde neon exato)
-- Alertas (como "⚠ Sem devolver o copo..."): usar `text-[#ef4444]`
-
-#### 4. `src/index.css` — Refinamentos nos utilitários GTA
-
-- Atualizar `.btn-gta` para incluir `border: 2px solid #000` e `box-shadow` com brilho verde
-- Atualizar `.gta-mission-card` para os cards de personagem com `backdrop-filter: blur`
+- Atualizar `.gta-mission-card` para `border-radius: 4px` (mais angulado)
+- Atualizar `.bg-gta-card` com `border-radius: 4px`
+- Adicionar variante `.text-gta-gradient` com glow dourado mais intenso via `filter: drop-shadow`
 
 ### Detalhes técnicos
 
-- As fontes Diplomata SC e Chivo são carregadas do Google Fonts com `display=swap` para não bloquear render
-- Pricedown é carregada via CDN externo; o `<link>` usa atributo `crossorigin` para garantir cache correto
-- O fallback de Pricedown é Bungee (já carregada), garantindo que mesmo se o CDN falhar, o visual GTA se mantém
-- Nenhuma lógica funcional, formulário ou rota será alterada
+- Black Ops One é uma fonte Google Fonts oficial — carregamento confiável com `display=swap`
+- `-webkit-text-stroke` tem suporte em todos os navegadores modernos (Chrome, Firefox 4+, Safari, Edge)
+- Remover a dependência do CDN onlinewebfonts.com melhora a performance e confiabilidade
+- Nenhuma lógica funcional será alterada
 
 ### Resultado esperado
 
-A página terá a tipografia autêntica do GTA San Andreas: títulos em Pricedown com contorno preto, destaques cursivos em Diplomata SC, interface em Chivo condensada. Botões com borda preta e brilho, cards estilo menu de pausa, e cores de status fiéis ao jogo.
+Títulos com a fonte Black Ops One (estética militar/gótica similar ao GTA), contorno preto de 3px via text-stroke, glow dourado intenso, e cards com bordas anguladas estilo urban/pixel art.
 
