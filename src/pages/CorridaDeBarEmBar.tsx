@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import eventHeroImg from "@/assets/event-hero.jpg";
+import eventHeroImg from "@/assets/corrida-hero-gta.png";
 
 const ScrollSection = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
