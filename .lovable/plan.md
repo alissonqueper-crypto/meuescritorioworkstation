@@ -1,19 +1,14 @@
 
 
-## Plano: Substituir fotos das salas de reunião na seção "Nossos Espaços" (Index)
+## Plano: Substituir fotos das Salas de Reunião na página Estrutura
 
 ### Alterações
 
-1. **Copiar 3 fotos** para `src/assets/`:
-   - `user-uploads://WhatsApp_Image_2026-02-24_at_19.32.23.jpeg` → `src/assets/sala-1.jpg`
-   - `user-uploads://WhatsApp_Image_2026-02-24_at_19.32.24.jpeg` → `src/assets/sala-2.jpg`
-   - `user-uploads://WhatsApp_Image_2026-02-24_at_19.32.22.jpeg` → `src/assets/sala-3.jpg`
-
-2. **`src/pages/Index.tsx`** — No array `officeSpaces`:
-   - Importar `sala1`, `sala2`, `sala3` de `@/assets/`
-   - Substituir o `src` das 3 entradas "Sala de Reunião 1/2/3" pelas fotos reais
-   - Atualizar nomes e descrições para refletir os espaços reais:
-     - Sala 1: "Sala Executiva" — mesa ampla com vista
-     - Sala 2: "Sala de Reunião Compacta" — poltrona e cadeira
-     - Sala 3: "Escritório Privativo" — estação com estante e impressora
+**`src/pages/Estrutura.tsx`** — No bloco "Salas de Reunião" do array `structureBlocks`:
+- As imagens `sala1`, `sala2`, `sala3` já estão importadas no arquivo
+- Reduzir o array `photos` de 6 itens para 3, usando as fotos reais já salvas em `src/assets/`
+- Atualizar nomes e descrições:
+  - Foto 1 (`sala1`): "Sala Executiva" — mesa ampla com vista para a rua
+  - Foto 2 (`sala2`): "Sala de Reunião Compacta" — poltrona e cadeira
+  - Foto 3 (`sala3`): "Escritório Privativo" — estação com estante e impressora
 
