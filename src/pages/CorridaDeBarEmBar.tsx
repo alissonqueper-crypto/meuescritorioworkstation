@@ -136,11 +136,11 @@ const CorridaDeBarEmBar = () => {
       {/* HERO – MISSÃO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src={eventHeroImg} alt="Corrida de Bar em Bar" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220_20%_4%)] via-[hsl(220_20%_4%/0.8)] to-[hsl(220_20%_4%/0.4)]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[hsl(112_40%_29%/0.15)] to-[hsl(37_82%_30%/0.1)]" />
+          <img src={eventHeroImg} alt="Corrida de Bar em Bar" className="w-full h-full object-cover object-[center_top]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[hsl(220_20%_4%)] via-[hsl(220_20%_4%/0.5)] to-[hsl(220_20%_4%/0.2)]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[hsl(112_40%_29%/0.08)] to-[hsl(37_82%_30%/0.05)]" />
         </div>
-        <div className="relative z-10 container mx-auto max-w-5xl px-4 py-32 text-center">
+        <div className="relative z-10 container mx-auto max-w-5xl px-4 pt-40 pb-20 text-center">
           <div className="animate-reveal-up">
             {/* HUD chip top */}
             <span className="inline-block gta-hud-chip rounded px-4 py-1.5 text-xs tracking-widest mb-6 uppercase">
