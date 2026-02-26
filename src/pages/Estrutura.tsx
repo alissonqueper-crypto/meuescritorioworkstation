@@ -7,6 +7,8 @@ import copa3 from "@/assets/copa-3.jpg";
 import sala1 from "@/assets/sala-1.jpg";
 import sala2 from "@/assets/sala-2.jpg";
 import sala3 from "@/assets/sala-3.jpg";
+import recepcao1 from "@/assets/recepcao-1.jpg";
+import recepcao2 from "@/assets/recepcao-2.jpg";
 
 const ScrollDiv = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
@@ -121,12 +123,8 @@ const structureBlocks = [
     color: "text-brand-red",
     bg: "bg-brand-red/10",
     photos: [
-      { name: "Recepção Principal", designation: "Primeiro contato", quote: "Recepção moderna e acolhedora com atendimento dedicado para você e seus visitantes.", src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=80" },
-      { name: "Área de Espera", designation: "Conforto para visitantes", quote: "Espaço confortável para seus clientes e visitantes aguardarem com café e Wi-Fi disponível.", src: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&auto=format&fit=crop&q=80" },
-      { name: "Hall de Entrada", designation: "Identidade profissional", quote: "Ambiente profissional que transmite credibilidade e seriedade para seus clientes.", src: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&auto=format&fit=crop&q=80" },
-      { name: "Corredor Principal", designation: "Circulação elegante", quote: "Corredor amplo e bem iluminado conectando todos os ambientes do escritório.", src: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&auto=format&fit=crop&q=80" },
-      { name: "Área de Credenciamento", designation: "Controle de acesso", quote: "Sistema de credenciamento digital com catracas e identificação por QR code para segurança.", src: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&auto=format&fit=crop&q=80" },
-      { name: "Fachada", designation: "Primeira impressão", quote: "Fachada moderna com identidade visual marcante e sinalização profissional.", src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=80" },
+      { name: "Recepção & Lounge", designation: "Boas-vindas", quote: "Sofá confortável, TV com mensagem de boas-vindas e vista para as salas de reunião.", src: recepcao1 },
+      { name: "Área de Coworking", designation: "Estações de trabalho", quote: "Ambiente amplo e moderno com estações de trabalho, planta decorativa e teto com design diferenciado.", src: recepcao2 },
     ],
   },
   {
