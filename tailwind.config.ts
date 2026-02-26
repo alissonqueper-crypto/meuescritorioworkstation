@@ -19,6 +19,7 @@ export default {
         "gta-title": ["Black Ops One", "Bungee", "Impact", "sans-serif"],
         "gta-script": ["Diplomata SC", "serif"],
         "gta-hud": ["Chivo", "sans-serif"],
+        "gta-price": ["Pricedown", "Bungee", "Impact", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
