@@ -1,73 +1,84 @@
 
 
-## Plano: Otimizações de layout mobile para a página Corrida de Bar em Bar + Header
+## Plano: Otimizações de layout mobile para o site principal (Index, Estrutura, Contato, Footer)
 
 ### Resumo
 
-Ajustar espaçamentos, tamanhos de fonte, grids e navegação para que a experiência mobile seja fluida e proporcional ao desktop, sem quebrar a identidade visual GTA.
+Aplicar o mesmo padrão de otimizações mobile feitas na página Corrida de Bar em Bar: reduzir espaçamentos, ajustar grids para 2 colunas desde mobile, diminuir fontes proporcionalmente e garantir que todos os elementos fiquem bem distribuidos em telas pequenas.
 
 ### Alterações
 
-#### 1. `src/components/Header.tsx` — Melhorar navegação mobile
+#### 1. `src/pages/Index.tsx`
 
-- Adicionar a **logo** dentro do `<Link to="/">` (atualmente está vazio, linhas 38-44)
-  - `<img src={logo} alt="Logo" className="h-8 md:h-10" />`
-- Tornar o menu mobile mais robusto: fundo sólido `bg-background` (sem `/98` que pode causar vazamento visual)
-- Adicionar separadores visuais entre os links mobile
+**ScrollSection (linha 16):**
+- Reduzir padding vertical: de `py-16 md:py-24` para `py-10 md:py-24`
 
-#### 2. `src/pages/CorridaDeBarEmBar.tsx` — Otimizações mobile por seção
+**Hero / LampContainer (linhas 92-128):**
+- Reduzir logo mobile: de `w-72 md:w-96` para `w-56 md:w-96`
+- Botão CTA: adicionar `w-full sm:w-auto` para ocupar 100% no mobile
+- Badges inferiores (linhas 112-127): reduzir `bottom-8` para `bottom-4 md:bottom-8` e diminuir texto dos badges para `text-[10px] md:text-xs`
+- Texto central "Tecnologia · Contabilidade...": esconder em mobile muito pequeno ou reduzir para `text-[10px]`
 
-**Hero (linhas 138-201):**
-- Reduzir `pt-40` para `pt-24` em mobile: `pt-24 md:pt-40`
-- Reduzir `pb-20` para `pb-12` em mobile: `pb-12 md:pb-20`
-- HUD chips: de `flex-wrap gap-3` para `gap-2` em mobile, com `text-[10px]` no chip
-- Botões CTA: empilhar verticalmente em mobile com `flex-col sm:flex-row`
-- Botões: `w-full sm:w-auto` para ocuparem 100% no mobile
+**Beneficios grid (linha 140):**
+- De `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` para `grid-cols-2 lg:grid-cols-3` (2 colunas desde mobile)
+- Reduzir padding dos cards: de `p-6` para `p-4 md:p-6`
+- Reduzir icone container: de `w-12 h-12` para `w-10 h-10 md:w-12 md:h-12`
+- Reduzir titulo card: de `text-lg` para `text-sm md:text-lg`
+- Reduzir desc: de `text-sm` para `text-xs md:text-sm`
 
-**Seções ScrollSection (linhas 18-24):**
-- Reduzir padding vertical de `py-16 md:py-24` para `py-10 md:py-24`
-- Reduzir `mb-12` dos headers de seção para `mb-8 md:mb-12`
+**Quem Trabalha Aqui grid (linha 165):**
+- De `grid-cols-1 sm:grid-cols-2` para `grid-cols-1 sm:grid-cols-2` (manter, pois cards tem mais conteudo)
+- Reduzir padding: de `p-6` para `p-4 md:p-6`
+- Reduzir icone: de `w-14 h-14` para `w-10 h-10 md:w-14 md:h-14`
+- Reduzir gap: de `gap-6` para `gap-4 md:gap-6`
 
-**Missão / grid 4 colunas (linhas 210-227):**
-- De `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4` para `grid-cols-2 lg:grid-cols-4` em mobile (2 colunas desde o início)
-- Reduzir padding dos cards de `p-6` para `p-4 md:p-6`
-- Reduzir número step de `text-4xl` para `text-2xl md:text-4xl`
+**Subtitulos das secoes (mb-12):**
+- Reduzir `mb-12` para `mb-8 md:mb-12` em todas as secoes
 
-**Dinâmica do Circuito (linhas 238-251):**
-- Grid mesas: `grid-cols-2 lg:grid-cols-4` (2 colunas em mobile)
-- Reduzir padding de `p-6` para `p-4 md:p-6`
-- Card de volume total: reduzir padding de `p-6` para `p-4 md:p-6`
+**Mapa Google (linhas 217-227):**
+- Adicionar `min-h-[250px]` no container do iframe para mobile
 
-**Mapa / 11 Pontos (linhas 261-274):**
-- Imagem do mapa: adicionar `max-w-full` para garantir responsividade total
+**Evento card (linhas 237-254):**
+- Botao CTA: `w-full sm:w-auto`
 
-**O Que Está Incluso (linhas 283-299):**
-- Já está `grid-cols-2`, manter — reduzir `gap-4` para `gap-3` e padding `p-4` para `p-3 md:p-4`
+#### 2. `src/components/ui/lamp.tsx`
 
-**Ingressos (linhas 336-362):**
-- Reduzir padding dos cards de `p-8` para `p-5 md:p-8`
-- Preço: de `text-4xl` para `text-3xl md:text-4xl`
+- Reduzir `min-h-[85vh]` para `min-h-[70vh] md:min-h-[85vh]` para o hero nao ocupar tanto espaco no mobile
+- Reduzir translate do content: de `-translate-y-20` para `-translate-y-10 md:-translate-y-20`
 
-**Código de Rua (linhas 407-431):**
-- Já está `grid-cols-1 md:grid-cols-2`, ok — reduzir padding de `p-6 md:p-8` ok
+#### 3. `src/pages/Estrutura.tsx`
 
-**FAQ (linhas 441-448):**
-- Reduzir `px-6` dos accordion items para `px-4 md:px-6`
+- Reduzir `pt-24` para `pt-20 md:pt-24`
+- Reduzir `mb-16` do header para `mb-10 md:mb-16`
+- Titulo: de `text-4xl md:text-5xl` para `text-3xl md:text-5xl`
+- Subtitulo galeria `mb-8` para `mb-6 md:mb-8`
+- Blocos `mt-20` para `mt-12 md:mt-20`
+- Subtitulo blocos `mb-12` para `mb-8 md:mb-12`
+- Blocos internos `mt-16` para `mt-10 md:mt-16`
+- Titulo bloco `text-xl` para `text-lg md:text-xl`
 
-**Mapa Google (linhas 459-464):**
-- Reduzir `aspect-video` para uma altura mínima fixa em mobile: `min-h-[250px]`
+#### 4. `src/pages/Contato.tsx`
 
-**Footer (linhas 468-474):**
-- Já compacto, sem alteração necessária
+- Reduzir `pt-24` para `pt-20 md:pt-24`
+- Reduzir `mb-16` do header para `mb-10 md:mb-16`
+- Titulo: de `text-4xl md:text-5xl` para `text-3xl md:text-5xl`
+- Botao WhatsApp: `w-full sm:w-auto`
+- Grid contato: `gap-8` para `gap-6 md:gap-8`
 
-### Detalhes técnicos
+#### 5. `src/components/Footer.tsx`
 
-- Todas as alterações usam classes responsivas do Tailwind (`sm:`, `md:`, `lg:`)
-- Nenhuma lógica funcional alterada
-- A logo será restaurada no header (atualmente está vazia)
-- Padrão mobile-first: valores menores como default, valores maiores com prefixo `md:`
+- Reduzir `py-12` para `py-8 md:py-12`
+- Logo: de `h-14` para `h-10 md:h-14`
+- Gap grid: de `gap-8` para `gap-6 md:gap-8`
+
+### Detalhes tecnicos
+
+- Todas as alteracoes usam classes responsivas do Tailwind (`sm:`, `md:`)
+- Padrao mobile-first: valores menores como default, maiores com prefixo `md:`
+- Nenhuma logica funcional alterada
+- Foco em proporcionalidade: o que funciona bem no desktop deve ter a mesma proporcao visual no mobile
 
 ### Resultado esperado
 
-Layout mobile com espaçamentos proporcionais, botões CTA empilhados e full-width, grids 2 colunas desde o início, navegação com logo visível e menu mobile limpo.
+Todas as paginas do site principal (Home, Estrutura, Contato) com layout mobile compacto e proporcional ao desktop: grids 2 colunas, espacamentos reduzidos, botoes full-width, hero mais curto e tipografia ajustada.
 
