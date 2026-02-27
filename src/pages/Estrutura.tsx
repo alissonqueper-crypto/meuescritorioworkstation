@@ -1,4 +1,4 @@
-import { Monitor, Users, Coffee, Armchair, DoorOpen, Sofa } from "lucide-react";
+import { Monitor, Users, Coffee, Armchair, DoorOpen } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { CircularTestimonials } from "@/components/ui/circular-testimonials";
 import copa1 from "@/assets/copa-1.jpg";
@@ -9,6 +9,9 @@ import sala2 from "@/assets/sala-2.jpg";
 import sala3 from "@/assets/sala-3.jpg";
 import recepcao1 from "@/assets/recepcao-1.jpg";
 import recepcao2 from "@/assets/recepcao-2.jpg";
+import areaComum1 from "@/assets/area-comum-1.jpg";
+import areaComum2 from "@/assets/area-comum-2.jpg";
+import areaComum3 from "@/assets/area-comum-3.jpg";
 
 const ScrollDiv = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
@@ -108,12 +111,9 @@ const structureBlocks = [
     color: "text-brand-gold",
     bg: "bg-brand-gold/10",
     photos: [
-      { name: "Espaço de Convivência", designation: "Networking natural", quote: "Ambiente descontraído para pausas e conversas entre profissionais de diversas áreas.", src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80" },
-      { name: "Área de Descompressão", designation: "Relaxe e recarregue", quote: "Espaço pensado para pausas produtivas com poltronas confortáveis e iluminação suave.", src: "https://images.unsplash.com/photo-1519974719765-e6559eac2575?w=800&auto=format&fit=crop&q=80" },
-      { name: "Espaço Colaborativo", designation: "Ideias e criatividade", quote: "Mesas informais para brainstorming, reuniões rápidas e troca de ideias entre coworkers.", src: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&auto=format&fit=crop&q=80" },
-      { name: "Terraço", designation: "Ar livre no escritório", quote: "Área externa com mesas e cadeiras para trabalhar ou relaxar ao ar livre nos dias bonitos.", src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=80" },
-      { name: "Área de Jogos", designation: "Diversão e descontração", quote: "Mesa de pingue-pongue e jogos de tabuleiro para pausas divertidas e team building.", src: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=800&auto=format&fit=crop&q=80" },
-      { name: "Espaço de Leitura", designation: "Silêncio e concentração", quote: "Cantinho reservado com estante de livros, poltronas e iluminação ideal para leitura.", src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80" },
+      { name: "Rede Suspensa", designation: "Descompressão no mezanino", quote: "Rede colorida suspensa no mezanino com vista para o telão — o lugar perfeito para relaxar entre reuniões.", src: areaComum1 },
+      { name: "Lounge", designation: "Sofás e TV", quote: "Sofás confortáveis com TV e banner do escritório para pausas, reuniões informais e networking.", src: areaComum2 },
+      { name: "Deck de Lazer", designation: "Eventos e descontração", quote: "Espaço amplo com rede suspensa, telão e área versátil para eventos, happy hours e momentos de lazer.", src: areaComum3 },
     ],
   },
   {
@@ -125,21 +125,6 @@ const structureBlocks = [
     photos: [
       { name: "Recepção & Lounge", designation: "Boas-vindas", quote: "Sofá confortável, TV com mensagem de boas-vindas e vista para as salas de reunião.", src: recepcao1 },
       { name: "Área de Coworking", designation: "Estações de trabalho", quote: "Ambiente amplo e moderno com estações de trabalho, planta decorativa e teto com design diferenciado.", src: recepcao2 },
-    ],
-  },
-  {
-    icon: Sofa,
-    name: "Lounge",
-    desc: "Sofás confortáveis para reuniões informais e descanso.",
-    color: "text-brand-blue",
-    bg: "bg-brand-blue/10",
-    photos: [
-      { name: "Lounge Principal", designation: "Conforto e estilo", quote: "Sofás confortáveis em ambiente climatizado para reuniões informais, leitura e descanso.", src: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&auto=format&fit=crop&q=80" },
-      { name: "Área de Descanso", designation: "Recarregue energias", quote: "Espaço reservado para momentos de descanso com iluminação suave e poltronas reclináveis.", src: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&auto=format&fit=crop&q=80" },
-      { name: "Lounge de Networking", designation: "Conexões profissionais", quote: "Ambiente descontraído ideal para conversas de negócios, happy hours e eventos de networking.", src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80" },
-      { name: "Varanda Lounge", designation: "Ar livre premium", quote: "Varanda coberta com sofás e vista para a cidade, perfeita para pausas ao ar livre.", src: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&auto=format&fit=crop&q=80" },
-      { name: "Espaço Meditação", designation: "Bem-estar no trabalho", quote: "Sala silenciosa com almofadas e iluminação zen para meditação e momentos de mindfulness.", src: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&auto=format&fit=crop&q=80" },
-      { name: "Bar de Café", designation: "Café especial", quote: "Balcão estilo coffee shop com café especial, chás artesanais e drinks não alcoólicos.", src: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format&fit=crop&q=80" },
     ],
   },
 ];
