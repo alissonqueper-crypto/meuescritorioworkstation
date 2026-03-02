@@ -1,18 +1,26 @@
 
 
-## Plano: Substituir fotos das Estações de Trabalho por fotos reais
+## Plano: Substituir galeria geral por fotos reais do escritório
+
+A galeria "Galeria de Fotos" no topo da página Estrutura usa 5 fotos genéricas do Unsplash. Serão substituídas pelas 6 fotos reais enviadas.
 
 ### Alterações
 
-1. **Copiar 3 fotos** para `src/assets/`:
-   - `user-uploads://DSC08033.jpg` → `src/assets/estacao-1.jpg` (mesas lado a lado com cadeiras ergonômicas e vista para a rua)
-   - `user-uploads://DSC08038.jpg` → `src/assets/estacao-2.jpg` (mesas com divisória e cadeiras executivas)
-   - `user-uploads://WhatsApp_Image_2026-03-02_at_16.53.01.jpeg` → `src/assets/estacao-3.jpg` (visão geral do coworking com rede suspensa e plantas)
+1. **Copiar 6 fotos** para `src/assets/`:
+   - `WhatsApp_Image_2026-03-02_at_17.05.10_1.jpeg` → `src/assets/galeria-recepcao.jpg` (sofá, TV de boas-vindas, logo)
+   - `WhatsApp_Image_2026-03-02_at_17.05.10_2.jpeg` → `src/assets/galeria-rede.jpg` (rede suspensa colorida com telão)
+   - `WhatsApp_Image_2026-03-02_at_17.05.10.jpeg` → `src/assets/galeria-fachada.jpg` (fachada do prédio)
+   - `WhatsApp_Image_2026-03-02_at_17.05.11.jpeg` → `src/assets/galeria-coworking.jpg` (coworking noturno com rede no teto)
+   - `DSC08033-2.jpg` → `src/assets/galeria-estacao.jpg` (estações de trabalho com divisória)
+   - `WhatsApp_Image_2026-03-02_at_17.08.36.jpeg` → `src/assets/galeria-escritorio.jpg` (escritório privativo com estante)
 
 2. **`src/pages/Estrutura.tsx`**:
-   - Importar `estacao1`, `estacao2`, `estacao3` de `@/assets/`
-   - No bloco "Estações de Trabalho", reduzir de 6 fotos placeholder para 3 fotos reais:
-     - Foto 1: "Mesa Individual" — mesas ergonômicas com cadeira confortável e vista para a rua
-     - Foto 2: "Estação Compartilhada" — mesas com divisória para privacidade e cadeiras executivas
-     - Foto 3: "Visão Geral do Coworking" — ambiente amplo com estações de trabalho, rede suspensa colorida e plantas decorativas
+   - Importar os 6 novos assets
+   - Substituir o array `gallerySpaces` (5 itens Unsplash → 6 itens reais):
+     - "Fachada" — entrada imponente com letreiro Workstation e logos dos parceiros
+     - "Recepção & Lounge" — sofá confortável, TV de boas-vindas e logo na parede
+     - "Rede Suspensa" — rede colorida iluminada com telão ao fundo
+     - "Coworking Noturno" — estações de trabalho sob rede suspensa com iluminação noturna
+     - "Estação de Trabalho" — mesas com divisória e cadeiras ergonômicas
+     - "Escritório Privativo" — sala privativa com mesa, estante e vista para o coworking
 
