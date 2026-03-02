@@ -336,11 +336,9 @@ const CorridaDeBarEmBar = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
           {tickets.map((t) =>
           <div key={t.id} className={`relative gta-mission-card rounded-2xl p-5 md:p-8 flex flex-col ${t.highlight ? "ring-2 ring-gta-green-light shadow-[0_0_40px_hsl(var(--gta-green)/0.2)]" : ""}`}>
-              {t.highlight
-
-
-
-            }
+              {t.highlight && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gta-green text-black text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Mais popular</span>
+              )}
               <span className="text-xs uppercase tracking-widest text-gta-gold mb-1 font-gta-hud font-bold italic">{t.subtitle}</span>
               <h3 className="font-gta-title text-xl mb-2 text-foreground">{t.name}</h3>
               <p className="text-sm text-muted-foreground mb-4 leading-snug">{t.desc}</p>
