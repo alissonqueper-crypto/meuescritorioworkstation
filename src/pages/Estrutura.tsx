@@ -12,6 +12,9 @@ import recepcao2 from "@/assets/recepcao-2.jpg";
 import areaComum1 from "@/assets/area-comum-1.jpg";
 import areaComum2 from "@/assets/area-comum-2.jpg";
 import areaComum3 from "@/assets/area-comum-3.jpg";
+import estacao1 from "@/assets/estacao-1.jpg";
+import estacao2 from "@/assets/estacao-2.jpg";
+import estacao3 from "@/assets/estacao-3.jpg";
 
 const ScrollDiv = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
@@ -72,12 +75,9 @@ const structureBlocks = [
     color: "text-brand-red",
     bg: "bg-brand-red/10",
     photos: [
-      { name: "Mesa Individual", designation: "Plano mensal", quote: "Mesa ergonômica com monitor dedicado, cadeira confortável e tomadas individuais para máxima produtividade.", src: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=800&auto=format&fit=crop&q=80" },
-      { name: "Área de Trabalho Compartilhada", designation: "Hot desk disponível", quote: "Ambiente aberto e colaborativo ao lado de profissionais de tecnologia, contabilidade, marketing e IA.", src: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&auto=format&fit=crop&q=80" },
-      { name: "Estação Premium", designation: "Plano fixo", quote: "Estação dedicada com gaveta, monitor ultrawide e cadeira ergonômica de alto padrão.", src: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&auto=format&fit=crop&q=80" },
-      { name: "Mesa Compartilhada", designation: "Flexível e acessível", quote: "Mesas amplas em ambiente compartilhado, ideais para freelancers e profissionais autônomos.", src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&auto=format&fit=crop&q=80" },
-      { name: "Estação Dupla", designation: "Para equipes de 2", quote: "Estação lado a lado com dois monitores, perfeita para duplas que precisam colaborar de perto.", src: "https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=800&auto=format&fit=crop&q=80" },
-      { name: "Área de Foco", designation: "Silêncio garantido", quote: "Zona reservada para trabalho concentrado, com divisórias acústicas e iluminação controlada.", src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop&q=80" },
+      { name: "Mesa Individual", designation: "Plano mensal", quote: "Mesas ergonômicas com cadeira confortável e vista para a rua, ideais para máxima produtividade.", src: estacao1 },
+      { name: "Estação Compartilhada", designation: "Hot desk disponível", quote: "Mesas com divisória para privacidade e cadeiras executivas, perfeitas para foco e colaboração.", src: estacao2 },
+      { name: "Visão Geral do Coworking", designation: "Ambiente completo", quote: "Ambiente amplo com estações de trabalho, rede suspensa colorida e plantas decorativas.", src: estacao3 },
     ],
   },
   {
