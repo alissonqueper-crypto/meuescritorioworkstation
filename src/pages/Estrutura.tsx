@@ -15,6 +15,12 @@ import areaComum3 from "@/assets/area-comum-3.jpg";
 import estacao1 from "@/assets/estacao-1.jpg";
 import estacao2 from "@/assets/estacao-2.jpg";
 import estacao3 from "@/assets/estacao-3.jpg";
+import galeriaFachada from "@/assets/galeria-fachada.jpg";
+import galeriaRecepcao from "@/assets/galeria-recepcao.jpg";
+import galeriaRede from "@/assets/galeria-rede.jpg";
+import galeriaCoworking from "@/assets/galeria-coworking.jpg";
+import galeriaEstacao from "@/assets/galeria-estacao.jpg";
+import galeriaEscritorio from "@/assets/galeria-escritorio.jpg";
 
 const ScrollDiv = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
   const { ref, isVisible } = useScrollAnimation();
@@ -27,34 +33,40 @@ const ScrollDiv = ({ children, className = "" }: { children: React.ReactNode; cl
 
 const gallerySpaces = [
   {
-    name: "Sala de Reunião 1",
-    designation: "Aluguel por hora · Até 8 pessoas",
-    quote: "Sala equipada com TV para apresentações e videoconferências, quadro branco, ar-condicionado e café incluso.",
-    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=80",
+    name: "Fachada",
+    designation: "Entrada principal",
+    quote: "Entrada imponente com letreiro Workstation e logos dos parceiros. Nosso espaço te recebe de portas abertas.",
+    src: galeriaFachada,
   },
   {
-    name: "Sala de Reunião 2",
-    designation: "Aluguel por hora · Até 6 pessoas",
-    quote: "Espaço intimista com TV e conexão de alta velocidade. Perfeito para calls, entrevistas e reuniões de equipe.",
-    src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=80",
+    name: "Recepção & Lounge",
+    designation: "Boas-vindas",
+    quote: "Sofá confortável, TV de boas-vindas e logo na parede. Um ambiente acolhedor desde o primeiro passo.",
+    src: galeriaRecepcao,
   },
   {
-    name: "Sala de Reunião 3",
-    designation: "Aluguel por hora · Até 12 pessoas",
-    quote: "Nossa maior sala de conferência, com layout flexível, projeção e som integrado para workshops e treinamentos.",
-    src: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&auto=format&fit=crop&q=80",
+    name: "Rede Suspensa",
+    designation: "Descompressão",
+    quote: "Rede colorida iluminada com telão ao fundo — o cantinho perfeito para relaxar entre reuniões.",
+    src: galeriaRede,
   },
   {
-    name: "Mesas de Coworking",
-    designation: "Planos mensais disponíveis",
-    quote: "Mesas ergonômicas com monitor, cadeira confortável e tomadas. Networking multidisciplinar.",
-    src: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?w=800&auto=format&fit=crop&q=80",
+    name: "Coworking Noturno",
+    designation: "Ambiente versátil",
+    quote: "Estações de trabalho sob rede suspensa com iluminação noturna aconchegante e produtiva.",
+    src: galeriaCoworking,
   },
   {
-    name: "Visão Geral do Escritório",
-    designation: "Ambiente moderno e climatizado",
-    quote: "Espaço completo com internet ultra rápida, cozinha compartilhada, recepção e áreas de convivência.",
-    src: "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&auto=format&fit=crop&q=80",
+    name: "Estação de Trabalho",
+    designation: "Produtividade",
+    quote: "Mesas com divisória e cadeiras ergonômicas para foco total no seu trabalho.",
+    src: galeriaEstacao,
+  },
+  {
+    name: "Escritório Privativo",
+    designation: "Privacidade",
+    quote: "Sala privativa com mesa, estante e vista para o coworking. Ideal para quem precisa de silêncio e concentração.",
+    src: galeriaEscritorio,
   },
 ];
 
