@@ -1,18 +1,19 @@
 
 
-## Plano: Corrigir modal de inscrição e remover campo "número da placa"
+## Plano: Corrigir seção Localização na página inicial
 
 ### Problema
-O `DialogContent` usa a classe `gta-mission-card` que aplica `overflow: hidden` e `position: relative`, quebrando o posicionamento fixo do Dialog do Radix. O conteúdo do modal fica invisível/cortado.
+O mapa atual usa uma query genérica (`q=Caçador,SC,Brazil`) que mostra a cidade inteira, e o endereço exibido é fictício ("Rua Exemplo, 123"). No mobile, o iframe com `aspect-video` pode ficar desproporcional.
 
-### Alterações em `src/pages/CorridaDeBarEmBar.tsx`
+### Alterações em `src/pages/Index.tsx`
 
-1. **Remover `gta-mission-card` do DialogContent** — substituir por classes Tailwind equivalentes que não conflitem com o Dialog:
-   - `bg-black/80 backdrop-blur border border-gta-green/30`
+1. **Atualizar endereço** de "Rua Exemplo, 123 – Centro, Caçador – SC" para **"R. Vinte e Cinco de Março, 148 – Centro, Caçador – SC, 89500-061"**
 
-2. **Remover o campo "Número desejado da placa"**:
-   - Remover o bloco do input `numero_placa` do formulário (linhas 388-391)
-   - Remover `numero_placa` do estado `form` (inicializar sem ele)
-   - Remover a validação de `placa` no `handleSubmit` (linhas 102-106)
-   - Ajustar o body do `supabase.functions.invoke` para não enviar `numero_placa`
+2. **Atualizar iframe do Google Maps** — trocar a query do embed para apontar diretamente ao endereço correto:
+   - `src="https://maps.google.com/maps?q=R.+Vinte+e+Cinco+de+Março,+148,+Caçador,+SC&output=embed"`
+
+3. **Adicionar botão "Abrir no Maps"** sobre o mapa (como na screenshot de referência) com link para:
+   - `https://www.google.com/maps/search/R.+Vinte+e+Cinco+de+Março,+148,+Caçador,+SC`
+
+4. **Ajustar dimensões mobile** — trocar `aspect-video min-h-[250px]` por `aspect-[4/3] md:aspect-video min-h-[300px]` para o mapa ficar mais alto e legível no mobile
 
