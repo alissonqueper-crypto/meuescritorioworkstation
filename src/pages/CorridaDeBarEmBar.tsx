@@ -86,12 +86,12 @@ const CorridaDeBarEmBar = () => {
   const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ nome: "", telefone: "", numero_placa: "" });
+  const [form, setForm] = useState({ nome: "", telefone: "" });
   const { toast } = useToast();
 
   const handleBuy = (ticketId: string) => {
     setSelectedTicket(ticketId);
-    setForm({ nome: "", telefone: "", numero_placa: "" });
+    setForm({ nome: "", telefone: "" });
     setDialogOpen(true);
   };
 
@@ -99,19 +99,12 @@ const CorridaDeBarEmBar = () => {
     e.preventDefault();
     if (!selectedTicket) return;
 
-    const placa = parseInt(form.numero_placa);
-    if (isNaN(placa) || placa <= 0) {
-      toast({ title: "Número de placa inválido", description: "Insira um número válido.", variant: "destructive" });
-      return;
-    }
-
     setLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke("create-checkout", {
         body: {
           nome: form.nome,
           telefone: form.telefone,
-          numero_placa: placa,
           tipo_ingresso: selectedTicket
         }
       });
@@ -369,7 +362,7 @@ const CorridaDeBarEmBar = () => {
 
       {/* MODAL DE INSCRIÇÃO */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="gta-mission-card border-gta-green/30 sm:max-w-md">
+        <DialogContent className="bg-black/90 backdrop-blur border border-gta-green/30 sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="font-gta-title text-xl text-gta-gradient">
               {selectedTicket === "masculino" ? "CJ Hardcore (R$ 110,00)" : "Sweet Light (R$ 55,00)"}
@@ -384,10 +377,6 @@ const CorridaDeBarEmBar = () => {
             <div className="space-y-2">
               <Label htmlFor="telefone">Telefone / WhatsApp</Label>
               <Input id="telefone" required placeholder="(49) 99999-9999" value={form.telefone} onChange={(e) => setForm((f) => ({ ...f, telefone: e.target.value }))} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="numero_placa">Número desejado da placa</Label>
-              <Input id="numero_placa" type="number" required min={1} placeholder="Ex: 42" value={form.numero_placa} onChange={(e) => setForm((f) => ({ ...f, numero_placa: e.target.value }))} />
             </div>
             <Button type="submit" className="w-full btn-gta rounded-lg py-3" disabled={loading}>
               {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processando...</> : "Confirmar e pagar"}

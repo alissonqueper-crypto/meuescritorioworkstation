@@ -21,12 +21,12 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { nome, telefone, numero_placa, tipo_ingresso } = await req.json();
+    const { nome, telefone, tipo_ingresso } = await req.json();
 
     // Validate input
-    if (!nome || !telefone || !numero_placa || !tipo_ingresso) {
+    if (!nome || !telefone || !tipo_ingresso) {
       return new Response(
-        JSON.stringify({ error: "Campos obrigatórios: nome, telefone, numero_placa, tipo_ingresso" }),
+        JSON.stringify({ error: "Campos obrigatórios: nome, telefone, tipo_ingresso" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -50,7 +50,7 @@ Deno.serve(async (req) => {
     const { error: dbError } = await supabase.from("inscricoes").insert({
       nome,
       telefone,
-      numero_placa,
+      numero_placa: 0,
       tipo_ingresso,
       valor_pago: ticket.price,
       order_nsu: orderNsu,
