@@ -1,26 +1,18 @@
 
 
-## Plano: Substituir galeria geral por fotos reais do escritório
+## Plano: Corrigir modal de inscrição e remover campo "número da placa"
 
-A galeria "Galeria de Fotos" no topo da página Estrutura usa 5 fotos genéricas do Unsplash. Serão substituídas pelas 6 fotos reais enviadas.
+### Problema
+O `DialogContent` usa a classe `gta-mission-card` que aplica `overflow: hidden` e `position: relative`, quebrando o posicionamento fixo do Dialog do Radix. O conteúdo do modal fica invisível/cortado.
 
-### Alterações
+### Alterações em `src/pages/CorridaDeBarEmBar.tsx`
 
-1. **Copiar 6 fotos** para `src/assets/`:
-   - `WhatsApp_Image_2026-03-02_at_17.05.10_1.jpeg` → `src/assets/galeria-recepcao.jpg` (sofá, TV de boas-vindas, logo)
-   - `WhatsApp_Image_2026-03-02_at_17.05.10_2.jpeg` → `src/assets/galeria-rede.jpg` (rede suspensa colorida com telão)
-   - `WhatsApp_Image_2026-03-02_at_17.05.10.jpeg` → `src/assets/galeria-fachada.jpg` (fachada do prédio)
-   - `WhatsApp_Image_2026-03-02_at_17.05.11.jpeg` → `src/assets/galeria-coworking.jpg` (coworking noturno com rede no teto)
-   - `DSC08033-2.jpg` → `src/assets/galeria-estacao.jpg` (estações de trabalho com divisória)
-   - `WhatsApp_Image_2026-03-02_at_17.08.36.jpeg` → `src/assets/galeria-escritorio.jpg` (escritório privativo com estante)
+1. **Remover `gta-mission-card` do DialogContent** — substituir por classes Tailwind equivalentes que não conflitem com o Dialog:
+   - `bg-black/80 backdrop-blur border border-gta-green/30`
 
-2. **`src/pages/Estrutura.tsx`**:
-   - Importar os 6 novos assets
-   - Substituir o array `gallerySpaces` (5 itens Unsplash → 6 itens reais):
-     - "Fachada" — entrada imponente com letreiro Workstation e logos dos parceiros
-     - "Recepção & Lounge" — sofá confortável, TV de boas-vindas e logo na parede
-     - "Rede Suspensa" — rede colorida iluminada com telão ao fundo
-     - "Coworking Noturno" — estações de trabalho sob rede suspensa com iluminação noturna
-     - "Estação de Trabalho" — mesas com divisória e cadeiras ergonômicas
-     - "Escritório Privativo" — sala privativa com mesa, estante e vista para o coworking
+2. **Remover o campo "Número desejado da placa"**:
+   - Remover o bloco do input `numero_placa` do formulário (linhas 388-391)
+   - Remover `numero_placa` do estado `form` (inicializar sem ele)
+   - Remover a validação de `placa` no `handleSubmit` (linhas 102-106)
+   - Ajustar o body do `supabase.functions.invoke` para não enviar `numero_placa`
 
