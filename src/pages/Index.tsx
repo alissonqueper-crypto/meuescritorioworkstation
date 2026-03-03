@@ -214,10 +214,10 @@ const Index = () => {
       {/* ============ LOCALIZAÇÃO ============ */}
       <ScrollSection className="bg-card/50">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Localização</h2>
-        <p className="text-center text-muted-foreground mb-8">Rua Exemplo, 123 – Centro, Caçador – SC</p>
-        <div className="rounded-2xl overflow-hidden border border-border aspect-video min-h-[250px] max-w-4xl mx-auto">
+        <p className="text-center text-muted-foreground mb-8">R. Vinte e Cinco de Março, 148 – Centro, Caçador – SC, 89500-061</p>
+        <div className="relative rounded-2xl overflow-hidden border border-border aspect-[4/3] md:aspect-video min-h-[300px] max-w-4xl mx-auto">
           <iframe
-            src="https://maps.google.com/maps?q=Caçador,SC,Brazil&output=embed"
+            src="https://maps.google.com/maps?q=R.+Vinte+e+Cinco+de+Mar%C3%A7o,+148,+Ca%C3%A7ador,+SC&output=embed"
             width="100%"
             height="100%"
             style={{ border: 0 }}
@@ -225,6 +225,16 @@ const Index = () => {
             loading="lazy"
             title="Localização"
           />
+          <a
+            href="https://www.google.com/maps/search/R.+Vinte+e+Cinco+de+Mar%C3%A7o,+148,+Ca%C3%A7ador,+SC"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute bottom-4 right-4"
+          >
+            <Button variant="default" size="sm" className="shadow-lg gap-1.5">
+              <MapPin className="w-4 h-4" /> Abrir no Maps
+            </Button>
+          </a>
         </div>
       </ScrollSection>
 
