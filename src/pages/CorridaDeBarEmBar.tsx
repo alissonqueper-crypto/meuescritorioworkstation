@@ -442,12 +442,20 @@ const CorridaDeBarEmBar = () => {
           <span className="gta-hud-chip rounded px-3 py-1 text-[10px] tracking-widest mb-4 inline-block font-gta-hud font-bold italic uppercase">LOCALIZAÇÃO</span>
           <h2 className="font-gta-title text-2xl md:text-4xl text-gta-gradient mb-3" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>Ponto de Largada</h2>
           <p className="text-muted-foreground">Caçador, SC – Concentração às 17h</p>
+          <p className="text-muted-foreground text-sm mt-1">R. Visc. de Mauá, 175 - Centro, Caçador - SC, 89500-259</p>
         </div>
-        <div className="rounded-xl overflow-hidden border border-gta-green/20 aspect-video min-h-[250px] max-w-4xl mx-auto">
+        <div className="relative rounded-xl overflow-hidden border border-gta-green/20 aspect-[4/3] md:aspect-video min-h-[300px] max-w-4xl mx-auto">
           <iframe
-            src="https://maps.google.com/maps?q=Caçador,SC,Brazil&output=embed"
+            src="https://maps.google.com/maps?q=R.+Visc.+de+Mauá,+175+-+Centro,+Caçador+-+SC&output=embed"
             width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title="Local do evento" />
-
+          <a
+            href="https://www.google.com/maps/search/R.+Visc.+de+Mauá,+175+-+Centro,+Caçador+-+SC"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute bottom-3 right-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-2 rounded-lg border border-border flex items-center gap-1.5 hover:bg-background transition-colors shadow-lg"
+          >
+            <MapPin className="w-3.5 h-3.5" /> Abrir no Maps
+          </a>
         </div>
       </ScrollSection>
 
