@@ -1,16 +1,18 @@
 
 
-## Plano: Corrigir seção de localização do evento (mobile + endereço)
+## Plano: Ajustar proporção do mapa na versão mobile
 
-### Alterações em `src/pages/CorridaDeBarEmBar.tsx` (linhas 439-452)
+### Problema
+Na screenshot, o mapa está mais largo que o restante do conteúdo da página no mobile. O container do mapa usa `max-w-4xl` mas o `aspect-[4/3]` com `min-h-[300px]` faz ele ocupar mais espaço vertical/horizontal que o necessário no mobile.
 
-1. **Atualizar endereço do iframe** — trocar query genérica por endereço específico:
-   - `src="https://maps.google.com/maps?q=R.+Visc.+de+Mauá,+175+-+Centro,+Caçador+-+SC&output=embed"`
+### Alterações em `src/pages/CorridaDeBarEmBar.tsx` (linha 447)
 
-2. **Ajustar proporção mobile** — trocar `aspect-video min-h-[250px]` por `aspect-[4/3] md:aspect-video min-h-[300px]` para o mapa ficar mais alto e legível no mobile
+1. **Remover `min-h-[300px]`** — no mobile, deixar o aspect ratio controlar a altura naturalmente
+2. **Trocar `max-w-4xl`** por `max-w-full` para que o mapa respeite o padding do container pai (`px-4`)
+3. **Adicionar `min-h-[250px] md:min-h-[350px]`** para garantir altura mínima razoável apenas em telas maiores
 
-3. **Adicionar botão "Abrir no Maps"** flutuante sobre o mapa (como na screenshot), com link externo para:
-   - `https://www.google.com/maps/search/R.+Visc.+de+Mauá,+175+-+Centro,+Caçador+-+SC`
-
-4. **Adicionar endereço textual** abaixo do subtítulo: "R. Visc. de Mauá, 175 - Centro, Caçador - SC, 89500-259"
+Classe final do container do mapa:
+```
+relative rounded-xl overflow-hidden border border-gta-green/20 aspect-[4/3] md:aspect-video min-h-[250px] md:min-h-[350px] w-full
+```
 
