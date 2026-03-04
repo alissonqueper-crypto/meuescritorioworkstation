@@ -444,7 +444,7 @@ const CorridaDeBarEmBar = () => {
           <p className="text-muted-foreground">Caçador, SC – Concentração às 17h</p>
           <p className="text-muted-foreground text-sm mt-1">R. Visc. de Mauá, 175 - Centro, Caçador - SC, 89500-259</p>
         </div>
-        <div className="relative rounded-xl overflow-hidden border border-gta-green/20 aspect-[4/3] md:aspect-video min-h-[300px] max-w-4xl mx-auto">
+        <div className="relative rounded-xl overflow-hidden border border-gta-green/20 aspect-[4/3] md:aspect-video min-h-[250px] md:min-h-[350px] w-full max-w-full mx-auto">
           <iframe
             src="https://maps.google.com/maps?q=R.+Visc.+de+Mauá,+175+-+Centro,+Caçador+-+SC&output=embed"
             width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title="Local do evento" />
