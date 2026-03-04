@@ -1,18 +1,20 @@
 
 
-## Plano: Ajustar proporção do mapa na versão mobile
+## Plano: Ajustar proporção do mapa da página inicial no mobile
 
 ### Problema
-Na screenshot, o mapa está mais largo que o restante do conteúdo da página no mobile. O container do mapa usa `max-w-4xl` mas o `aspect-[4/3]` com `min-h-[300px]` faz ele ocupar mais espaço vertical/horizontal que o necessário no mobile.
+O container do mapa na seção Localização da página inicial (`src/pages/Index.tsx`, linha 218) usa `max-w-4xl` que causa overflow no mobile, idêntico ao problema já corrigido na página do evento.
 
-### Alterações em `src/pages/CorridaDeBarEmBar.tsx` (linha 447)
+### Alteração em `src/pages/Index.tsx` (linha 218)
 
-1. **Remover `min-h-[300px]`** — no mobile, deixar o aspect ratio controlar a altura naturalmente
-2. **Trocar `max-w-4xl`** por `max-w-full` para que o mapa respeite o padding do container pai (`px-4`)
-3. **Adicionar `min-h-[250px] md:min-h-[350px]`** para garantir altura mínima razoável apenas em telas maiores
-
-Classe final do container do mapa:
+Trocar as classes do container do mapa de:
 ```
-relative rounded-xl overflow-hidden border border-gta-green/20 aspect-[4/3] md:aspect-video min-h-[250px] md:min-h-[350px] w-full
+relative rounded-2xl overflow-hidden border border-border aspect-[4/3] md:aspect-video min-h-[300px] max-w-4xl mx-auto
 ```
+Para:
+```
+relative rounded-2xl overflow-hidden border border-border aspect-[4/3] md:aspect-video min-h-[250px] md:min-h-[350px] w-full max-w-full mx-auto
+```
+
+Mesma correção aplicada anteriormente na página do evento.
 
