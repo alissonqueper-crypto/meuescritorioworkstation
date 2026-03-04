@@ -329,9 +329,9 @@ const CorridaDeBarEmBar = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
           {tickets.map((t) =>
           <div key={t.id} className={`relative gta-mission-card rounded-2xl p-5 md:p-8 flex flex-col ${t.highlight ? "ring-2 ring-gta-green-light shadow-[0_0_40px_hsl(var(--gta-green)/0.2)]" : ""}`}>
-              {t.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gta-green text-black text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Mais popular</span>
-              )}
+              {t.highlight &&
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gta-green text-black text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">Mais popular</span>
+            }
               <span className="text-xs uppercase tracking-widest text-gta-gold mb-1 font-gta-hud font-bold italic">{t.subtitle}</span>
               <h3 className="font-gta-title text-xl mb-2 text-foreground">{t.name}</h3>
               <p className="text-sm text-muted-foreground mb-4 leading-snug">{t.desc}</p>
@@ -452,8 +452,8 @@ const CorridaDeBarEmBar = () => {
             href="https://www.google.com/maps/search/R.+Visc.+de+Mauá,+175+-+Centro,+Caçador+-+SC"
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute bottom-3 right-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-2 rounded-lg border border-border flex items-center gap-1.5 hover:bg-background transition-colors shadow-lg"
-          >
+            className="absolute bottom-3 right-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-2 rounded-lg border border-border flex items-center gap-1.5 hover:bg-background transition-colors shadow-lg">
+            
             <MapPin className="w-3.5 h-3.5" /> Abrir no Maps
           </a>
         </div>
@@ -463,7 +463,7 @@ const CorridaDeBarEmBar = () => {
       <section className="border-t border-gta-green/20 py-8 px-4">
         <div className="container mx-auto max-w-6xl text-center text-xs text-muted-foreground space-y-2">
           <p>Organização e sede oficial: <strong className="text-foreground">Meu Escritório – WORKSTATION</strong></p>
-          <p>CNPJ: 00.000.000/0001-00</p>
+          <p>CNPJ: 47.866.657/0001-08</p>
           <p>&copy; {new Date().getFullYear()} Corrida de Bar em Bar. Todos os direitos reservados.</p>
         </div>
       </section>
