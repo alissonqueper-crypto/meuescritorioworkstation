@@ -123,7 +123,7 @@ const CorridaDeBarEmBar = () => {
               ★ NOVA MISSÃO DISPONÍVEL ★
             </span>
 
-            <img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4" />
+            <img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4 mx-auto" />
             <p className="font-gta-script text-sm md:text-base text-gta-gold uppercase tracking-widest mb-3">
               GTA San Andreas Edition
             </p>
