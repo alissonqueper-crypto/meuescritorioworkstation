@@ -7,6 +7,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { LampContainer } from "@/components/ui/lamp";
 import logoImg from "@/assets/logo.png";
 import eventHeroImg from "@/assets/corrida-hero-gta.png";
+import corridaLogo from "@/assets/corrida-logo.png";
 import sala1 from "@/assets/sala-1.jpg";
 import sala2 from "@/assets/sala-2.jpg";
 import sala3 from "@/assets/sala-3.jpg";
@@ -257,9 +258,7 @@ const Index = () => {
                 ★ NOVA MISSÃO DISPONÍVEL ★
               </span>
 
-              <h3 className="font-gta-price text-gta-gradient uppercase tracking-tight leading-[0.85] text-3xl md:text-5xl">
-                CORRIDA<br />DE BAR<br />EM BAR
-              </h3>
+              <img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-48 md:w-72" />
               <p className="font-gta-script text-gta-gold text-sm md:text-base -mt-1">GTA San Andreas Edition</p>
 
               <div className="flex flex-wrap justify-center gap-2 mt-1">
