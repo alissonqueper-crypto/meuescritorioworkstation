@@ -1,34 +1,55 @@
 
 
-## Problema: InfinitePay retorna `success: false` para todos
+## Plano: Inverter fluxo — Pagamento primeiro, inscrição depois
 
-A edge function `check-payments` verifica pagamentos corretamente, mas a API da InfinitePay retorna que nenhum pagamento foi feito. Precisamos entender o que a API está retornando para diagnosticar.
+### Novo fluxo
+1. Usuário clica no botão do ingresso → edge function gera link de checkout (sem pedir dados) → redireciona para InfinitePay
+2. Após pagamento, InfinitePay redireciona para página de inscrição com `order_nsu` na URL
+3. Usuário preenche nome, telefone, indicação na página de inscrição
+4. Dados salvos no banco com `status_pagamento: "aprovado"`
 
-### Diagnóstico necessario
+### Alterações por arquivo
 
-O código atual verifica `data.success === true` mas não loga a resposta da API. Pode ser que:
-1. A resposta use outro campo (ex: `data.paid`, `data.status === "paid"`)
-2. Os compradores realmente não finalizaram o pagamento no checkout
+**`supabase/functions/create-checkout/index.ts`**
+- Receber apenas `tipo_ingresso` (sem nome, telefone, indicacao)
+- Não criar registro no banco — apenas gerar o `order_nsu` e o link de checkout
+- Redirect URL aponta para nova página de inscrição: `/eventos/corrida-de-bar-em-bar/inscricao?order_nsu=XXX&tipo=masculino`
 
-### Plano
+**`src/pages/CorridaDeBarEmBar.tsx`**
+- Remover o modal/dialog de formulário
+- Botão de compra chama `create-checkout` diretamente com apenas `tipo_ingresso`
+- Redireciona para o checkout_url retornado
 
-1. **Adicionar logging detalhado** na edge function `check-payments` para logar a resposta completa da API InfinitePay (`console.log("InfinitePay response:", JSON.stringify(data))`)
-2. **Re-executar** para um `order_nsu` específico e verificar nos logs o que exatamente a API retorna
-3. **Ajustar a condição** de sucesso se o campo de resposta for diferente de `success`
+**Nova página: `src/pages/CorridaInscricao.tsx`**
+- Lê `order_nsu` e `tipo` dos query params
+- Formulário: nome, telefone, indicação
+- Ao submeter: insere no banco `inscricoes` com `status_pagamento: "aprovado"`, atribui número do participante
+- Exibe confirmação com dados do ingresso
 
-### Alteração em `supabase/functions/check-payments/index.ts`
+**Nova edge function: `supabase/functions/register-participant/index.ts`**
+- Recebe `order_nsu`, `tipo_ingresso`, `nome`, `telefone`, `indicacao`
+- Verifica se já existe registro com esse `order_nsu` (evitar duplicata)
+- Insere na tabela `inscricoes` com status `aprovado`
+- Atribui número do participante da tabela `numeros_participantes`
+- Retorna dados da inscrição
 
-Adicionar `console.log` após `const data = await res.json()`:
-```typescript
-const data = await res.json();
-console.log(`InfinitePay response for ${inscricao.order_nsu}:`, JSON.stringify(data));
+**`src/App.tsx`**
+- Adicionar rota `/eventos/corrida-de-bar-em-bar/inscricao` → `CorridaInscricao`
+
+**`src/pages/CorridaSuccess.tsx`**
+- Simplificar ou redirecionar para a nova página de inscrição (pode ser removida se não for mais necessária)
+
+### Resumo do fluxo
+
+```text
+[Ticket Button] → create-checkout(tipo_ingresso)
+       ↓
+[InfinitePay Checkout] → paga
+       ↓
+[Redirect: /inscricao?order_nsu=X&tipo=Y]
+       ↓
+[Form: nome, telefone, indicação] → register-participant()
+       ↓
+[Confirmação com dados do ingresso]
 ```
-
-Isso vai nos mostrar exatamente o que a InfinitePay retorna e permitir corrigir a condição.
-
-| Arquivo | O que muda |
-|---|---|
-| `supabase/functions/check-payments/index.ts` | Adicionar log da resposta da InfinitePay para diagnóstico |
-
-Após ver os logs, ajustaremos a condição de verificação de pagamento se necessário.
 
