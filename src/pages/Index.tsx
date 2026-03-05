@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Wifi, Users, Coffee, MapPin, Thermometer, Building2, ArrowRight, Calendar, Code, Calculator, Megaphone, Brain } from "lucide-react";
+import { Wifi, Users, Coffee, MapPin, Thermometer, Building2, ArrowRight, Calendar, Code, Calculator, Megaphone, Brain, Beer, Timer, Route, Crosshair } from "lucide-react";
 import { CircularTestimonials } from "@/components/ui/circular-testimonials";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { LampContainer } from "@/components/ui/lamp";
 import logoImg from "@/assets/logo.png";
+import eventHeroImg from "@/assets/corrida-hero-gta.png";
 import sala1 from "@/assets/sala-1.jpg";
 import sala2 from "@/assets/sala-2.jpg";
 import sala3 from "@/assets/sala-3.jpg";
@@ -245,22 +246,42 @@ const Index = () => {
         </h2>
         <p className="text-center text-muted-foreground mb-8 md:mb-12">Nosso coworking é palco de eventos incríveis.</p>
         <div className="max-w-2xl mx-auto">
-          <div className="bg-neon-card rounded-2xl p-6 md:p-8 transition-all duration-300">
-            <div className="flex items-center gap-2 mb-3">
-              <Calendar className="w-5 h-5 text-neon-pink" />
-              <span className="text-xs font-semibold text-neon-purple uppercase tracking-wider">Evento em Destaque</span>
+          <div className="gta-mission-card overflow-hidden relative">
+            {/* Background image */}
+            <img src={eventHeroImg} alt="" className="absolute inset-0 w-full h-full object-cover opacity-20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/50" />
+
+            {/* Content */}
+            <div className="relative z-10 p-6 md:p-8 flex flex-col items-center text-center gap-4">
+              <span className="gta-hud-chip px-3 py-1 rounded-full text-[10px] sm:text-xs">
+                ★ NOVA MISSÃO DISPONÍVEL ★
+              </span>
+
+              <h3 className="font-gta-price text-gta-gradient uppercase tracking-tight leading-[0.85] text-3xl md:text-5xl">
+                CORRIDA<br />DE BAR<br />EM BAR
+              </h3>
+              <p className="font-gta-script text-gta-gold text-sm md:text-base -mt-1">GTA San Andreas Edition</p>
+
+              <div className="flex flex-wrap justify-center gap-2 mt-1">
+                {[
+                  { icon: Calendar, text: "14/03 · 17h" },
+                  { icon: MapPin, text: "Caçador/SC" },
+                  { icon: Route, text: "~2,5 km" },
+                  { icon: Beer, text: "11 bares" },
+                ].map((chip) => (
+                  <span key={chip.text} className="gta-hud-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs">
+                    <chip.icon className="w-3 h-3" />
+                    {chip.text}
+                  </span>
+                ))}
+              </div>
+
+              <Link to="/eventos/corrida-de-bar-em-bar" className="mt-2">
+                <button className="btn-gta px-6 py-3 rounded-lg text-sm md:text-base flex items-center gap-2">
+                  Iniciar missão <ArrowRight className="w-5 h-5" />
+                </button>
+              </Link>
             </div>
-            <h3 className="font-display text-2xl md:text-3xl font-bold text-neon-gradient mb-3">
-              Corrida de Bar em Bar
-            </h3>
-            <p className="text-muted-foreground text-sm mb-6">
-              A corrida mais insana de Caçador! Percorra os melhores bares da cidade em uma noite épica de diversão, drinks e prêmios.
-            </p>
-            <Link to="/eventos/corrida-de-bar-em-bar">
-              <Button variant="neon" size="lg" className="w-full sm:w-auto">
-                Ver página do evento <ArrowRight className="w-5 h-5" />
-              </Button>
-            </Link>
           </div>
         </div>
       </ScrollSection>
