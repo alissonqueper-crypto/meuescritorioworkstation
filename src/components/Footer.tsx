@@ -2,14 +2,14 @@ import { MessageCircle, Instagram, Facebook, MapPin, Phone } from "lucide-react"
 import logo from "@/assets/logo.png";
 
 const WHATSAPP_URL =
-  "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
+"https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
 const ADDRESS = "Rua Exemplo, 123 – Centro, Caçador – SC, 89500-000"; // TODO: Editar endereço
 const CNPJ = "00.000.000/0001-00"; // TODO: Editar CNPJ
 const INSTAGRAM_URL = "#"; // TODO: Editar link Instagram
 const FACEBOOK_URL = "#"; // TODO: Editar link Facebook
 
-const Footer = () => (
-  <footer className="bg-card border-t border-border">
+const Footer = () =>
+<footer className="bg-card border-t border-border">
     {/* Brand separator gradient */}
     <div className="brand-separator w-full" />
 
@@ -41,9 +41,9 @@ const Footer = () => (
         <div>
           <h4 className="font-semibold text-sm mb-3 text-foreground">Redes Sociais</h4>
           <div className="flex gap-3">
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-brand-teal/20 transition-colors text-muted-foreground hover:text-brand-teal">
-              <MessageCircle className="w-5 h-5" />
-            </a>
+            
+
+          
             <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-secondary hover:bg-brand-red/20 transition-colors text-muted-foreground hover:text-brand-red">
               <Instagram className="w-5 h-5" />
             </a>
@@ -59,7 +59,7 @@ const Footer = () => (
         <p className="mt-1">CNPJ: {CNPJ}</p>
       </div>
     </div>
-  </footer>
-);
+  </footer>;
+
 
 export default Footer;
