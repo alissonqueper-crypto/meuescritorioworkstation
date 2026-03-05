@@ -1,25 +1,55 @@
 
 
-## Plano: Exibir status do pagamento no card do ingresso
+## Plano: Criar Edge Function para verificar pagamentos na InfinitePay
 
-**Arquivo: `src/pages/MeuIngresso.tsx`**
+### Problema
+Inscrições ficam como "pendente" eternamente quando a pessoa não completa o pagamento ou quando completa mas o redirect falha. Atualmente o status só muda no client-side (`CorridaSuccess.tsx`), o que é inseguro.
 
-Adicionar uma linha "Status" no card do ingresso que mostra o status do pagamento com cores diferenciadas:
+### Solução
 
-- **aprovado** → verde, texto "Aprovado ✅"
-- **pendente** → amarelo, texto "Pendente ⏳"
-- **expirado** → cinza, texto "Expirado"
-- **outros** → cinza padrão
+Criar uma edge function `check-payments` que consulta a API pública da InfinitePay para cada inscrição pendente e atualiza o status no banco.
 
-A função `statusColor` já existe no componente mas não está sendo usada. Vou adicionar a linha de status ao array de informações do ticket, usando um elemento estilizado com a cor correspondente ao invés de texto simples.
+### Endpoint da InfinitePay
 
-### Alteração
-
-No array de rows (linha ~152), adicionar após "Data da compra":
-
-```typescript
-{ label: "Status", value: ingresso.status_pagamento }
+```text
+POST https://api.infinitepay.io/invoices/public/checkout/payment_check
+Body: { "handle": "meu-escritorio", "order_nsu": "CORRIDA_xxx" }
 ```
 
-E renderizar essa linha com a cor via `statusColor()` já existente, com um badge ou texto colorido para destaque visual.
+Retorna `{ "success": true/false }` — endpoint público, sem necessidade de API key.
+
+### Alterações
+
+**1. Criar `supabase/functions/check-payments/index.ts`**
+- Busca todas as inscrições com `status_pagamento = 'pendente'` e `order_nsu IS NOT NULL`
+- Para cada uma, chama `payment_check` na InfinitePay
+- Se `success: true` → atualiza para `"aprovado"`
+- Se `success: false` e criado há mais de 48h → atualiza para `"expirado"`
+- Retorna resumo: `{ aprovados: N, expirados: N, ainda_pendentes: N }`
+
+**2. Atualizar `supabase/config.toml`**
+- Registrar `[functions.check-payments]` com `verify_jwt = false`
+
+**3. Corrigir `src/pages/CorridaSuccess.tsx`**
+- Em vez de atualizar status diretamente no client, chamar a edge function `check-payments` passando o `order_nsu` específico para verificar aquele pagamento via InfinitePay antes de marcar como aprovado
+
+### Fluxo
+
+```text
+check-payments (Edge Function)
+  │
+  ├─ Se recebe order_nsu → verifica só aquele pedido
+  ├─ Se não recebe → verifica todos os pendentes (batch)
+  │
+  ├─ POST infinitepay/payment_check { handle, order_nsu }
+  │   ├─ success: true  → UPDATE status = 'aprovado'
+  │   └─ success: false + >48h → UPDATE status = 'expirado'
+  │
+  └─ Retorna resumo
+```
+
+### Uso
+- Automaticamente chamada na página de sucesso (substitui update direto)
+- Pode ser chamada manualmente para reconciliar todos os pendentes
+- Futuramente pode ser agendada com pg_cron
 
