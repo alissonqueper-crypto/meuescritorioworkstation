@@ -4,7 +4,7 @@ import logo from "@/assets/logo.png";
 const WHATSAPP_URL =
 "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
 const ADDRESS = "Rua Vinte e Cinco de Março, 148 - Centro, Caçador - SC, 89500-061";
-const CNPJ = "00.000.000/0001-00"; // TODO: Editar CNPJ
+const CNPJ = "47.866.657/0001-08";
 const INSTAGRAM_URL = "https://www.instagram.com/meu.escritorio.ws/";
 const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61583799449147&locale=pt_BR";
 
