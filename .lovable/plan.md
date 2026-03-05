@@ -1,44 +1,32 @@
 
 
-## Plano: Atualizar card de evento na Index com estética GTA
+## Plano: Logo scroll-to-top + Navegação com scroll suave para seções
 
-O card atual na seção "Eventos & Comunidade" da Index usa o estilo genérico neon. Vamos atualizá-lo para refletir a identidade visual GTA San Andreas da página do evento.
+### Problema atual
+- A logo já linka para `/`, mas se o usuário já está na home, não faz nada visível (não rola ao topo)
+- Os links de navegação levam a páginas separadas, mas na home seria melhor rolar suavemente até as seções correspondentes
 
-### Alterações em `src/pages/Index.tsx`
+### Alterações
 
-**Imports adicionais:**
-- Importar `eventHeroImg` de `@/assets/corrida-hero-gta.png`
-- Importar ícones extras: `Beer`, `Timer`, `Route`, `Crosshair`
+**`src/components/Header.tsx`**
+- Logo: ao clicar, se já está na `/`, fazer `window.scrollTo({ top: 0, behavior: 'smooth' })` em vez de navegar
+- Atualizar `navLinks` para incluir âncoras quando na home page:
+  - "Início" → scroll ao topo
+  - "Estrutura" → se na home, scroll para `#estrutura`; senão, navega para `/estrutura`
+  - "Eventos" → se na home, scroll para `#eventos`; senão, navega para `/eventos/corrida-de-bar-em-bar`
+  - "Contato" → se na home, scroll para `#localizacao`; senão, navega para `/contato`
+- Criar handler de click que detecta `location.pathname === "/"` e faz `document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })` em vez de navegar
 
-**Substituir o card atual (linhas 248-264)** por um card com estética GTA:
+**`src/pages/Index.tsx`**
+- Adicionar `id` nas `ScrollSection` correspondentes:
+  - Benefícios → `id="beneficios"`
+  - Nossos Espaços → `id="estrutura"`
+  - Localização → `id="localizacao"`
+  - Eventos → `id="eventos"`
 
-- Fundo com imagem hero do evento (semi-transparente) + gradient overlay escuro
-- Badge superior com estilo `gta-hud-chip` ("★ NOVA MISSÃO DISPONÍVEL ★")
-- Título "CORRIDA DE BAR EM BAR" em `font-gta-price text-gta-gradient` com text-shadow
-- Subtítulo "GTA San Andreas Edition" em `font-gta-script text-gta-gold`
-- Chips HUD com data, local, distância, nº de bares (mesmo estilo da página do evento)
-- Botão com classe `btn-gta` em vez de `variant="neon"`
-- Manter o `Link to="/eventos/corrida-de-bar-em-bar"`
-
-### Estrutura visual
-
-```text
-┌─────────────────────────────────────────┐
-│  [Hero image background + dark overlay] │
-│                                         │
-│  ★ NOVA MISSÃO DISPONÍVEL ★  (hud chip) │
-│                                         │
-│     CORRIDA DE BAR EM BAR               │
-│     GTA San Andreas Edition             │
-│                                         │
-│  14/03·17h  Caçador/SC  ~2,5km  11bars  │
-│                                         │
-│     [ Iniciar missão → ]  (btn-gta)     │
-└─────────────────────────────────────────┘
-```
-
-### Detalhes técnicos
-- Card usa `overflow-hidden relative` com `<img>` absoluto + gradient overlay (mesmo padrão do hero da página do evento)
-- Texto e botões ficam em `relative z-10`
-- Responsivo: texto menor no mobile, chips com `text-[10px] sm:text-xs`
+### Comportamento
+- Na home: cliques no nav rolam suavemente até a seção
+- Em outras páginas: cliques navegam normalmente para a rota
+- Logo: sempre volta ao topo da home (scroll suave se já na home, navegação se em outra página)
+- `scroll-padding-top` no CSS para compensar o header fixo (~80px)
 
