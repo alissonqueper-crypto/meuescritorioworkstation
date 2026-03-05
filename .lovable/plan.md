@@ -1,55 +1,45 @@
 
 
-## Plano: Inverter fluxo — Pagamento primeiro, inscrição depois
+## Plano: Atualizar registros existentes + Proteger página de inscrição
 
-### Novo fluxo
-1. Usuário clica no botão do ingresso → edge function gera link de checkout (sem pedir dados) → redireciona para InfinitePay
-2. Após pagamento, InfinitePay redireciona para página de inscrição com `order_nsu` na URL
-3. Usuário preenche nome, telefone, indicação na página de inscrição
-4. Dados salvos no banco com `status_pagamento: "aprovado"`
+### 3 objetivos:
+1. **Atualizar todos os registros existentes** para `status_pagamento = 'aprovado'`
+2. **Validar pagamento na página de inscrição** — antes de mostrar o formulário, verificar na InfinitePay se o `order_nsu` foi realmente pago
+3. **Impedir cadastro duplicado** — se já existe inscrição com aquele `order_nsu`, mostrar mensagem ao invés do formulário
 
 ### Alterações por arquivo
 
-**`supabase/functions/create-checkout/index.ts`**
-- Receber apenas `tipo_ingresso` (sem nome, telefone, indicacao)
-- Não criar registro no banco — apenas gerar o `order_nsu` e o link de checkout
-- Redirect URL aponta para nova página de inscrição: `/eventos/corrida-de-bar-em-bar/inscricao?order_nsu=XXX&tipo=masculino`
+**Banco de dados (UPDATE via insert tool)**
+- `UPDATE inscricoes SET status_pagamento = 'aprovado' WHERE status_pagamento = 'pendente'`
 
-**`src/pages/CorridaDeBarEmBar.tsx`**
-- Remover o modal/dialog de formulário
-- Botão de compra chama `create-checkout` diretamente com apenas `tipo_ingresso`
-- Redireciona para o checkout_url retornado
+**`supabase/functions/register-participant/index.ts`**
+- Antes de inserir, verificar pagamento na API InfinitePay (`payment_check` com o `order_nsu`)
+- Se `success: false`, rejeitar com erro "Pagamento não confirmado"
+- Manter verificação de duplicata existente (já implementada)
 
-**Nova página: `src/pages/CorridaInscricao.tsx`**
-- Lê `order_nsu` e `tipo` dos query params
-- Formulário: nome, telefone, indicação
-- Ao submeter: insere no banco `inscricoes` com `status_pagamento: "aprovado"`, atribui número do participante
-- Exibe confirmação com dados do ingresso
+**`src/pages/CorridaInscricao.tsx`**
+- Ao carregar a página, chamar `register-participant` em modo de verificação OU verificar diretamente se já existe inscrição com aquele `order_nsu` no banco
+- Se já existe inscrição → mostrar tela de "já cadastrado" com dados do ingresso
+- Adicionar um estado de validação inicial (`verificando`) que checa o `order_nsu` antes de exibir o formulário
 
-**Nova edge function: `supabase/functions/register-participant/index.ts`**
-- Recebe `order_nsu`, `tipo_ingresso`, `nome`, `telefone`, `indicacao`
-- Verifica se já existe registro com esse `order_nsu` (evitar duplicata)
-- Insere na tabela `inscricoes` com status `aprovado`
-- Atribui número do participante da tabela `numeros_participantes`
-- Retorna dados da inscrição
-
-**`src/App.tsx`**
-- Adicionar rota `/eventos/corrida-de-bar-em-bar/inscricao` → `CorridaInscricao`
-
-**`src/pages/CorridaSuccess.tsx`**
-- Simplificar ou redirecionar para a nova página de inscrição (pode ser removida se não for mais necessária)
-
-### Resumo do fluxo
+### Fluxo protegido
 
 ```text
-[Ticket Button] → create-checkout(tipo_ingresso)
+[Página carrega com order_nsu]
        ↓
-[InfinitePay Checkout] → paga
-       ↓
-[Redirect: /inscricao?order_nsu=X&tipo=Y]
-       ↓
-[Form: nome, telefone, indicação] → register-participant()
-       ↓
-[Confirmação com dados do ingresso]
+[Verifica se order_nsu já foi usado] → SIM → "Inscrição já realizada"
+       ↓ NÃO
+[register-participant verifica pagamento na InfinitePay]
+       ↓ PAGO
+[Salva inscrição como aprovado]
+       ↓ NÃO PAGO
+[Erro: "Pagamento não confirmado"]
 ```
+
+### Resumo
+| O que | Como |
+|---|---|
+| Aprovar todos pendentes | UPDATE direto no banco |
+| Proteger URL contra acesso indevido | Edge function valida pagamento na InfinitePay antes de aceitar cadastro |
+| Impedir cadastro duplicado | Verificação de `order_nsu` existente (já funciona) + check no frontend ao carregar página |
 
