@@ -56,6 +56,35 @@ export type Database = {
         }
         Relationships: []
       }
+      numeros_participantes: {
+        Row: {
+          atribuido_em: string | null
+          id: string
+          inscricao_id: string | null
+          numero: number
+        }
+        Insert: {
+          atribuido_em?: string | null
+          id?: string
+          inscricao_id?: string | null
+          numero: number
+        }
+        Update: {
+          atribuido_em?: string | null
+          id?: string
+          inscricao_id?: string | null
+          numero?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "numeros_participantes_inscricao_id_fkey"
+            columns: ["inscricao_id"]
+            isOneToOne: false
+            referencedRelation: "inscricoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

@@ -47,7 +47,7 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    const { error: dbError } = await supabase.from("inscricoes").insert({
+    const { data: inscricaoData, error: dbError } = await supabase.from("inscricoes").insert({
       nome,
       telefone,
       numero_placa: 0,
@@ -56,14 +56,29 @@ Deno.serve(async (req) => {
       order_nsu: orderNsu,
       status_pagamento: "pendente",
       indicacao: indicacao || null,
-    });
+    }).select("id").single();
 
-    if (dbError) {
+    if (dbError || !inscricaoData) {
       console.error("DB Error:", dbError);
       return new Response(
         JSON.stringify({ error: "Erro ao salvar inscrição." }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    // Atribuir número aleatório ao participante
+    const { data: numeroDisponivel } = await supabase
+      .from("numeros_participantes")
+      .select("id")
+      .is("inscricao_id", null)
+      .limit(1)
+      .single();
+
+    if (numeroDisponivel) {
+      await supabase
+        .from("numeros_participantes")
+        .update({ inscricao_id: inscricaoData.id, atribuido_em: new Date().toISOString() })
+        .eq("id", numeroDisponivel.id);
     }
 
     // Create InfinitePay checkout link

@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Inscricao {
+  id: string;
   nome: string;
   telefone: string;
   tipo_ingresso: string;
@@ -15,6 +16,7 @@ interface Inscricao {
   order_nsu: string | null;
   created_at: string;
   numero_placa: number;
+  numero_participante?: number;
 }
 
 const MeuIngresso = () => {
@@ -33,10 +35,22 @@ const MeuIngresso = () => {
 
     const { data, error } = await supabase
       .from("inscricoes")
-      .select("nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa")
+      .select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa")
       .ilike("nome", nome.trim())
       .eq("telefone", telefone.trim())
       .maybeSingle();
+
+    if (data && !error) {
+      // Buscar número do participante
+      const { data: numData } = await supabase
+        .from("numeros_participantes")
+        .select("numero")
+        .eq("inscricao_id", data.id)
+        .maybeSingle();
+      if (numData) {
+        (data as any).numero_participante = numData.numero;
+      }
+    }
 
     setLoading(false);
     setBuscou(true);
@@ -139,6 +153,12 @@ const MeuIngresso = () => {
 
               {/* Ticket body */}
               <div className="p-6 space-y-3 text-sm">
+                {ingresso.numero_participante && (
+                  <div className="flex justify-between border-b border-border/20 pb-2 mb-1">
+                    <span className="text-muted-foreground">Nº do Participante</span>
+                    <span className="font-gta-price text-xl text-gta-gradient">{ingresso.numero_participante}</span>
+                  </div>
+                )}
                 {[
                   { label: "Participante", value: ingresso.nome },
                   { label: "Telefone", value: ingresso.telefone },
