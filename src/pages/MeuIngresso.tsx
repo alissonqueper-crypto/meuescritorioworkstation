@@ -92,25 +92,25 @@ const MeuIngresso = () => {
         {!ingresso &&
         <form onSubmit={handleSubmit} className="bg-gta-card rounded-xl p-6 space-y-4 animate-reveal-up">
             <div className="space-y-2">
-              <Label htmlFor="nome" className="text-foreground/80 text-sm">Nome completo</Label>
+              <Label htmlFor="nome" className="text-foreground text-sm font-medium">Nome completo</Label>
               <Input
               id="nome"
               placeholder="Seu nome completo"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               required
-              className="bg-background/50 border-border/50" />
+              className="bg-background/80 border-border/50 text-base text-foreground" />
             
             </div>
             <div className="space-y-2">
-              <Label htmlFor="telefone" className="text-foreground/80 text-sm">Telefone</Label>
+              <Label htmlFor="telefone" className="text-foreground text-sm font-medium">Telefone</Label>
               <Input
               id="telefone"
               placeholder="(49) 99999-9999"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
               required
-              className="bg-background/50 border-border/50" />
+              className="bg-background/80 border-border/50 text-base text-foreground" />
             
             </div>
 
