@@ -1,5 +1,6 @@
 import { useState } from "react";
 import mapaCircuito from "@/assets/mapa-circuito.png";
+import corridaLogo from "@/assets/corrida-logo.png";
 import {
   ArrowRight, Beer, Gift, Trophy, Music, MapPin, Clock, Shield, Users,
   ChevronDown, CreditCard, Calendar, Star, Zap, Check, Loader2, Timer, Route, Sticker, Award,
@@ -122,9 +123,7 @@ const CorridaDeBarEmBar = () => {
               ★ NOVA MISSÃO DISPONÍVEL ★
             </span>
 
-            <h1 className="font-gta-price text-3xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 leading-[0.85] text-gta-gradient tracking-tight uppercase" style={{ textShadow: "3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000" }}>
-              CORRIDA<br />DE BAR<br />EM BAR
-            </h1>
+            <img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4" />
             <p className="font-gta-script text-sm md:text-base text-gta-gold uppercase tracking-widest mb-3">
               GTA San Andreas Edition
             </p>
