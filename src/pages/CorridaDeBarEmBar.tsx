@@ -188,6 +188,11 @@ const CorridaDeBarEmBar = () => {
                 Ver briefing <ArrowRight className="w-5 h-5" />
               </Button>
             </div>
+            <div className="mt-4">
+              <a href="/meu-ingresso" className="text-sm text-gta-gold hover:underline underline-offset-4">
+                🎫 Já comprou? Ver meu ingresso
+              </a>
+            </div>
           </div>
         </div>
 
