@@ -11,25 +11,20 @@ const TICKET_PRICES: Record<string, number> = {
   feminino: 55,
 };
 
+const INFINITEPAY_HANDLE = "meu-escritorio";
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { order_nsu, tipo_ingresso, nome, telefone, indicacao } = await req.json();
+    const body = await req.json();
+    const { order_nsu, tipo_ingresso, nome, telefone, indicacao, check_only } = body;
 
-    if (!order_nsu || !tipo_ingresso || !nome || !telefone) {
+    if (!order_nsu) {
       return new Response(
-        JSON.stringify({ error: "Campos obrigatórios: order_nsu, tipo_ingresso, nome, telefone" }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    const valorPago = TICKET_PRICES[tipo_ingresso];
-    if (!valorPago) {
-      return new Response(
-        JSON.stringify({ error: "Tipo de ingresso inválido." }),
+        JSON.stringify({ error: "order_nsu é obrigatório." }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -39,17 +34,72 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Check for duplicate
+    // Check for existing registration with this order_nsu
     const { data: existing } = await supabase
       .from("inscricoes")
-      .select("id")
+      .select("id, nome, tipo_ingresso, numero_placa, status_pagamento")
       .eq("order_nsu", order_nsu)
       .maybeSingle();
 
     if (existing) {
       return new Response(
-        JSON.stringify({ error: "Este pedido já foi registrado.", duplicate: true }),
-        { status: 409, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        JSON.stringify({
+          duplicate: true,
+          inscricao: existing,
+        }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Verify payment with InfinitePay
+    let paymentConfirmed = false;
+    try {
+      const res = await fetch(
+        "https://api.infinitepay.io/invoices/public/checkout/payment_check",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            handle: INFINITEPAY_HANDLE,
+            order_nsu: order_nsu,
+          }),
+        }
+      );
+      const paymentData = await res.json();
+      console.log(`InfinitePay check for ${order_nsu}:`, JSON.stringify(paymentData));
+      paymentConfirmed = paymentData.success === true;
+    } catch (err) {
+      console.error("InfinitePay check error:", err);
+    }
+
+    if (!paymentConfirmed) {
+      return new Response(
+        JSON.stringify({ error: "Pagamento não confirmado. Aguarde a confirmação ou tente novamente.", payment_not_confirmed: true }),
+        { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // If check_only mode, just return payment status
+    if (check_only) {
+      return new Response(
+        JSON.stringify({ payment_confirmed: true }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Validate required fields for registration
+    if (!tipo_ingresso || !nome || !telefone) {
+      return new Response(
+        JSON.stringify({ error: "Campos obrigatórios: tipo_ingresso, nome, telefone" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const valorPago = TICKET_PRICES[tipo_ingresso];
+    if (!valorPago) {
+      return new Response(
+        JSON.stringify({ error: "Tipo de ingresso inválido." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 

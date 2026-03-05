@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, CheckCircle, AlertTriangle } from "lucide-react";
+import { Loader2, CheckCircle, AlertTriangle, ShieldX } from "lucide-react";
+
+type VerifyState = "loading" | "valid" | "already_registered" | "payment_not_confirmed" | "invalid";
 
 const CorridaInscricao = () => {
   const [searchParams] = useSearchParams();
@@ -14,11 +16,77 @@ const CorridaInscricao = () => {
   const tipo = searchParams.get("tipo");
   const { toast } = useToast();
 
+  const [verifyState, setVerifyState] = useState<VerifyState>("loading");
+  const [existingData, setExistingData] = useState<any>(null);
   const [form, setForm] = useState({ nome: "", telefone: "", indicacao: "" });
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ success: boolean; numero_placa: number; nome: string; tipo_ingresso: string } | null>(null);
 
-  if (!orderNsu || !tipo) {
+  useEffect(() => {
+    if (!orderNsu || !tipo) {
+      setVerifyState("invalid");
+      return;
+    }
+
+    const verify = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke("register-participant", {
+          body: { order_nsu: orderNsu, check_only: true },
+        });
+
+        if (error) {
+          // Parse the error body if available
+          const errorBody = error.message ? error.message : "";
+          if (errorBody.includes("402") || data?.payment_not_confirmed) {
+            setVerifyState("payment_not_confirmed");
+            return;
+          }
+        }
+
+        if (data?.duplicate) {
+          setExistingData(data.inscricao);
+          setVerifyState("already_registered");
+          return;
+        }
+
+        if (data?.payment_not_confirmed) {
+          setVerifyState("payment_not_confirmed");
+          return;
+        }
+
+        if (data?.payment_confirmed || data?.duplicate === false) {
+          setVerifyState("valid");
+          return;
+        }
+
+        // Fallback: check error in data
+        if (data?.error) {
+          setVerifyState("payment_not_confirmed");
+          return;
+        }
+
+        setVerifyState("valid");
+      } catch {
+        setVerifyState("payment_not_confirmed");
+      }
+    };
+
+    verify();
+  }, [orderNsu, tipo]);
+
+  if (verifyState === "loading") {
+    return (
+      <div className="bg-gta-gradient min-h-screen flex items-center justify-center px-4">
+        <div className="gta-mission-card rounded-2xl p-8 max-w-md w-full text-center">
+          <Loader2 className="w-12 h-12 text-gta-green-light mx-auto mb-4 animate-spin" />
+          <h1 className="font-gta-title text-xl text-gta-gradient mb-2">Verificando pagamento...</h1>
+          <p className="text-muted-foreground text-sm">Aguarde enquanto confirmamos seu pagamento.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (verifyState === "invalid") {
     return (
       <div className="bg-gta-gradient min-h-screen flex items-center justify-center px-4">
         <div className="gta-mission-card rounded-2xl p-8 max-w-md w-full text-center">
@@ -30,6 +98,74 @@ const CorridaInscricao = () => {
           <Link to="/eventos/corrida-de-bar-em-bar">
             <Button className="btn-gta rounded-lg">Voltar para o evento</Button>
           </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (verifyState === "payment_not_confirmed") {
+    return (
+      <div className="bg-gta-gradient min-h-screen flex items-center justify-center px-4">
+        <div className="gta-mission-card rounded-2xl p-8 max-w-md w-full text-center">
+          <ShieldX className="w-12 h-12 text-destructive mx-auto mb-4" />
+          <h1 className="font-gta-title text-xl text-gta-gradient mb-3">Pagamento não confirmado</h1>
+          <p className="text-muted-foreground text-sm mb-6">
+            Não foi possível confirmar o pagamento deste pedido. Se você acabou de pagar, aguarde alguns minutos e tente novamente.
+          </p>
+          <div className="flex flex-col gap-3">
+            <Button className="btn-gta rounded-lg" onClick={() => window.location.reload()}>
+              Tentar novamente
+            </Button>
+            <Link to="/eventos/corrida-de-bar-em-bar">
+              <Button variant="outline" className="w-full border-gta-green/50 text-gta-green-light hover:bg-gta-green/10 rounded-lg">
+                Voltar ao evento
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (verifyState === "already_registered") {
+    return (
+      <div className="bg-gta-gradient min-h-screen flex items-center justify-center px-4">
+        <div className="gta-mission-card rounded-2xl p-8 max-w-md w-full text-center">
+          <CheckCircle className="w-16 h-16 text-gta-green-light mx-auto mb-4" />
+          <h1 className="font-gta-title text-2xl text-gta-gradient mb-2">Inscrição já realizada!</h1>
+          <p className="text-muted-foreground text-sm mb-6">Este pedido já possui uma inscrição registrada.</p>
+
+          {existingData && (
+            <div className="bg-gta-card rounded-xl p-6 space-y-3 text-left mb-6">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground text-sm">Nome</span>
+                <span className="text-foreground text-sm font-medium">{existingData.nome}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground text-sm">Ingresso</span>
+                <span className="text-foreground text-sm font-medium">
+                  {existingData.tipo_ingresso === "masculino" ? "CJ Hardcore" : "Sweet Light"}
+                </span>
+              </div>
+              {existingData.numero_placa > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground text-sm">Número</span>
+                  <span className="text-gta-green-light text-lg font-bold font-gta-hud">{existingData.numero_placa}</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="flex flex-col gap-3">
+            <Link to="/meu-ingresso">
+              <Button className="w-full btn-gta rounded-lg">🎫 Ver meu ingresso</Button>
+            </Link>
+            <Link to="/eventos/corrida-de-bar-em-bar">
+              <Button variant="outline" className="w-full border-gta-green/50 text-gta-green-light hover:bg-gta-green/10 rounded-lg">
+                Voltar ao evento
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -92,19 +228,20 @@ const CorridaInscricao = () => {
         },
       });
 
-      if (error) throw new Error("Erro ao registrar inscrição.");
-
       if (data?.duplicate) {
-        toast({
-          title: "Inscrição já registrada",
-          description: "Este pedido já foi registrado anteriormente.",
-          variant: "destructive",
-        });
+        setExistingData(data.inscricao);
+        setVerifyState("already_registered");
         setLoading(false);
         return;
       }
 
-      if (!data?.success) {
+      if (data?.payment_not_confirmed) {
+        setVerifyState("payment_not_confirmed");
+        setLoading(false);
+        return;
+      }
+
+      if (error || !data?.success) {
         throw new Error(data?.error || "Erro ao registrar.");
       }
 
