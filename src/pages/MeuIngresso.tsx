@@ -135,7 +135,7 @@ const MeuIngresso = () => {
                 <Ticket className="w-6 h-6 text-gta-green-light" />
                 <div>
                   <p className="font-gta-price text-gta-gradient uppercase tracking-tight text-2xl">
-                    {ingresso.tipo_ingresso === "masculino" ? "CJ – Modo Hardcore" : "Sweet – Modo Light"}
+                    {ingresso.tipo_ingresso === "masculino" ? "CJ – Modo Hardcore · Masculino" : "Sweet – Modo Light · Feminino"}
                   </p>
                   <p className="text-xs text-muted-foreground">Corrida de Bar em Bar</p>
                 </div>
@@ -152,7 +152,7 @@ const MeuIngresso = () => {
               {[
               { label: "Participante", value: ingresso.nome },
               { label: "Telefone", value: ingresso.telefone },
-              { label: "Ingresso", value: ingresso.tipo_ingresso === "masculino" ? "CJ – Modo Hardcore (2,2L)" : "Sweet – Modo Light (1,1L)" },
+              { label: "Ingresso", value: ingresso.tipo_ingresso === "masculino" ? "CJ – Modo Hardcore (2,2L) · Ingresso Masculino" : "Sweet – Modo Light (1,1L) · Ingresso Feminino" },
               { label: "Valor pago", value: formatCurrency(ingresso.valor_pago) },
               { label: "Data da compra", value: formatDate(ingresso.created_at) }].
               map((row) =>
