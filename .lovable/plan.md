@@ -1,58 +1,34 @@
 
 
-## Plano: Otimizações mobile, reconciliação de pagamentos e limpeza de duplicatas
+## Problema: InfinitePay retorna `success: false` para todos
 
-Há 3 problemas distintos para resolver:
+A edge function `check-payments` verifica pagamentos corretamente, mas a API da InfinitePay retorna que nenhum pagamento foi feito. Precisamos entender o que a API está retornando para diagnosticar.
 
-### 1. Textos "apagados" no mobile Android
+### Diagnóstico necessario
 
-O problema está nas classes CSS que usam opacidade baixa e cores com pouca visibilidade em telas mobile. As principais causas:
+O código atual verifica `data.success === true` mas não loga a resposta da API. Pode ser que:
+1. A resposta use outro campo (ex: `data.paid`, `data.status === "paid"`)
+2. Os compradores realmente não finalizaram o pagamento no checkout
 
-- `text-muted-foreground` (definido como `215 12% 55%`) é muito escuro no fundo GTA
-- `bg-background/50` nos inputs tem opacidade muito baixa
-- `text-foreground/80` nos labels reduz visibilidade
-- `-webkit-text-stroke` no `.text-gta-gradient` pode renderizar mal em Android
+### Plano
 
-**Alterações em `src/pages/MeuIngresso.tsx`:**
-- Trocar `text-foreground/80` → `text-foreground` nos labels
-- Trocar `bg-background/50` → `bg-background/80` nos inputs
-- Aumentar contraste dos textos do ticket card
-- Adicionar `text-base` nos inputs para evitar zoom automático no iOS/Android (inputs < 16px causam zoom)
+1. **Adicionar logging detalhado** na edge function `check-payments` para logar a resposta completa da API InfinitePay (`console.log("InfinitePay response:", JSON.stringify(data))`)
+2. **Re-executar** para um `order_nsu` específico e verificar nos logs o que exatamente a API retorna
+3. **Ajustar a condição** de sucesso se o campo de resposta for diferente de `success`
 
-**Alterações em `src/index.css`:**
-- Ajustar `.text-gta-gradient` para usar `text-shadow` sem `-webkit-text-stroke` em telas pequenas (stroke pode causar texto "apagado" em Android)
-- Aumentar opacidade do `.gta-mission-card` background
+### Alteração em `supabase/functions/check-payments/index.ts`
 
-### 2. Atualizar status cruzando com InfinitePay
+Adicionar `console.log` após `const data = await res.json()`:
+```typescript
+const data = await res.json();
+console.log(`InfinitePay response for ${inscricao.order_nsu}:`, JSON.stringify(data));
+```
 
-A edge function `check-payments` já existe e faz exatamente isso. Precisa ser **executada** para reconciliar os 37 registros pendentes. Vou:
-
-- Adicionar ao `check-payments` a lógica de **limpeza de duplicatas**: após verificar pagamentos, identificar registros com mesmo `nome+telefone` onde nenhum está aprovado e manter apenas o mais recente
-- Adicionar um botão na página MeuIngresso (ou chamar automaticamente) para triggerar a verificação
-
-**Alteração em `supabase/functions/check-payments/index.ts`:**
-- Após o loop de verificação de pagamentos, adicionar etapa de limpeza:
-  - Agrupar por `nome` + `telefone`
-  - Para cada grupo com duplicatas:
-    - Se algum está `aprovado` → deletar todos os outros
-    - Se nenhum está `aprovado` → manter apenas o mais recente, deletar o resto
-
-### 3. Limpeza de nomes duplicados
-
-Dados atuais mostram duplicatas significativas (ex: Alexandre com 9 registros, todos pendentes). A limpeza será feita na edge function conforme descrito acima.
-
-Resumo dos dados:
-- 37 registros, todos `pendente`
-- 5 grupos de duplicatas identificados
-- Alexandre Angelo Catapam: 9 registros duplicados
-
-### Alterações por arquivo
+Isso vai nos mostrar exatamente o que a InfinitePay retorna e permitir corrigir a condição.
 
 | Arquivo | O que muda |
 |---|---|
-| `src/pages/MeuIngresso.tsx` | Aumentar contraste de labels, inputs e textos para mobile |
-| `src/index.css` | Ajustar `.text-gta-gradient` e `.gta-mission-card` para melhor legibilidade mobile |
-| `supabase/functions/check-payments/index.ts` | Adicionar etapa de limpeza de duplicatas após reconciliação |
+| `supabase/functions/check-payments/index.ts` | Adicionar log da resposta da InfinitePay para diagnóstico |
 
-Após implementar, vou executar a edge function para reconciliar todos os pagamentos pendentes e limpar duplicatas de uma vez.
+Após ver os logs, ajustaremos a condição de verificação de pagamento se necessário.
 
