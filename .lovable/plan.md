@@ -1,35 +1,44 @@
 
 
-## Problema: Labels e valores colados no Android
+## Plano: Atualizar card de evento na Index com estética GTA
 
-No screenshot, as linhas como "ParticipanteCamilla Heusser De Oliveira" e "IngressoSweet – Modo Light..." estão sem espaçamento entre label e valor. Isso acontece porque o `flex justify-between` não funciona bem quando o conteúdo é longo demais e não há `min-width` ou `shrink` controlado — o texto quebra e fica colado.
+O card atual na seção "Eventos & Comunidade" da Index usa o estilo genérico neon. Vamos atualizá-lo para refletir a identidade visual GTA San Andreas da página do evento.
 
-### Correção em `src/pages/MeuIngresso.tsx`
+### Alterações em `src/pages/Index.tsx`
 
-Mudar o layout das linhas do ticket de `flex justify-between` (horizontal) para um layout empilhado (vertical) nos itens com texto longo, e adicionar `shrink-0` no label + `text-right` no valor para os itens curtos:
+**Imports adicionais:**
+- Importar `eventHeroImg` de `@/assets/corrida-hero-gta.png`
+- Importar ícones extras: `Beer`, `Timer`, `Route`, `Crosshair`
 
-**Linha 161-164** — Trocar de:
-```tsx
-<div className="flex justify-between border-b border-border/20 pb-2 last:border-0">
-  <span className="text-muted-foreground">{row.label}</span>
-  <span className="font-medium text-foreground">{row.value}</span>
-</div>
+**Substituir o card atual (linhas 248-264)** por um card com estética GTA:
+
+- Fundo com imagem hero do evento (semi-transparente) + gradient overlay escuro
+- Badge superior com estilo `gta-hud-chip` ("★ NOVA MISSÃO DISPONÍVEL ★")
+- Título "CORRIDA DE BAR EM BAR" em `font-gta-price text-gta-gradient` com text-shadow
+- Subtítulo "GTA San Andreas Edition" em `font-gta-script text-gta-gold`
+- Chips HUD com data, local, distância, nº de bares (mesmo estilo da página do evento)
+- Botão com classe `btn-gta` em vez de `variant="neon"`
+- Manter o `Link to="/eventos/corrida-de-bar-em-bar"`
+
+### Estrutura visual
+
+```text
+┌─────────────────────────────────────────┐
+│  [Hero image background + dark overlay] │
+│                                         │
+│  ★ NOVA MISSÃO DISPONÍVEL ★  (hud chip) │
+│                                         │
+│     CORRIDA DE BAR EM BAR               │
+│     GTA San Andreas Edition             │
+│                                         │
+│  14/03·17h  Caçador/SC  ~2,5km  11bars  │
+│                                         │
+│     [ Iniciar missão → ]  (btn-gta)     │
+└─────────────────────────────────────────┘
 ```
 
-Para:
-```tsx
-<div className="flex justify-between gap-4 border-b border-border/20 pb-2 last:border-0">
-  <span className="text-muted-foreground shrink-0">{row.label}</span>
-  <span className="font-medium text-foreground text-right">{row.value}</span>
-</div>
-```
-
-As mudanças:
-- `gap-4` garante espaçamento mínimo entre label e valor
-- `shrink-0` no label impede que ele encolha
-- `text-right` no valor mantém alinhamento limpo quando quebra linha
-
-Mesma correção na linha 149-152 (Nº do Participante) — adicionar `gap-4` e `shrink-0`.
-
-Também aplicar no header do ticket (linha 139) que mostra o título longo — reduzir o `text-2xl` para `text-lg md:text-2xl` para telas menores.
+### Detalhes técnicos
+- Card usa `overflow-hidden relative` com `<img>` absoluto + gradient overlay (mesmo padrão do hero da página do evento)
+- Texto e botões ficam em `relative z-10`
+- Responsivo: texto menor no mobile, chips com `text-[10px] sm:text-xs`
 
