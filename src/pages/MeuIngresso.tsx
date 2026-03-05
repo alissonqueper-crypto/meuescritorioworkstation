@@ -34,10 +34,12 @@ const MeuIngresso = () => {
     setErro("");
     setIngresso(null);
 
-    const { data, error } = await supabase.
-    from("inscricoes").
-    select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa").
-    ilike("nome", `%${nome.trim()}%`);
+    const firstName = nome.trim().split(/\s+/)[0];
+
+    const { data, error } = await supabase
+      .from("inscricoes")
+      .select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa")
+      .ilike("nome", `%${firstName}%`);
 
     setLoading(false);
     setBuscou(true);
