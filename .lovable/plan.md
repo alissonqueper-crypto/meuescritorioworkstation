@@ -1,23 +1,19 @@
 
 
-## Plano: Corrigir busca de ingressos
+## Plano: Ajustar card do ingresso
 
-### Problema
-1. Nomes no banco têm espaços extras no final (ex: `"Adrielly Gelinski "`), fazendo a busca exata falhar
-2. Telefones estão em formatos variados no banco (`(49) 99186-9961` vs `49991291416`), então a comparação exata falha
+Duas alterações no arquivo `src/pages/MeuIngresso.tsx`:
 
-### Solução
+1. **Remover linha "Pedido"** — remover `{ label: "Pedido", value: ingresso.order_nsu || "—" }` do array
+2. **Remover horário da data** — alterar `formatDate` para usar apenas `day`, `month`, `year` (sem `hour`/`minute`)
+3. **Adicionar info do tipo de ingresso** — na linha "Ingresso", detalhar:
+   - Masculino: `"CJ – Modo Hardcore (2,2L)"`
+   - Feminino: `"Sweet – Modo Light (1,1L)"`
 
-**Arquivo: `src/pages/MeuIngresso.tsx`**
+   Isso já está parcialmente feito. Vou garantir que a descrição esteja completa com o nome temático e o volume.
 
-1. Usar `%` wildcard no `.ilike` para nome: `.ilike("nome", `%${nome.trim()}%`)`
-2. Para o telefone, extrair apenas os dígitos e buscar com um filtro que ignore formatação. Como o Supabase não tem uma função nativa de "strip non-digits" no PostgREST, a melhor abordagem é:
-   - Extrair apenas os dígitos do telefone digitado pelo usuário
-   - Buscar todos os registros que contenham o nome (com wildcard)
-   - Filtrar pelo telefone no lado do cliente, comparando apenas dígitos
-
-Alternativamente, buscar apenas pelo nome com wildcard e filtrar telefone no JS comparando dígitos.
-
-### Alterações
-- `MeuIngresso.tsx`: mudar a query para usar wildcard no nome, remover o filtro `.eq("telefone")`, e filtrar telefone no cliente comparando apenas dígitos
+### Arquivo: `src/pages/MeuIngresso.tsx`
+- Linha ~67: remover `hour` e `minute` do `formatDate`
+- Linha ~155: manter/ajustar descrição do ingresso com nome temático + volume
+- Linha ~157: remover a linha do "Pedido"
 
