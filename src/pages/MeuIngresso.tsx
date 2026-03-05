@@ -136,7 +136,7 @@ const MeuIngresso = () => {
               <div className="bg-gta-green/20 border-b border-gta-green/30 px-6 py-4 flex items-center gap-3">
                 <Ticket className="w-6 h-6 text-gta-green-light" />
                 <div>
-                  <p className="font-gta-price text-gta-gradient uppercase tracking-tight text-2xl">
+                  <p className="font-gta-price text-gta-gradient uppercase tracking-tight text-lg md:text-2xl">
                     {ingresso.tipo_ingresso === "masculino" ? "CJ – Modo Hardcore · Masculino" : "Sweet – Modo Light · Feminino"}
                   </p>
                   <p className="text-xs text-muted-foreground">Corrida de Bar em Bar</p>
@@ -146,8 +146,8 @@ const MeuIngresso = () => {
               {/* Ticket body */}
               <div className="p-6 space-y-3 text-sm">
               {ingresso.numero_placa > 0 &&
-              <div className="flex justify-between border-b border-border/20 pb-2 mb-1">
-                    <span className="text-muted-foreground">Nº do Participante</span>
+              <div className="flex justify-between gap-4 border-b border-border/20 pb-2 mb-1">
+                    <span className="text-muted-foreground shrink-0">Nº do Participante</span>
                     <span className="font-gta-price text-xl text-gta-gradient">{ingresso.numero_placa}</span>
                   </div>
               }
@@ -158,9 +158,9 @@ const MeuIngresso = () => {
               { label: "Valor pago", value: formatCurrency(ingresso.valor_pago) },
               { label: "Data da compra", value: formatDate(ingresso.created_at) }].
               map((row) =>
-              <div key={row.label} className="flex justify-between border-b border-border/20 pb-2 last:border-0">
-                    <span className="text-muted-foreground">{row.label}</span>
-                    <span className="font-medium text-foreground">{row.value}</span>
+              <div key={row.label} className="flex justify-between gap-4 border-b border-border/20 pb-2 last:border-0">
+                    <span className="text-muted-foreground shrink-0">{row.label}</span>
+                    <span className="font-medium text-foreground text-right">{row.value}</span>
                   </div>
               )}
 
