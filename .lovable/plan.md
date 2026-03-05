@@ -1,64 +1,37 @@
 
 
-## Plano: Sistema de numeração aleatória para participantes
+## Plano: Copiar números para `numero_placa` e formatar valor
 
 ### Resumo
-Criar uma tabela `numeros_participantes` com 1000 números aleatórios únicos (não sequenciais). Cada número é atribuído a um participante no momento da compra. Os participantes que já compraram receberão números via uma migração inicial.
+Atualizar a coluna `numero_placa` na tabela `inscricoes` com os números já atribuídos na tabela `numeros_participantes`, e converter `valor_pago` de centavos (integer) para reais (numeric) para exibir como dinheiro no Supabase.
 
-### 1. Migração SQL
-
-Criar tabela `numeros_participantes` e popular com 1000 números aleatórios únicos (entre 1000 e 9999, por exemplo, para parecerem "placas"):
+### 1. Copiar números dos participantes para `numero_placa`
+Executar um UPDATE para copiar o número de `numeros_participantes` para `inscricoes.numero_placa`:
 
 ```sql
-CREATE TABLE public.numeros_participantes (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  numero integer UNIQUE NOT NULL,
-  inscricao_id uuid REFERENCES public.inscricoes(id) ON DELETE SET NULL,
-  atribuido_em timestamptz
-);
-
-ALTER TABLE public.numeros_participantes ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Anyone can read numeros" ON public.numeros_participantes
-  FOR SELECT USING (true);
-
--- Gerar 1000 números aleatórios únicos (entre 1000-9999)
-INSERT INTO public.numeros_participantes (numero)
-SELECT n FROM (
-  SELECT DISTINCT floor(random() * 9000 + 1000)::integer AS n
-  FROM generate_series(1, 5000)
-) sub
-LIMIT 1000;
-
--- Atribuir números aos participantes já existentes
-WITH disponíveis AS (
-  SELECT id, numero, ROW_NUMBER() OVER (ORDER BY random()) AS rn
-  FROM public.numeros_participantes WHERE inscricao_id IS NULL
-),
-inscritos AS (
-  SELECT id, ROW_NUMBER() OVER (ORDER BY created_at) AS rn
-  FROM public.inscricoes
-)
-UPDATE public.numeros_participantes np
-SET inscricao_id = i.id, atribuido_em = now()
-FROM disponíveis d
-JOIN inscritos i ON d.rn = i.rn
-WHERE np.id = d.id;
+UPDATE inscricoes i
+SET numero_placa = np.numero
+FROM numeros_participantes np
+WHERE np.inscricao_id = i.id;
 ```
 
 ### 2. Atualizar Edge Function `create-checkout`
+Além de atribuir o número na tabela `numeros_participantes`, também salvar o número em `inscricoes.numero_placa`.
 
-Após inserir a inscrição, atribuir automaticamente um número disponível:
+### 3. Formatar `valor_pago` como dinheiro
+O `valor_pago` está em centavos (integer). Para exibir como dinheiro no Supabase, duas opções:
+- **Converter os valores para reais** (dividir por 100) e mudar o tipo da coluna. Isso exige atualizar todo o código que lê/escreve esse campo.
+- **Manter em centavos** e apenas formatar no frontend (já é feito na página MeuIngresso).
 
-- Buscar um número com `inscricao_id IS NULL`, ordenado por `random()`, limit 1
-- Fazer UPDATE setando `inscricao_id` e `atribuido_em`
+A opção mais segura é converter os valores existentes para reais e atualizar a coluna para `numeric(10,2)`, ajustando o código frontend e a Edge Function.
 
-### 3. Atualizar página "Meu Ingresso"
+### 4. Atualizar frontend
+- `MeuIngresso.tsx`: usar `numero_placa` direto da query de `inscricoes` em vez de buscar em `numeros_participantes` separadamente. Ajustar formatação do valor se mudar para reais.
 
-- Na query de consulta, fazer um join ou query separada em `numeros_participantes` para buscar o número atribuído
-- Exibir o número no card do ingresso como "Número do participante"
-
-### 4. Atualizar types.ts
-
-Será atualizado automaticamente após a migração para incluir a nova tabela.
+### Alterações de arquivo
+- **Migração SQL**: alterar `valor_pago` de integer para numeric, dividir valores por 100
+- **Edge Function**: salvar número em `numero_placa`, enviar valor em reais (não centavos)
+- **MeuIngresso.tsx**: simplificar query, ajustar formato do valor
+- **types.ts**: atualizar tipo de `valor_pago`
+- **CorridaDeBarEmBar.tsx**: ajustar valores de tickets se necessário
 
