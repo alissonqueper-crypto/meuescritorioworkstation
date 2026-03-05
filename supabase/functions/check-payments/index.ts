@@ -93,8 +93,62 @@ Deno.serve(async (req) => {
       }
     }
 
+    // === DEDUPLICATION STEP ===
+    let duplicatas_removidas = 0;
+
+    if (!orderNsu) {
+      // Only run dedup in batch mode
+      const { data: allInscricoes } = await supabase
+        .from("inscricoes")
+        .select("id, nome, telefone, status_pagamento, created_at")
+        .order("created_at", { ascending: false });
+
+      if (allInscricoes && allInscricoes.length > 0) {
+        // Group by normalized nome+telefone
+        const groups = new Map<string, typeof allInscricoes>();
+        
+        for (const ins of allInscricoes) {
+          const key = `${ins.nome.trim().toLowerCase()}|${ins.telefone.replace(/\D/g, "")}`;
+          if (!groups.has(key)) {
+            groups.set(key, []);
+          }
+          groups.get(key)!.push(ins);
+        }
+
+        for (const [, group] of groups) {
+          if (group.length <= 1) continue;
+
+          // Already sorted by created_at desc (newest first)
+          const aprovado = group.find((g) => g.status_pagamento === "aprovado");
+          
+          let idsToDelete: string[];
+
+          if (aprovado) {
+            // Keep the approved one, delete all others
+            idsToDelete = group.filter((g) => g.id !== aprovado.id).map((g) => g.id);
+          } else {
+            // Keep newest (index 0), delete the rest
+            idsToDelete = group.slice(1).map((g) => g.id);
+          }
+
+          if (idsToDelete.length > 0) {
+            const { error: delErr } = await supabase
+              .from("inscricoes")
+              .delete()
+              .in("id", idsToDelete);
+
+            if (delErr) {
+              console.error(`Delete error for group:`, delErr);
+            } else {
+              duplicatas_removidas += idsToDelete.length;
+            }
+          }
+        }
+      }
+    }
+
     return new Response(
-      JSON.stringify({ aprovados, expirados, ainda_pendentes }),
+      JSON.stringify({ aprovados, expirados, ainda_pendentes, duplicatas_removidas }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {

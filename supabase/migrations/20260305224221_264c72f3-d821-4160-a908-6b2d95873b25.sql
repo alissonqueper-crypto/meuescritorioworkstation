@@ -1,0 +1,1 @@
+CREATE POLICY "Service can delete duplicates" ON public.inscricoes FOR DELETE USING (true);
