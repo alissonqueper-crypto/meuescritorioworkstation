@@ -134,7 +134,7 @@ const MeuIngresso = () => {
               <div className="bg-gta-green/20 border-b border-gta-green/30 px-6 py-4 flex items-center gap-3">
                 <Ticket className="w-6 h-6 text-gta-green-light" />
                 <div>
-                  <p className="font-gta-price text-lg text-gta-gradient uppercase tracking-tight">
+                  <p className="font-gta-price text-gta-gradient uppercase tracking-tight text-2xl">
                     {ingresso.tipo_ingresso === "masculino" ? "CJ – Modo Hardcore" : "Sweet – Modo Light"}
                   </p>
                   <p className="text-xs text-muted-foreground">Corrida de Bar em Bar</p>
