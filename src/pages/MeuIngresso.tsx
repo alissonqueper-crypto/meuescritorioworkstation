@@ -26,6 +26,8 @@ const MeuIngresso = () => {
   const [erro, setErro] = useState("");
   const [buscou, setBuscou] = useState(false);
 
+  const digitsOnly = (s: string) => s.replace(/\D/g, "");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -35,9 +37,7 @@ const MeuIngresso = () => {
     const { data, error } = await supabase
       .from("inscricoes")
       .select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa")
-      .ilike("nome", nome.trim())
-      .eq("telefone", telefone.trim())
-      .maybeSingle();
+      .ilike("nome", `%${nome.trim()}%`);
 
     setLoading(false);
     setBuscou(true);
@@ -47,12 +47,15 @@ const MeuIngresso = () => {
       return;
     }
 
-    if (!data) {
+    const inputDigits = digitsOnly(telefone);
+    const match = data?.find((r) => digitsOnly(r.telefone) === inputDigits);
+
+    if (!match) {
       setErro("Nenhum ingresso encontrado com esse nome e telefone.");
       return;
     }
 
-    setIngresso(data);
+    setIngresso(match);
   };
 
   const formatCurrency = (value: number) =>
