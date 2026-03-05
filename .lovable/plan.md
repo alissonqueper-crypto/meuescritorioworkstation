@@ -1,35 +1,31 @@
 
 
-## Plano: Adicionar campo "Como conheceu" no formulário de inscrição
+## Plano: Página "Meu Ingresso" com consulta por nome e telefone
 
-### 1. Migração no banco de dados
+### Resumo
+Criar uma nova página `/meu-ingresso` onde o comprador consulta seu ingresso informando nome e telefone. A página exibe os dados do ingresso (tipo, valor, status do pagamento, data da compra, order_nsu).
 
-Adicionar coluna `indicacao` (text, nullable) na tabela `inscricoes` para armazenar de onde o participante veio.
+### Alterações
 
-```sql
-ALTER TABLE public.inscricoes ADD COLUMN indicacao text;
-```
+**1. Nova página `src/pages/MeuIngresso.tsx`**
+- Formulário com dois campos: nome completo e telefone
+- Ao submeter, consulta a tabela `inscricoes` filtrando por `nome` e `telefone` (case-insensitive com `.ilike` para o nome)
+- Se encontrar, exibe um card estilizado no tema GTA com:
+  - Nome do participante
+  - Tipo de ingresso (CJ Hardcore / Sweet Light)
+  - Valor pago (formatado em reais)
+  - Status do pagamento
+  - Número do pedido (order_nsu)
+  - Data da compra
+- Se não encontrar, exibe mensagem de erro
+- Botão para voltar à página do evento
 
-### 2. Atualizar Edge Function `create-checkout`
+**2. Rota em `src/App.tsx`**
+- Adicionar rota `/meu-ingresso` apontando para o novo componente
 
-Receber o campo `indicacao` no body e salvá-lo no insert da tabela `inscricoes`.
+**3. Link de acesso**
+- Adicionar um botão/link "Ver meu ingresso" na página da corrida e na página de sucesso (`CorridaSuccess.tsx`)
 
-### 3. Atualizar formulário em `src/pages/CorridaDeBarEmBar.tsx`
-
-- Adicionar `indicacao` ao state do form (default `""`)
-- Adicionar um `<Select>` entre o campo de telefone e o botão de confirmar, com label "Como ficou sabendo?" e as opções:
-  - Instagram
-  - Cena Indie Bar
-  - Meu Escritório – Workstation
-  - Oeste Pub
-  - Galgo
-  - Pix
-  - Pulse
-  - Império Hamburgueria
-  - Bravo Pub
-  - Kazah Oz
-  - Garagem Bar e Lanchonete
-  - O Boteco dos Amigos
-- Campo obrigatório
-- Enviar `indicacao` no body da chamada à edge function
+### Sem alterações no banco
+A tabela `inscricoes` já tem RLS com SELECT público. Não precisa de migração.
 
