@@ -1,20 +1,35 @@
 
 
-## Plano: Ajustar proporção do mapa da página inicial no mobile
+## Plano: Adicionar campo "Como conheceu" no formulário de inscrição
 
-### Problema
-O container do mapa na seção Localização da página inicial (`src/pages/Index.tsx`, linha 218) usa `max-w-4xl` que causa overflow no mobile, idêntico ao problema já corrigido na página do evento.
+### 1. Migração no banco de dados
 
-### Alteração em `src/pages/Index.tsx` (linha 218)
+Adicionar coluna `indicacao` (text, nullable) na tabela `inscricoes` para armazenar de onde o participante veio.
 
-Trocar as classes do container do mapa de:
-```
-relative rounded-2xl overflow-hidden border border-border aspect-[4/3] md:aspect-video min-h-[300px] max-w-4xl mx-auto
-```
-Para:
-```
-relative rounded-2xl overflow-hidden border border-border aspect-[4/3] md:aspect-video min-h-[250px] md:min-h-[350px] w-full max-w-full mx-auto
+```sql
+ALTER TABLE public.inscricoes ADD COLUMN indicacao text;
 ```
 
-Mesma correção aplicada anteriormente na página do evento.
+### 2. Atualizar Edge Function `create-checkout`
+
+Receber o campo `indicacao` no body e salvá-lo no insert da tabela `inscricoes`.
+
+### 3. Atualizar formulário em `src/pages/CorridaDeBarEmBar.tsx`
+
+- Adicionar `indicacao` ao state do form (default `""`)
+- Adicionar um `<Select>` entre o campo de telefone e o botão de confirmar, com label "Como ficou sabendo?" e as opções:
+  - Instagram
+  - Cena Indie Bar
+  - Meu Escritório – Workstation
+  - Oeste Pub
+  - Galgo
+  - Pix
+  - Pulse
+  - Império Hamburgueria
+  - Bravo Pub
+  - Kazah Oz
+  - Garagem Bar e Lanchonete
+  - O Boteco dos Amigos
+- Campo obrigatório
+- Enviar `indicacao` no body da chamada à edge function
 
