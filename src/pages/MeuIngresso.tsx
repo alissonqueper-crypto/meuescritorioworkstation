@@ -62,7 +62,7 @@ const MeuIngresso = () => {
   new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
 
   const formatDate = (iso: string) =>
-  new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
 
   const statusColor = (s: string) => {
     if (s === "aprovado") return "text-[hsl(142,70%,50%)]";
@@ -149,12 +149,11 @@ const MeuIngresso = () => {
                     <span className="font-gta-price text-xl text-gta-gradient">{ingresso.numero_placa}</span>
                   </div>
               }
-                {[
+              {[
               { label: "Participante", value: ingresso.nome },
               { label: "Telefone", value: ingresso.telefone },
-              { label: "Ingresso", value: ingresso.tipo_ingresso === "masculino" ? "CJ Hardcore (2,2L)" : "Sweet Light (1,1L)" },
+              { label: "Ingresso", value: ingresso.tipo_ingresso === "masculino" ? "CJ – Modo Hardcore (2,2L)" : "Sweet – Modo Light (1,1L)" },
               { label: "Valor pago", value: formatCurrency(ingresso.valor_pago) },
-              { label: "Pedido", value: ingresso.order_nsu || "—" },
               { label: "Data da compra", value: formatDate(ingresso.created_at) }].
               map((row) =>
               <div key={row.label} className="flex justify-between border-b border-border/20 pb-2 last:border-0">
