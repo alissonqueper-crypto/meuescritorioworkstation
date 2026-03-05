@@ -34,10 +34,10 @@ const MeuIngresso = () => {
     setErro("");
     setIngresso(null);
 
-    const { data, error } = await supabase
-      .from("inscricoes")
-      .select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa")
-      .ilike("nome", `%${nome.trim()}%`);
+    const { data, error } = await supabase.
+    from("inscricoes").
+    select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa").
+    ilike("nome", `%${nome.trim()}%`);
 
     setLoading(false);
     setBuscou(true);
@@ -59,10 +59,10 @@ const MeuIngresso = () => {
   };
 
   const formatCurrency = (value: number) =>
-    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
+  new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
 
   const formatDate = (iso: string) =>
-    new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
   const statusColor = (s: string) => {
     if (s === "aprovado") return "text-[hsl(142,70%,50%)]";
@@ -87,29 +87,29 @@ const MeuIngresso = () => {
         </div>
 
         {/* Form */}
-        {!ingresso && (
-          <form onSubmit={handleSubmit} className="bg-gta-card rounded-xl p-6 space-y-4 animate-reveal-up">
+        {!ingresso &&
+        <form onSubmit={handleSubmit} className="bg-gta-card rounded-xl p-6 space-y-4 animate-reveal-up">
             <div className="space-y-2">
               <Label htmlFor="nome" className="text-foreground/80 text-sm">Nome completo</Label>
               <Input
-                id="nome"
-                placeholder="Seu nome completo"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                required
-                className="bg-background/50 border-border/50"
-              />
+              id="nome"
+              placeholder="Seu nome completo"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+              className="bg-background/50 border-border/50" />
+            
             </div>
             <div className="space-y-2">
               <Label htmlFor="telefone" className="text-foreground/80 text-sm">Telefone</Label>
               <Input
-                id="telefone"
-                placeholder="(49) 99999-9999"
-                value={telefone}
-                onChange={(e) => setTelefone(e.target.value)}
-                required
-                className="bg-background/50 border-border/50"
-              />
+              id="telefone"
+              placeholder="(49) 99999-9999"
+              value={telefone}
+              onChange={(e) => setTelefone(e.target.value)}
+              required
+              className="bg-background/50 border-border/50" />
+            
             </div>
 
             <Button type="submit" disabled={loading} className="btn-gta w-full rounded-lg">
@@ -117,18 +117,18 @@ const MeuIngresso = () => {
               {loading ? "Buscando..." : "Buscar ingresso"}
             </Button>
 
-            {erro && (
-              <div className="flex items-center gap-2 text-sm text-destructive bg-destructive/10 rounded-lg p-3 mt-2">
+            {erro &&
+          <div className="flex items-center gap-2 text-sm text-destructive bg-destructive/10 rounded-lg p-3 mt-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 {erro}
               </div>
-            )}
+          }
           </form>
-        )}
+        }
 
         {/* Ticket Card */}
-        {ingresso && (
-          <div className="animate-reveal-up">
+        {ingresso &&
+        <div className="animate-reveal-up">
             <div className="gta-mission-card rounded-xl overflow-hidden">
               {/* Ticket header */}
               <div className="bg-gta-green/20 border-b border-gta-green/30 px-6 py-4 flex items-center gap-3">
@@ -143,41 +143,41 @@ const MeuIngresso = () => {
 
               {/* Ticket body */}
               <div className="p-6 space-y-3 text-sm">
-              {ingresso.numero_placa > 0 && (
-                  <div className="flex justify-between border-b border-border/20 pb-2 mb-1">
+              {ingresso.numero_placa > 0 &&
+              <div className="flex justify-between border-b border-border/20 pb-2 mb-1">
                     <span className="text-muted-foreground">Nº do Participante</span>
                     <span className="font-gta-price text-xl text-gta-gradient">{ingresso.numero_placa}</span>
                   </div>
-                )}
+              }
                 {[
-                  { label: "Participante", value: ingresso.nome },
-                  { label: "Telefone", value: ingresso.telefone },
-                  { label: "Ingresso", value: ingresso.tipo_ingresso === "masculino" ? "CJ Hardcore (2,2L)" : "Sweet Light (1,1L)" },
-                  { label: "Valor pago", value: formatCurrency(ingresso.valor_pago) },
-                  { label: "Pedido", value: ingresso.order_nsu || "—" },
-                  { label: "Data da compra", value: formatDate(ingresso.created_at) },
-                ].map((row) => (
-                  <div key={row.label} className="flex justify-between border-b border-border/20 pb-2 last:border-0">
+              { label: "Participante", value: ingresso.nome },
+              { label: "Telefone", value: ingresso.telefone },
+              { label: "Ingresso", value: ingresso.tipo_ingresso === "masculino" ? "CJ Hardcore (2,2L)" : "Sweet Light (1,1L)" },
+              { label: "Valor pago", value: formatCurrency(ingresso.valor_pago) },
+              { label: "Pedido", value: ingresso.order_nsu || "—" },
+              { label: "Data da compra", value: formatDate(ingresso.created_at) }].
+              map((row) =>
+              <div key={row.label} className="flex justify-between border-b border-border/20 pb-2 last:border-0">
                     <span className="text-muted-foreground">{row.label}</span>
                     <span className="font-medium text-foreground">{row.value}</span>
                   </div>
-                ))}
-                <div className="flex justify-between pt-1">
-                  <span className="text-muted-foreground">Status</span>
-                  <span className={`font-semibold capitalize ${statusColor(ingresso.status_pagamento)}`}>
-                    {ingresso.status_pagamento}
-                  </span>
-                </div>
+              )}
+                
+
+
+
+
+              
               </div>
             </div>
 
             {/* Actions */}
             <div className="flex flex-col gap-3 mt-6">
               <Button
-                variant="outline"
-                className="border-gta-green/50 text-gta-green-light hover:bg-gta-green/10"
-                onClick={() => { setIngresso(null); setBuscou(false); setErro(""); }}
-              >
+              variant="outline"
+              className="border-gta-green/50 text-gta-green-light hover:bg-gta-green/10"
+              onClick={() => {setIngresso(null);setBuscou(false);setErro("");}}>
+              
                 <Search className="w-4 h-4" /> Nova consulta
               </Button>
               <Link to="/eventos/corrida-de-bar-em-bar">
@@ -187,10 +187,10 @@ const MeuIngresso = () => {
               </Link>
             </div>
           </div>
-        )}
+        }
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default MeuIngresso;
