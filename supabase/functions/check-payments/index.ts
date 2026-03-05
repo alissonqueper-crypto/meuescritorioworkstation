@@ -68,6 +68,7 @@ Deno.serve(async (req) => {
         );
 
         const data = await res.json();
+        console.log(`InfinitePay response for ${inscricao.order_nsu}:`, JSON.stringify(data));
 
         if (data.success === true) {
           await supabase
