@@ -1,18 +1,21 @@
 
 
-## Plano: Substituir título texto pela logo do evento
+## Plano: Centralizar logo do evento no mobile
 
-### Alterações
+A imagem da logo (`<img>`) na linha 126 de `CorridaDeBarEmBar.tsx` não está centralizada porque falta a classe `mx-auto`. Elementos `<img>` não são afetados por `text-center` do pai.
 
-1. **Copiar imagem** `user-uploads://Design_sem_nome_11.png` → `src/assets/corrida-logo.png`
+### Alteração
 
-2. **`src/pages/CorridaDeBarEmBar.tsx`** (linha 125-127)
-   - Substituir o `<h1>` com texto "CORRIDA DE BAR EM BAR" por uma `<img>` com a logo
-   - Classe: `w-64 sm:w-80 md:w-96 lg:w-[28rem]` para responsividade
+**`src/pages/CorridaDeBarEmBar.tsx`** (linha 126):
+- Adicionar `mx-auto` à classe da imagem para centralizá-la horizontalmente.
 
-3. **`src/pages/Index.tsx`** (linhas 260-262)
-   - Substituir o `<h3>` com texto "CORRIDA DE BAR EM BAR" por uma `<img>` com a logo
-   - Classe: `w-48 md:w-72` (menor no card)
+De:
+```tsx
+<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4" />
+```
 
-Ambos importam `corridaLogo from "@/assets/corrida-logo.png"`.
+Para:
+```tsx
+<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4 mx-auto" />
+```
 
