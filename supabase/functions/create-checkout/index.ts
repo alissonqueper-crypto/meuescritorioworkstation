@@ -15,6 +15,8 @@ const TICKET_PRICES: Record<string, { price: number; description: string }> = {
   feminino: { price: 5500, description: "Ingresso Corrida de Bar em Bar - Feminino" },
 };
 
+const toReais = (cents: number) => cents / 100;
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -52,7 +54,7 @@ Deno.serve(async (req) => {
       telefone,
       numero_placa: 0,
       tipo_ingresso,
-      valor_pago: ticket.price,
+      valor_pago: toReais(ticket.price),
       order_nsu: orderNsu,
       status_pagamento: "pendente",
       indicacao: indicacao || null,
@@ -79,6 +81,20 @@ Deno.serve(async (req) => {
         .from("numeros_participantes")
         .update({ inscricao_id: inscricaoData.id, atribuido_em: new Date().toISOString() })
         .eq("id", numeroDisponivel.id);
+
+      // Also save the number in inscricoes.numero_placa
+      const { data: numData } = await supabase
+        .from("numeros_participantes")
+        .select("numero")
+        .eq("id", numeroDisponivel.id)
+        .single();
+
+      if (numData) {
+        await supabase
+          .from("inscricoes")
+          .update({ numero_placa: numData.numero })
+          .eq("id", inscricaoData.id);
+      }
     }
 
     // Create InfinitePay checkout link

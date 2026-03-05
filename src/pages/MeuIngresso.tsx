@@ -16,7 +16,6 @@ interface Inscricao {
   order_nsu: string | null;
   created_at: string;
   numero_placa: number;
-  numero_participante?: number;
 }
 
 const MeuIngresso = () => {
@@ -40,18 +39,6 @@ const MeuIngresso = () => {
       .eq("telefone", telefone.trim())
       .maybeSingle();
 
-    if (data && !error) {
-      // Buscar número do participante
-      const { data: numData } = await supabase
-        .from("numeros_participantes")
-        .select("numero")
-        .eq("inscricao_id", data.id)
-        .maybeSingle();
-      if (numData) {
-        (data as any).numero_participante = numData.numero;
-      }
-    }
-
     setLoading(false);
     setBuscou(true);
 
@@ -68,8 +55,8 @@ const MeuIngresso = () => {
     setIngresso(data);
   };
 
-  const formatCurrency = (cents: number) =>
-    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(cents / 100);
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
 
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
@@ -153,10 +140,10 @@ const MeuIngresso = () => {
 
               {/* Ticket body */}
               <div className="p-6 space-y-3 text-sm">
-                {ingresso.numero_participante && (
+              {ingresso.numero_placa > 0 && (
                   <div className="flex justify-between border-b border-border/20 pb-2 mb-1">
                     <span className="text-muted-foreground">Nº do Participante</span>
-                    <span className="font-gta-price text-xl text-gta-gradient">{ingresso.numero_participante}</span>
+                    <span className="font-gta-price text-xl text-gta-gradient">{ingresso.numero_placa}</span>
                   </div>
                 )}
                 {[
