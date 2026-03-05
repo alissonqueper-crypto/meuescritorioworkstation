@@ -69,6 +69,11 @@ const CorridaSuccess = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link to="/meu-ingresso">
+              <Button variant="accent" size="lg" className="w-full sm:w-auto">
+                🎫 Ver meu ingresso
+              </Button>
+            </Link>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
               <Button variant="whatsapp" size="lg" className="w-full sm:w-auto">
                 <MessageCircle className="w-4 h-4" /> Falar com a organização

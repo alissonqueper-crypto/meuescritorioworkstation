@@ -11,6 +11,7 @@ import Estrutura from "./pages/Estrutura";
 import Contato from "./pages/Contato";
 import CorridaDeBarEmBar from "./pages/CorridaDeBarEmBar";
 import CorridaSuccess from "./pages/CorridaSuccess";
+import MeuIngresso from "./pages/MeuIngresso";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/contato" element={<Contato />} />
             <Route path="/eventos/corrida-de-bar-em-bar" element={<CorridaDeBarEmBar />} />
             <Route path="/eventos/corrida-de-bar-em-bar/sucesso" element={<CorridaSuccess />} />
+            <Route path="/meu-ingresso" element={<MeuIngresso />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
