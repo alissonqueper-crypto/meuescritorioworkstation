@@ -7,10 +7,6 @@ import {
 "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -84,31 +80,14 @@ const faq = [
 
 
 const CorridaDeBarEmBar = () => {
-  const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ nome: "", telefone: "", indicacao: "" });
+  const [loading, setLoading] = useState<string | null>(null);
   const { toast } = useToast();
 
-  const handleBuy = (ticketId: string) => {
-    setSelectedTicket(ticketId);
-    setForm({ nome: "", telefone: "", indicacao: "" });
-    setDialogOpen(true);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedTicket) return;
-
-    setLoading(true);
+  const handleBuy = async (ticketId: string) => {
+    setLoading(ticketId);
     try {
       const { data, error } = await supabase.functions.invoke("create-checkout", {
-        body: {
-          nome: form.nome,
-          telefone: form.telefone,
-          tipo_ingresso: selectedTicket,
-          indicacao: form.indicacao
-        }
+        body: { tipo_ingresso: ticketId }
       });
 
       if (error || !data?.checkout_url) {
@@ -123,7 +102,7 @@ const CorridaDeBarEmBar = () => {
         variant: "destructive"
       });
     } finally {
-      setLoading(false);
+      setLoading(null);
     }
   };
 
@@ -352,8 +331,8 @@ const CorridaDeBarEmBar = () => {
                   </li>
               )}
               </ul>
-              <Button className="w-full btn-gta rounded-lg py-3 text-sm" onClick={() => handleBuy(t.id)}>
-                {t.cta}
+              <Button className="w-full btn-gta rounded-lg py-3 text-sm" onClick={() => handleBuy(t.id)} disabled={loading === t.id}>
+                {loading === t.id ? <><Loader2 className="w-4 h-4 animate-spin" /> Processando...</> : t.cta}
               </Button>
             </div>
           )}
@@ -366,53 +345,6 @@ const CorridaDeBarEmBar = () => {
           </p>
         </div>
       </ScrollSection>
-
-      {/* MODAL DE INSCRIÇÃO */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="bg-black/90 backdrop-blur border border-gta-green/30 sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="font-gta-title text-xl text-gta-gradient">
-              {selectedTicket === "masculino" ? "CJ Hardcore (R$ 110,00)" : "Sweet Light (R$ 55,00)"}
-            </DialogTitle>
-            <DialogDescription>Preencha seus dados para prosseguir ao pagamento.</DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4 mt-2">
-            <div className="space-y-2">
-              <Label htmlFor="nome">Nome completo</Label>
-              <Input id="nome" required placeholder="Seu nome completo" value={form.nome} onChange={(e) => setForm((f) => ({ ...f, nome: e.target.value }))} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="telefone">Telefone / WhatsApp</Label>
-              <Input id="telefone" required placeholder="(49) 99999-9999" value={form.telefone} onChange={(e) => setForm((f) => ({ ...f, telefone: e.target.value }))} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="indicacao">Como ficou sabendo?</Label>
-              <Select value={form.indicacao} onValueChange={(value) => setForm((f) => ({ ...f, indicacao: value }))} required>
-                <SelectTrigger id="indicacao" className="w-full">
-                  <SelectValue placeholder="Selecione uma opção" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Instagram">Instagram</SelectItem>
-                  <SelectItem value="Cena Indie Bar">Cena Indie Bar</SelectItem>
-                  <SelectItem value="Meu Escritório – Workstation">Meu Escritório – Workstation</SelectItem>
-                  <SelectItem value="Oeste Pub">Oeste Pub</SelectItem>
-                  <SelectItem value="Galgo">Galgo</SelectItem>
-                  <SelectItem value="Pix">Pix</SelectItem>
-                  <SelectItem value="Pulse">Pulse</SelectItem>
-                  <SelectItem value="Império Hamburgueria">Império Hamburgueria</SelectItem>
-                  <SelectItem value="Bravo Pub">Bravo Pub</SelectItem>
-                  <SelectItem value="Kazah Oz">Kazah Oz</SelectItem>
-                  <SelectItem value="Garagem Bar e Lanchonete">Garagem Bar e Lanchonete</SelectItem>
-                  <SelectItem value="O Boteco dos Amigos">O Boteco dos Amigos</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <Button type="submit" className="w-full btn-gta rounded-lg py-3" disabled={loading || !form.indicacao}>
-              {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processando...</> : "Confirmar e pagar"}
-            </Button>
-          </form>
-        </DialogContent>
-      </Dialog>
 
       {/* CÓDIGO DE RUA (REGRAS & SEGURANÇA) */}
       <ScrollSection>
