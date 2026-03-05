@@ -1,45 +1,35 @@
 
 
-## Plano: Atualizar registros existentes + Proteger página de inscrição
+## Problema: Labels e valores colados no Android
 
-### 3 objetivos:
-1. **Atualizar todos os registros existentes** para `status_pagamento = 'aprovado'`
-2. **Validar pagamento na página de inscrição** — antes de mostrar o formulário, verificar na InfinitePay se o `order_nsu` foi realmente pago
-3. **Impedir cadastro duplicado** — se já existe inscrição com aquele `order_nsu`, mostrar mensagem ao invés do formulário
+No screenshot, as linhas como "ParticipanteCamilla Heusser De Oliveira" e "IngressoSweet – Modo Light..." estão sem espaçamento entre label e valor. Isso acontece porque o `flex justify-between` não funciona bem quando o conteúdo é longo demais e não há `min-width` ou `shrink` controlado — o texto quebra e fica colado.
 
-### Alterações por arquivo
+### Correção em `src/pages/MeuIngresso.tsx`
 
-**Banco de dados (UPDATE via insert tool)**
-- `UPDATE inscricoes SET status_pagamento = 'aprovado' WHERE status_pagamento = 'pendente'`
+Mudar o layout das linhas do ticket de `flex justify-between` (horizontal) para um layout empilhado (vertical) nos itens com texto longo, e adicionar `shrink-0` no label + `text-right` no valor para os itens curtos:
 
-**`supabase/functions/register-participant/index.ts`**
-- Antes de inserir, verificar pagamento na API InfinitePay (`payment_check` com o `order_nsu`)
-- Se `success: false`, rejeitar com erro "Pagamento não confirmado"
-- Manter verificação de duplicata existente (já implementada)
-
-**`src/pages/CorridaInscricao.tsx`**
-- Ao carregar a página, chamar `register-participant` em modo de verificação OU verificar diretamente se já existe inscrição com aquele `order_nsu` no banco
-- Se já existe inscrição → mostrar tela de "já cadastrado" com dados do ingresso
-- Adicionar um estado de validação inicial (`verificando`) que checa o `order_nsu` antes de exibir o formulário
-
-### Fluxo protegido
-
-```text
-[Página carrega com order_nsu]
-       ↓
-[Verifica se order_nsu já foi usado] → SIM → "Inscrição já realizada"
-       ↓ NÃO
-[register-participant verifica pagamento na InfinitePay]
-       ↓ PAGO
-[Salva inscrição como aprovado]
-       ↓ NÃO PAGO
-[Erro: "Pagamento não confirmado"]
+**Linha 161-164** — Trocar de:
+```tsx
+<div className="flex justify-between border-b border-border/20 pb-2 last:border-0">
+  <span className="text-muted-foreground">{row.label}</span>
+  <span className="font-medium text-foreground">{row.value}</span>
+</div>
 ```
 
-### Resumo
-| O que | Como |
-|---|---|
-| Aprovar todos pendentes | UPDATE direto no banco |
-| Proteger URL contra acesso indevido | Edge function valida pagamento na InfinitePay antes de aceitar cadastro |
-| Impedir cadastro duplicado | Verificação de `order_nsu` existente (já funciona) + check no frontend ao carregar página |
+Para:
+```tsx
+<div className="flex justify-between gap-4 border-b border-border/20 pb-2 last:border-0">
+  <span className="text-muted-foreground shrink-0">{row.label}</span>
+  <span className="font-medium text-foreground text-right">{row.value}</span>
+</div>
+```
+
+As mudanças:
+- `gap-4` garante espaçamento mínimo entre label e valor
+- `shrink-0` no label impede que ele encolha
+- `text-right` no valor mantém alinhamento limpo quando quebra linha
+
+Mesma correção na linha 149-152 (Nº do Participante) — adicionar `gap-4` e `shrink-0`.
+
+Também aplicar no header do ticket (linha 139) que mostra o título longo — reduzir o `text-2xl` para `text-lg md:text-2xl` para telas menores.
 
