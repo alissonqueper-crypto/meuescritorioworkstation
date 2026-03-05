@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import logo from "@/assets/logo.png";
@@ -8,16 +8,37 @@ const WHATSAPP_URL =
 "https://api.whatsapp.com/send/?phone=554999472868&text=Ol%C3%A1%21+Gostaria+de+saber+mais+sobre+o+Meu+Escritorio+-+Workstation.&type=phone_number&app_absent=0";
 
 const navLinks = [
-{ to: "/", label: "Início" },
-{ to: "/estrutura", label: "Estrutura" },
-{ to: "/eventos/corrida-de-bar-em-bar", label: "Eventos" },
-{ to: "/contato", label: "Contato" }];
+  { to: "/", label: "Início", sectionId: "" },
+  { to: "/estrutura", label: "Estrutura", sectionId: "estrutura" },
+  { to: "/eventos/corrida-de-bar-em-bar", label: "Eventos", sectionId: "eventos" },
+  { to: "/contato", label: "Contato", sectionId: "localizacao" },
+];
 
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (e: React.MouseEvent, link: typeof navLinks[0]) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      if (!link.sectionId) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        document.getElementById(link.sectionId)?.scrollIntoView({ behavior: "smooth" });
+      }
+      setMobileOpen(false);
+    }
+  };
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -35,9 +56,8 @@ const Header = () => {
 
       <div className="container mx-auto max-w-7xl flex items-center justify-between px-4 h-16 md:h-20">
         {/* Logo */}
-        <Link to="/" className="shrink-0">
+        <Link to="/" className="shrink-0" onClick={handleLogoClick}>
           <img src={logo} alt="Meu Escritório Workstation" className="h-8 md:h-10" />
-
         </Link>
 
         {/* Desktop nav */}
@@ -46,12 +66,12 @@ const Header = () => {
           <Link
             key={l.to}
             to={l.to}
+            onClick={(e) => handleNavClick(e, l)}
             className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
             location.pathname === l.to ?
             "text-primary bg-primary/10" :
             "text-muted-foreground hover:text-foreground hover:bg-secondary"}`
             }>
-
               {l.label}
             </Link>
           )}
@@ -77,6 +97,7 @@ const Header = () => {
           <React.Fragment key={l.to}>
             <Link
               to={l.to}
+              onClick={(e) => handleNavClick(e, l)}
               className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
               location.pathname === l.to ?
               "text-primary bg-primary/10" :
