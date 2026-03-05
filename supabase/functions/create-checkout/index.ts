@@ -21,7 +21,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { nome, telefone, tipo_ingresso } = await req.json();
+    const { nome, telefone, tipo_ingresso, indicacao } = await req.json();
 
     // Validate input
     if (!nome || !telefone || !tipo_ingresso) {
@@ -55,6 +55,7 @@ Deno.serve(async (req) => {
       valor_pago: ticket.price,
       order_nsu: orderNsu,
       status_pagamento: "pendente",
+      indicacao: indicacao || null,
     });
 
     if (dbError) {

@@ -19,6 +19,7 @@ export type Database = {
           created_at: string
           forma_pagamento: string | null
           id: string
+          indicacao: string | null
           nome: string
           numero_placa: number
           order_nsu: string | null
@@ -31,6 +32,7 @@ export type Database = {
           created_at?: string
           forma_pagamento?: string | null
           id?: string
+          indicacao?: string | null
           nome: string
           numero_placa: number
           order_nsu?: string | null
@@ -43,6 +45,7 @@ export type Database = {
           created_at?: string
           forma_pagamento?: string | null
           id?: string
+          indicacao?: string | null
           nome?: string
           numero_placa?: number
           order_nsu?: string | null

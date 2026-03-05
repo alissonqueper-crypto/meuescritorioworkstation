@@ -10,6 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -86,12 +87,12 @@ const CorridaDeBarEmBar = () => {
   const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ nome: "", telefone: "" });
+  const [form, setForm] = useState({ nome: "", telefone: "", indicacao: "" });
   const { toast } = useToast();
 
   const handleBuy = (ticketId: string) => {
     setSelectedTicket(ticketId);
-    setForm({ nome: "", telefone: "" });
+    setForm({ nome: "", telefone: "", indicacao: "" });
     setDialogOpen(true);
   };
 
@@ -105,7 +106,8 @@ const CorridaDeBarEmBar = () => {
         body: {
           nome: form.nome,
           telefone: form.telefone,
-          tipo_ingresso: selectedTicket
+          tipo_ingresso: selectedTicket,
+          indicacao: form.indicacao
         }
       });
 
@@ -378,7 +380,29 @@ const CorridaDeBarEmBar = () => {
               <Label htmlFor="telefone">Telefone / WhatsApp</Label>
               <Input id="telefone" required placeholder="(49) 99999-9999" value={form.telefone} onChange={(e) => setForm((f) => ({ ...f, telefone: e.target.value }))} />
             </div>
-            <Button type="submit" className="w-full btn-gta rounded-lg py-3" disabled={loading}>
+            <div className="space-y-2">
+              <Label htmlFor="indicacao">Como ficou sabendo?</Label>
+              <Select value={form.indicacao} onValueChange={(value) => setForm((f) => ({ ...f, indicacao: value }))} required>
+                <SelectTrigger id="indicacao" className="w-full">
+                  <SelectValue placeholder="Selecione uma opção" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Instagram">Instagram</SelectItem>
+                  <SelectItem value="Cena Indie Bar">Cena Indie Bar</SelectItem>
+                  <SelectItem value="Meu Escritório – Workstation">Meu Escritório – Workstation</SelectItem>
+                  <SelectItem value="Oeste Pub">Oeste Pub</SelectItem>
+                  <SelectItem value="Galgo">Galgo</SelectItem>
+                  <SelectItem value="Pix">Pix</SelectItem>
+                  <SelectItem value="Pulse">Pulse</SelectItem>
+                  <SelectItem value="Império Hamburgueria">Império Hamburgueria</SelectItem>
+                  <SelectItem value="Bravo Pub">Bravo Pub</SelectItem>
+                  <SelectItem value="Kazah Oz">Kazah Oz</SelectItem>
+                  <SelectItem value="Garagem Bar e Lanchonete">Garagem Bar e Lanchonete</SelectItem>
+                  <SelectItem value="O Boteco dos Amigos">O Boteco dos Amigos</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <Button type="submit" className="w-full btn-gta rounded-lg py-3" disabled={loading || !form.indicacao}>
               {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processando...</> : "Confirmar e pagar"}
             </Button>
           </form>
