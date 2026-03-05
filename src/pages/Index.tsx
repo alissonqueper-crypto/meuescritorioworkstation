@@ -132,7 +132,7 @@ const Index = () => {
       <div className="brand-separator w-full" />
 
       {/* ============ BENEFÍCIOS ============ */}
-      <ScrollSection>
+      <ScrollSection id="beneficios">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Por que escolher nosso <span className="text-brand-gradient">Workstation</span>?
         </h2>
@@ -186,7 +186,7 @@ const Index = () => {
       </ScrollSection>
 
       {/* ============ NOSSOS ESPAÇOS ============ */}
-      <ScrollSection>
+      <ScrollSection id="estrutura">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Nossos <span className="text-brand-gradient">Espaços</span>
         </h2>
@@ -213,7 +213,7 @@ const Index = () => {
       </ScrollSection>
 
       {/* ============ LOCALIZAÇÃO ============ */}
-      <ScrollSection className="bg-card/50">
+      <ScrollSection id="localizacao" className="bg-card/50">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Localização</h2>
         <p className="text-center text-muted-foreground mb-8">R. Vinte e Cinco de Março, 148 – Centro, Caçador – SC, 89500-061</p>
         <div className="relative rounded-2xl overflow-hidden border border-border aspect-[4/3] md:aspect-video min-h-[250px] md:min-h-[350px] w-full max-w-full mx-auto">
@@ -240,7 +240,7 @@ const Index = () => {
       </ScrollSection>
 
       {/* ============ EVENTOS ============ */}
-      <ScrollSection>
+      <ScrollSection id="eventos">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
           Eventos & <span className="text-brand-gradient">Comunidade</span>
         </h2>
