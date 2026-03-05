@@ -161,6 +161,16 @@ const MeuIngresso = () => {
                     <span className="font-medium text-foreground">{row.value}</span>
                   </div>
               )}
+
+                <div className="flex justify-between items-center pt-1">
+                  <span className="text-muted-foreground">Status</span>
+                  <span className={`font-semibold ${statusColor(ingresso.status_pagamento)}`}>
+                    {ingresso.status_pagamento === "aprovado" && "Aprovado ✅"}
+                    {ingresso.status_pagamento === "pendente" && "Pendente ⏳"}
+                    {ingresso.status_pagamento === "expirado" && "Expirado ❌"}
+                    {!["aprovado", "pendente", "expirado"].includes(ingresso.status_pagamento) && ingresso.status_pagamento}
+                  </span>
+                </div>
                 
 
 
