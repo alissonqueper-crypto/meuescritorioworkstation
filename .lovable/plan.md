@@ -1,37 +1,23 @@
 
 
-## Plano: Copiar números para `numero_placa` e formatar valor
+## Plano: Corrigir busca de ingressos
 
-### Resumo
-Atualizar a coluna `numero_placa` na tabela `inscricoes` com os números já atribuídos na tabela `numeros_participantes`, e converter `valor_pago` de centavos (integer) para reais (numeric) para exibir como dinheiro no Supabase.
+### Problema
+1. Nomes no banco têm espaços extras no final (ex: `"Adrielly Gelinski "`), fazendo a busca exata falhar
+2. Telefones estão em formatos variados no banco (`(49) 99186-9961` vs `49991291416`), então a comparação exata falha
 
-### 1. Copiar números dos participantes para `numero_placa`
-Executar um UPDATE para copiar o número de `numeros_participantes` para `inscricoes.numero_placa`:
+### Solução
 
-```sql
-UPDATE inscricoes i
-SET numero_placa = np.numero
-FROM numeros_participantes np
-WHERE np.inscricao_id = i.id;
-```
+**Arquivo: `src/pages/MeuIngresso.tsx`**
 
-### 2. Atualizar Edge Function `create-checkout`
-Além de atribuir o número na tabela `numeros_participantes`, também salvar o número em `inscricoes.numero_placa`.
+1. Usar `%` wildcard no `.ilike` para nome: `.ilike("nome", `%${nome.trim()}%`)`
+2. Para o telefone, extrair apenas os dígitos e buscar com um filtro que ignore formatação. Como o Supabase não tem uma função nativa de "strip non-digits" no PostgREST, a melhor abordagem é:
+   - Extrair apenas os dígitos do telefone digitado pelo usuário
+   - Buscar todos os registros que contenham o nome (com wildcard)
+   - Filtrar pelo telefone no lado do cliente, comparando apenas dígitos
 
-### 3. Formatar `valor_pago` como dinheiro
-O `valor_pago` está em centavos (integer). Para exibir como dinheiro no Supabase, duas opções:
-- **Converter os valores para reais** (dividir por 100) e mudar o tipo da coluna. Isso exige atualizar todo o código que lê/escreve esse campo.
-- **Manter em centavos** e apenas formatar no frontend (já é feito na página MeuIngresso).
+Alternativamente, buscar apenas pelo nome com wildcard e filtrar telefone no JS comparando dígitos.
 
-A opção mais segura é converter os valores existentes para reais e atualizar a coluna para `numeric(10,2)`, ajustando o código frontend e a Edge Function.
-
-### 4. Atualizar frontend
-- `MeuIngresso.tsx`: usar `numero_placa` direto da query de `inscricoes` em vez de buscar em `numeros_participantes` separadamente. Ajustar formatação do valor se mudar para reais.
-
-### Alterações de arquivo
-- **Migração SQL**: alterar `valor_pago` de integer para numeric, dividir valores por 100
-- **Edge Function**: salvar número em `numero_placa`, enviar valor em reais (não centavos)
-- **MeuIngresso.tsx**: simplificar query, ajustar formato do valor
-- **types.ts**: atualizar tipo de `valor_pago`
-- **CorridaDeBarEmBar.tsx**: ajustar valores de tickets se necessário
+### Alterações
+- `MeuIngresso.tsx`: mudar a query para usar wildcard no nome, remover o filtro `.eq("telefone")`, e filtrar telefone no cliente comparando apenas dígitos
 
