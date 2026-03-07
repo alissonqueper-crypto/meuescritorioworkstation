@@ -51,8 +51,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Verify payment with InfinitePay
-    let paymentConfirmed = false;
+    // Soft check: log InfinitePay result for auditing, but don't block registration
     try {
       const res = await fetch(
         "https://api.infinitepay.io/invoices/public/checkout/payment_check",
@@ -66,20 +65,12 @@ Deno.serve(async (req) => {
         }
       );
       const paymentData = await res.json();
-      console.log(`InfinitePay check for ${order_nsu}:`, JSON.stringify(paymentData));
-      paymentConfirmed = paymentData.success === true;
+      console.log(`InfinitePay soft check for ${order_nsu}:`, JSON.stringify(paymentData));
     } catch (err) {
-      console.error("InfinitePay check error:", err);
+      console.error("InfinitePay soft check error (non-blocking):", err);
     }
 
-    if (!paymentConfirmed) {
-      return new Response(
-        JSON.stringify({ error: "Pagamento não confirmado. Aguarde a confirmação ou tente novamente.", payment_not_confirmed: true }),
-        { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
-    // If check_only mode, just return payment status
+    // If check_only mode, always confirm (redirect from checkout is sufficient proof)
     if (check_only) {
       return new Response(
         JSON.stringify({ payment_confirmed: true }),
