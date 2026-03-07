@@ -1,17 +1,21 @@
 
 
-## Plano: Inserir participante Gilson manualmente + investigar erro
+## Plano: Centralizar logo do evento no mobile
 
-### Dados do participante (da screenshot)
-- **Nome**: Gilson Rogério Varotto
-- **Telefone**: 49999118801
-- **Ingresso**: masculino / CJ Hardcore (R$ 110)
-- **Status**: aprovado
-- **Número disponível**: 5761
+A imagem da logo (`<img>`) na linha 126 de `CorridaDeBarEmBar.tsx` não está centralizada porque falta a classe `mx-auto`. Elementos `<img>` não são afetados por `text-center` do pai.
 
-### Execução
-Uma migração SQL para inserir o registro na tabela `inscricoes` e atribuir o número 5761 da tabela `numeros_participantes`.
+### Alteração
 
-### Investigação
-Os logs da edge function não mostram nenhuma tentativa de registro do Gilson, o que sugere que o erro pode estar no frontend (a requisição nem chega à edge function). Após inserir o participante, vou investigar o código do frontend para entender por que o submit está falhando silenciosamente.
+**`src/pages/CorridaDeBarEmBar.tsx`** (linha 126):
+- Adicionar `mx-auto` à classe da imagem para centralizá-la horizontalmente.
+
+De:
+```tsx
+<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4" />
+```
+
+Para:
+```tsx
+<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4 mx-auto" />
+```
 
