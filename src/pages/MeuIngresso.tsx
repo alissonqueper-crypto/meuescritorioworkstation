@@ -49,8 +49,8 @@ const MeuIngresso = () => {
       return;
     }
 
-    const inputDigits = digitsOnly(telefone);
-    const matches = data?.filter((r) => digitsOnly(r.telefone) === inputDigits) ?? [];
+    const last8 = (s: string) => digitsOnly(s).slice(-8);
+    const matches = data?.filter((r) => last8(r.telefone) === last8(telefone)) ?? [];
 
     if (matches.length === 0) {
       setErro("Nenhum ingresso encontrado com esse nome e telefone.");
