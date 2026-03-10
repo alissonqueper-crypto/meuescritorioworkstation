@@ -1,21 +1,17 @@
 
 
-## Plano: Centralizar logo do evento no mobile
+## Plano: Excluir ingresso feminino de Cassiano Rocha de Lara Picolotto
 
-A imagem da logo (`<img>`) na linha 126 de `CorridaDeBarEmBar.tsx` não está centralizada porque falta a classe `mx-auto`. Elementos `<img>` não são afetados por `text-center` do pai.
+### Dados do registro a excluir
+- **ID**: `5efedbd9-6c0d-42bb-8dbe-2a598001de01`
+- **Nome**: Cassiano Rocha de Lara Picolotto
+- **Tipo**: feminino
+- **Placa**: 9636
 
-### Alteração
+### Execução
+1. DELETE na tabela `inscricoes` pelo ID
+2. UPDATE na tabela `numeros_participantes` para liberar a placa 9636 (setar inscricao_id = NULL)
 
-**`src/pages/CorridaDeBarEmBar.tsx`** (linha 126):
-- Adicionar `mx-auto` à classe da imagem para centralizá-la horizontalmente.
-
-De:
-```tsx
-<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4" />
-```
-
-Para:
-```tsx
-<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4 mx-auto" />
-```
+### Arquivo
+`supabase/migrations/` com timestamp único
 
