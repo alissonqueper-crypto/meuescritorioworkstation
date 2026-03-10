@@ -1,17 +1,21 @@
 
 
-## Plano: Inserir ingresso de Josaphat Kocan
+## Plano: Centralizar logo do evento no mobile
 
-### Dados
-- **Nome**: Josaphat Kocan
-- **Telefone**: 49999713674
-- **Tipo**: masculino (R$110)
-- **Placa**: 1001 (próximo disponível)
-- **Status**: aprovado
+A imagem da logo (`<img>`) na linha 126 de `CorridaDeBarEmBar.tsx` não está centralizada porque falta a classe `mx-auto`. Elementos `<img>` não são afetados por `text-center` do pai.
 
-### Execução
-1. INSERT na tabela `inscricoes`
-2. UPDATE na tabela `numeros_participantes` para vincular placa 1001
+### Alteração
 
-Cassiano já está correto, nenhuma alteração necessária.
+**`src/pages/CorridaDeBarEmBar.tsx`** (linha 126):
+- Adicionar `mx-auto` à classe da imagem para centralizá-la horizontalmente.
+
+De:
+```tsx
+<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4" />
+```
+
+Para:
+```tsx
+<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4 mx-auto" />
+```
 
