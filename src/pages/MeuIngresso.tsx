@@ -22,7 +22,7 @@ const MeuIngresso = () => {
   const [nome, setNome] = useState("");
   const [telefone, setTelefone] = useState("");
   const [loading, setLoading] = useState(false);
-  const [ingresso, setIngresso] = useState<Inscricao | null>(null);
+  const [ingressos, setIngressos] = useState<Inscricao[]>([]);
   const [erro, setErro] = useState("");
   const [buscou, setBuscou] = useState(false);
 
