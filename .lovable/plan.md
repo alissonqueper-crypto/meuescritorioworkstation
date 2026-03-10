@@ -1,21 +1,24 @@
 
 
-## Plano: Centralizar logo do evento no mobile
+## Plano: Flexibilizar a comparação de telefone na busca
 
-A imagem da logo (`<img>`) na linha 126 de `CorridaDeBarEmBar.tsx` não está centralizada porque falta a classe `mx-auto`. Elementos `<img>` não são afetados por `text-center` do pai.
+### Problema
+Os dois registros do Cassiano têm telefones ligeiramente diferentes no banco (`4988232778` vs `49988232778`). O filtro atual compara os dígitos exatamente, então só um dos registros é retornado.
+
+### Solução
+Em `src/pages/MeuIngresso.tsx`, na função `handleSubmit`, ao invés de comparar os dígitos exatos do telefone, comparar apenas os **últimos 8 dígitos** de ambos os números. Isso acomoda variações de DDD e dígito 9.
 
 ### Alteração
 
-**`src/pages/CorridaDeBarEmBar.tsx`** (linha 126):
-- Adicionar `mx-auto` à classe da imagem para centralizá-la horizontalmente.
+**`src/pages/MeuIngresso.tsx`** (linha 53):
+```typescript
+// De:
+const matches = data?.filter((r) => digitsOnly(r.telefone) === inputDigits) ?? [];
 
-De:
-```tsx
-<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4" />
+// Para:
+const last8 = (s: string) => digitsOnly(s).slice(-8);
+const matches = data?.filter((r) => last8(r.telefone) === last8(telefone)) ?? [];
 ```
 
-Para:
-```tsx
-<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4 mx-auto" />
-```
+Isso garante que variações como `49`, `049`, presença/ausência do dígito `9` não impeçam o match.
 
