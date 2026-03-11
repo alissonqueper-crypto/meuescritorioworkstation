@@ -16,6 +16,7 @@ interface Inscricao {
   order_nsu: string | null;
   created_at: string;
   numero_placa: number;
+  indicacao: string | null;
 }
 
 const MeuIngresso = () => {
