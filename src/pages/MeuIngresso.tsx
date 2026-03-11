@@ -39,7 +39,7 @@ const MeuIngresso = () => {
 
     const { data, error } = await supabase
       .from("inscricoes")
-      .select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa")
+      .select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa, indicacao")
       .ilike("nome", `%${firstName}%`);
 
     setLoading(false);
