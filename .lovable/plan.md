@@ -1,21 +1,12 @@
 
 
-## Plano: Centralizar logo do evento no mobile
+## Plano: Atualizar indicações nulas e exibir no ingresso
 
-A imagem da logo (`<img>`) na linha 126 de `CorridaDeBarEmBar.tsx` não está centralizada porque falta a classe `mx-auto`. Elementos `<img>` não são afetados por `text-center` do pai.
+### 1. Atualizar dados no banco
+Usar o insert tool para setar `indicacao = 'Meu Escritório – Workstation'` em todos os registros onde `indicacao IS NULL` (18 registros identificados).
 
-### Alteração
-
-**`src/pages/CorridaDeBarEmBar.tsx`** (linha 126):
-- Adicionar `mx-auto` à classe da imagem para centralizá-la horizontalmente.
-
-De:
-```tsx
-<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4" />
-```
-
-Para:
-```tsx
-<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4 mx-auto" />
-```
+### 2. Exibir indicação no card do ingresso
+Em `src/pages/MeuIngresso.tsx`:
+- Adicionar `indicacao` na interface `Inscricao` e na query do Supabase
+- Adicionar uma linha "Indicação" no corpo do card, exibindo o valor quando existir
 
