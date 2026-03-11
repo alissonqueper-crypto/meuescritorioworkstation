@@ -1,15 +1,21 @@
 
 
-## Plano: Adicionar 2 ingressos com indicação "Meu Escritório – Workstation"
+## Plano: Centralizar logo do evento no mobile
 
-### Registros:
-1. **Kassiely Santos** — Feminino (R$ 55) — Tel: 49998170592
-2. **Vitor Dapper** — Masculino (R$ 110) — Tel: 49998166574
+A imagem da logo (`<img>`) na linha 126 de `CorridaDeBarEmBar.tsx` não está centralizada porque falta a classe `mx-auto`. Elementos `<img>` não são afetados por `text-center` do pai.
 
-Ambos com `indicacao = 'Meu Escritório – Workstation'`, `status_pagamento = 'aprovado'`.
+### Alteração
 
-### Execução
-Migration SQL que:
-1. Insere os dois registros na tabela `inscricoes` com `numero_placa = 0`
-2. A trigger `atribuir_numero_participante` já existente atribuirá os números automaticamente
+**`src/pages/CorridaDeBarEmBar.tsx`** (linha 126):
+- Adicionar `mx-auto` à classe da imagem para centralizá-la horizontalmente.
+
+De:
+```tsx
+<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4" />
+```
+
+Para:
+```tsx
+<img src={corridaLogo} alt="Corrida de Bar em Bar" className="w-64 sm:w-80 md:w-96 lg:w-[28rem] mb-4 mx-auto" />
+```
 
