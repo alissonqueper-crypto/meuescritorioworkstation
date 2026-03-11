@@ -16,6 +16,7 @@ interface Inscricao {
   order_nsu: string | null;
   created_at: string;
   numero_placa: number;
+  indicacao: string | null;
 }
 
 const MeuIngresso = () => {
@@ -38,7 +39,7 @@ const MeuIngresso = () => {
 
     const { data, error } = await supabase
       .from("inscricoes")
-      .select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa")
+      .select("id, nome, telefone, tipo_ingresso, valor_pago, status_pagamento, order_nsu, created_at, numero_placa, indicacao")
       .ilike("nome", `%${firstName}%`);
 
     setLoading(false);
@@ -164,6 +165,7 @@ const MeuIngresso = () => {
                     { label: "Ingresso", value: ingresso.tipo_ingresso === "masculino" ? "CJ – Modo Hardcore (2,2L) · Ingresso Masculino" : "Sweet – Modo Light (1,1L) · Ingresso Feminino" },
                     { label: "Valor pago", value: formatCurrency(ingresso.valor_pago) },
                     { label: "Data da compra", value: formatDate(ingresso.created_at) },
+                    ...(ingresso.indicacao ? [{ label: "Indicação", value: ingresso.indicacao }] : []),
                   ].map((row) => (
                     <div key={row.label} className="flex justify-between gap-4 border-b border-border/20 pb-2 last:border-0">
                       <span className="text-muted-foreground shrink-0">{row.label}</span>

@@ -1,0 +1,1 @@
+UPDATE inscricoes SET indicacao = 'Meu Escritório – Workstation' WHERE indicacao IS NULL;
