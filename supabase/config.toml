@@ -1,10 +1,1 @@
-project_id = "vsluytamolyjsuuymdxh"
-
-[functions.create-checkout]
-verify_jwt = false
-
-[functions.check-payments]
-verify_jwt = false
-
-[functions.register-participant]
-verify_jwt = false
+project_id = "acxhzyxvghrdveczzhdx"
