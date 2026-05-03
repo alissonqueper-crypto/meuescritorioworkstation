@@ -5,6 +5,7 @@ import { CircularTestimonials } from "@/components/ui/circular-testimonials";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { LampContainer } from "@/components/ui/lamp";
+import EventoCSBanner from "@/components/EventoCSBanner";
 import logoImg from "@/assets/logo.png";
 import eventHeroImg from "@/assets/corrida-hero-gta.png";
 import corridaLogo from "@/assets/corrida-logo.png";
@@ -131,6 +132,8 @@ const Index = () => {
       </div>
 
       <div className="brand-separator w-full" />
+
+      <EventoCSBanner />
 
       {/* ============ BENEFÍCIOS ============ */}
       <ScrollSection id="beneficios">
