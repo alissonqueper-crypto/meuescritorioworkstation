@@ -28,7 +28,7 @@ const queryClient = new QueryClient();
 
 const ConditionalChrome = ({ children }: { children: React.ReactNode }) => {
   const loc = useLocation();
-  const isCampeonato = loc.pathname.startsWith("/campeonato");
+  const isCampeonato = loc.pathname.startsWith("/campeonato") || loc.pathname.startsWith("/inscricao-cs");
   return (
     <>
       {!isCampeonato && <Header />}
