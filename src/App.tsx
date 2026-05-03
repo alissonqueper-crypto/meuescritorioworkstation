@@ -62,6 +62,7 @@ const App = () => (
             <Route path="/campeonato/equipes" element={<CampeonatoEquipes />} />
             <Route path="/campeonato/admin" element={<CampeonatoAdmin />} />
             <Route path="/campeonato/contato" element={<CampeonatoContato />} />
+            <Route path="/inscricao-cs" element={<InscricaoCS />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
