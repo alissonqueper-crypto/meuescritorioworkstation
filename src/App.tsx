@@ -22,6 +22,7 @@ import CampeonatoChaveamento from "./pages/campeonato/Chaveamento";
 import CampeonatoEquipes from "./pages/campeonato/Equipes";
 import CampeonatoAdmin from "./pages/campeonato/Admin";
 import CampeonatoContato from "./pages/campeonato/Contato";
+import InscricaoCS from "./pages/InscricaoCS";
 
 const queryClient = new QueryClient();
 
