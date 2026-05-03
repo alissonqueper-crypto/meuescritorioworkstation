@@ -149,7 +149,7 @@ export default function EventoCSBanner() {
 
         {/* CTA */}
         <div className="flex justify-center mb-6">
-          <Link to="/campeonato/inscricao">
+          <Link to="/inscricao-cs">
             <Button
               size="lg"
               className="bg-brand-red hover:bg-brand-red/90 text-white font-gta tracking-wider text-base md:text-lg px-8 py-6 rounded-xl shadow-lg shadow-brand-red/30"

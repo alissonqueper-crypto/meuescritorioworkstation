@@ -22,12 +22,13 @@ import CampeonatoChaveamento from "./pages/campeonato/Chaveamento";
 import CampeonatoEquipes from "./pages/campeonato/Equipes";
 import CampeonatoAdmin from "./pages/campeonato/Admin";
 import CampeonatoContato from "./pages/campeonato/Contato";
+import InscricaoCS from "./pages/InscricaoCS";
 
 const queryClient = new QueryClient();
 
 const ConditionalChrome = ({ children }: { children: React.ReactNode }) => {
   const loc = useLocation();
-  const isCampeonato = loc.pathname.startsWith("/campeonato");
+  const isCampeonato = loc.pathname.startsWith("/campeonato") || loc.pathname.startsWith("/inscricao-cs");
   return (
     <>
       {!isCampeonato && <Header />}
@@ -61,6 +62,7 @@ const App = () => (
             <Route path="/campeonato/equipes" element={<CampeonatoEquipes />} />
             <Route path="/campeonato/admin" element={<CampeonatoAdmin />} />
             <Route path="/campeonato/contato" element={<CampeonatoContato />} />
+            <Route path="/inscricao-cs" element={<InscricaoCS />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
